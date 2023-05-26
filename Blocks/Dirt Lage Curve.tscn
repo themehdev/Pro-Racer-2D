@@ -1,8 +1,8 @@
 [gd_scene format=2]
 
-[node name="Dirt Lage Curve" type="Node2D"]
+[node name="Dirt Large Curve" type="Node2D"]
 
-[node name="Wall" type="StaticBody2D" parent="."]
+[node name="Wall" type="StaticBody2D" parent="." groups=["Wall"]]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wall"]
 polygon = PoolVector2Array( 768, 768, 752, 768, 720, 80, 696, -112, 640, -320, 512, -512, 320, -640, 112, -696, -144, -728, -768, -752, -768, -768, -752, -768, -136, -752, 120, -720, 336, -656, 528, -528, 656, -336, 720, -120, 744, 72, 768, 752 )
@@ -11,7 +11,7 @@ polygon = PoolVector2Array( 768, 768, 752, 768, 720, 80, 696, -112, 640, -320, 5
 color = Color( 0.4, 0.4, 0.4, 1 )
 polygon = PoolVector2Array( 768, 768, 752, 768, 720, 80, 696, -112, 640, -320, 512, -512, 320, -640, 112, -696, -144, -728, -768, -752, -768, -768, -752, -768, -136, -752, 120, -720, 336, -656, 528, -528, 656, -336, 720, -120, 744, 72, 768, 752 )
 
-[node name="Wall2" type="StaticBody2D" parent="."]
+[node name="Wall2" type="StaticBody2D" parent="." groups=["Wall"]]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wall2"]
 polygon = PoolVector2Array( 272, 768, 256, 768, 224, 272, 192, 8, 112, -112, -8, -192, -272, -224, -768, -240, -768, -256, -264, -240, 0, -208, 128, -128, 208, 0, 240, 264 )
@@ -20,7 +20,7 @@ polygon = PoolVector2Array( 272, 768, 256, 768, 224, 272, 192, 8, 112, -112, -8,
 color = Color( 0.4, 0.4, 0.4, 1 )
 polygon = PoolVector2Array( 272, 768, 256, 768, 224, 272, 192, 8, 112, -112, -8, -192, -272, -224, -768, -240, -768, -256, -264, -240, 0, -208, 128, -128, 208, 0, 240, 264 )
 
-[node name="Dirt" type="StaticBody2D" parent="."]
+[node name="Dirt" type="StaticBody2D" parent="." groups=["Dirt"]]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Dirt"]
 polygon = PoolVector2Array( -768, -752, -768, -264, -264, -240, 0, -208, 128, -128, 208, 0, 240, 256, 272, 768, 752, 768, 720, 80, 696, -112, 640, -320, 512, -512, 320, -640, 112, -696, -128, -728 )

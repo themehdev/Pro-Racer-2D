@@ -2,7 +2,7 @@
 
 [node name="Curve" type="Node2D"]
 
-[node name="Wall" type="StaticBody2D" parent="."]
+[node name="Wall" type="StaticBody2D" parent="." groups=["Wall"]]
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="Wall"]
 polygon = PoolVector2Array( -256, -240, -256, -256, -256, -256, -240, -256, -56, -248, 80, -208, 160, -160, 208, -80, 248, 56, 256, 240, 256, 256, 240, 256, 224, 64, 184, -64, 136, -136, 64, -184, -64, -224 )
@@ -11,7 +11,7 @@ polygon = PoolVector2Array( -256, -240, -256, -256, -256, -256, -240, -256, -56,
 color = Color( 0.533333, 0.533333, 0.533333, 1 )
 polygon = PoolVector2Array( -256, -240, -256, -256, -256, -256, -240, -256, -56, -248, 80, -208, 160, -160, 208, -80, 248, 56, 256, 240, 256, 256, 240, 256, 224, 64, 184, -64, 136, -136, 64, -184, -64, -224 )
 
-[node name="Road" type="StaticBody2D" parent="."]
+[node name="Road" type="StaticBody2D" parent="." groups=["Road"]]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Road"]
 polygon = PoolVector2Array( -256, -240, -64, -224, 64, -184, 136, -136, 184, -64, 224, 64, 240, 256, -256, 256 )

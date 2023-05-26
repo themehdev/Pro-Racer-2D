@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends StaticBody2D
 
 
 # Declare member variables here. Examples:
@@ -12,5 +12,18 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+#func _process(delta):
+#	pass
+
+
+func _on_Area2D_area_entered(area):
+	if area.get_parent().is_in_group("player"):
+		Global.dirts_on += 1
+		
+
+
+
+
+func _on_Area2D_area_exited(area):
+	if area.get_parent().is_in_group("player"):
+		Global.dirts_on += 1

@@ -11,7 +11,7 @@ b = Vector2( 256, 0 )
 
 [node name="Road" parent="." instance=ExtResource( 2 )]
 
-[node name="Finish Line" type="StaticBody2D" parent="."]
+[node name="Finish Line" type="StaticBody2D" parent="." groups=["Finish"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Finish Line"]
 shape = SubResource( 1 )

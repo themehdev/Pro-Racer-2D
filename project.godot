@@ -11,7 +11,12 @@ config_version=4
 [application]
 
 config/name="Pro Racer 2D"
+run/main_scene="res://Game.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Global="*res://Global.tscn"
 
 [gui]
 
