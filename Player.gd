@@ -6,12 +6,13 @@ extends KinematicBody2D
 # var b = "text"
 var vel = Vector2(0, 0)
 var dir = Vector2.RIGHT
-var rotation_speed = 0.004
+var rotation_speed = 0.006
 var rotation_vel = 0
 var speed = 70
-var friction = 0.05
+var friction = 0.0001
 var rot_friction = 0.20
 var grip = 3
+var on_wal_counter = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -25,21 +26,32 @@ func _physics_process(delta):
 	if Input.is_action_pressed("ui_down"):
 		vel += Vector2.DOWN.rotated(dir.angle()) * speed
 	if Input.is_action_pressed("ui_left"):
-		rotation_vel -= rotation_speed
-		vel = vel.rotated(dir.angle() - PI/60)
+		rotation_vel -= rotation_speed * (abs(vel.y) + abs(vel.x))/1000
 	if Input.is_action_pressed("ui_right"):
-		rotation_vel += rotation_speed
-		vel = vel.rotated(dir.angle() - PI/60)
-	if is_on_ceiling() or is_on_floor():
-		vel.y /= 2
-		vel.x /= 2
+		rotation_vel += rotation_speed * (abs(vel.y) + abs(vel.x))/1000
+	if is_on_ceiling() or is_on_floor() or is_on_wall():
+		if(on_wal_counter == 1):
+			vel.x *= -1
+			vel.y *= -1
+		elif abs(vel.y) < abs(vel.x):
+			vel.x /= 2
+			vel.y /= -2
+			on_wal_counter += 1
+		else:
+			vel.x /= -2
+			vel.y /= 2
+			on_wal_counter += 1
+	else:
+		on_wal_counter = 0
+		
+	
+	rotation_vel *= (1.0 - rot_friction)
 	
 	dir = dir.rotated(rotation_vel)
 	
 	rotation = dir.angle()
 	
 	vel *= (1.0 - friction)
-	rotation_vel *= (1.0 - rot_friction)
 
 	move_and_slide(vel)
 	
