@@ -6,9 +6,11 @@ extends KinematicBody2D
 # var b = "text"
 var vel = Vector2(0, 0)
 var dir = Vector2(0, -1)
-var rotation_speed = 0.05
-var speed = 5
-var friction = 0.02
+var rotation_speed = 0.004
+var rotation_vel = 0
+var speed = 70
+var friction = 0.08
+var rot_friction = 0.12
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -24,13 +26,16 @@ func _physics_process(delta):
 	if Input.is_action_pressed("ui_down"):
 		vel += Vector2.DOWN.rotated(dir.angle()) * speed
 	if Input.is_action_pressed("ui_left"):
-		dir = dir.rotated(-rotation_speed)
+		rotation_vel -= rotation_speed
 	if Input.is_action_pressed("ui_right"):
-		dir = dir.rotated(rotation_speed)
+		rotation_vel += rotation_speed
+	
+	dir = dir.rotated(rotation_vel)
 	
 	rotation = dir.angle()
 	
 	vel *= (1.0 - friction)
+	rotation_vel *= (1.0 - rot_friction)
 
 	move_and_slide(vel)
 	
