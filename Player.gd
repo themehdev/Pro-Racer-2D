@@ -5,7 +5,7 @@ extends KinematicBody2D
 # var a = 2
 # var b = "text"
 var vel = Vector2(0, 0)
-var dir = Vector2(0, -1)
+var dir = Vector2.RIGHT
 var rotation_speed = 0.004
 var rotation_vel = 0
 var speed = 70
