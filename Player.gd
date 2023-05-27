@@ -9,8 +9,9 @@ var dir = Vector2(0, -1)
 var rotation_speed = 0.004
 var rotation_vel = 0
 var speed = 70
-var friction = 0.08
-var rot_friction = 0.12
+var friction = 0.05
+var rot_friction = 0.20
+var grip = 3
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -19,16 +20,19 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	if is_on_ceiling() or is_on_floor():
-		vel.y = 0
 	if Input.is_action_pressed("ui_up"):
 		vel += Vector2.UP.rotated(dir.angle()) * speed
 	if Input.is_action_pressed("ui_down"):
 		vel += Vector2.DOWN.rotated(dir.angle()) * speed
 	if Input.is_action_pressed("ui_left"):
 		rotation_vel -= rotation_speed
+		vel = vel.rotated(dir.angle() - PI/60)
 	if Input.is_action_pressed("ui_right"):
 		rotation_vel += rotation_speed
+		vel = vel.rotated(dir.angle() - PI/60)
+	if is_on_ceiling() or is_on_floor():
+		vel.y /= 2
+		vel.x /= 2
 	
 	dir = dir.rotated(rotation_vel)
 	
