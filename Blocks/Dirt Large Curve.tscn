@@ -6,6 +6,7 @@
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wall"]
 polygon = PoolVector2Array( 768, 768, 752, 768, 720, 80, 696, -112, 640, -320, 512, -512, 320, -640, 112, -696, -144, -728, -768, -752, -768, -768, -752, -768, -136, -752, 120, -720, 336, -656, 528, -528, 656, -336, 720, -120, 744, 72, 768, 752 )
+one_way_collision_margin = 10.0
 
 [node name="Polygon2D" type="Polygon2D" parent="Wall"]
 color = Color( 0.4, 0.4, 0.4, 1 )
@@ -15,6 +16,7 @@ polygon = PoolVector2Array( 768, 768, 752, 768, 720, 80, 696, -112, 640, -320, 5
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wall2"]
 polygon = PoolVector2Array( 272, 768, 256, 768, 224, 272, 192, 8, 112, -112, -8, -192, -272, -224, -768, -240, -768, -256, -264, -240, 0, -208, 128, -128, 208, 0, 240, 264 )
+one_way_collision_margin = 10.0
 
 [node name="Polygon2D" type="Polygon2D" parent="Wall2"]
 color = Color( 0.4, 0.4, 0.4, 1 )

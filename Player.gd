@@ -12,16 +12,19 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _physics_process(delta):
+	if is_on_wall():
+		vel.x = 0
+	if is_on_ceiling() or is_on_floor():
+		vel.y = 0
 	if Input.is_action_pressed("ui_up"):
 		vel.y -= 1
 	if Input.is_action_pressed("ui_down"):
 		vel.y += 1
 	if Input.is_action_pressed("ui_left"):
-		vel.x += 0.05 * vel.y
-		vel.y -= 0.05 * vel.y
+		vel.x -= 1
 	if Input.is_action_pressed("ui_right"):
-		vel.x -= 0.05 * vel.y
-		vel.y += 0.05 * vel.y
+		vel.x += 1
+
+	position += move_and_slide(vel)
 	
-	position += vel

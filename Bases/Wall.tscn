@@ -7,6 +7,7 @@ extents = Vector2( 8, 256 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+one_way_collision_margin = 10.0
 
 [node name="ColorRect" type="ColorRect" parent="."]
 margin_left = -8.0

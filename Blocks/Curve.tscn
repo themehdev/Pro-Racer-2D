@@ -6,6 +6,7 @@
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="Wall"]
 polygon = PoolVector2Array( -256, -240, -256, -256, -256, -256, -240, -256, -56, -248, 80, -208, 160, -160, 208, -80, 248, 56, 256, 240, 256, 256, 240, 256, 224, 64, 184, -64, 136, -136, 64, -184, -64, -224 )
+one_way_collision_margin = 10.0
 
 [node name="Polygon2D" type="Polygon2D" parent="Wall"]
 color = Color( 0.533333, 0.533333, 0.533333, 1 )
