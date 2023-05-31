@@ -10,7 +10,7 @@ var rotation_speed = 0.006
 var rotation_vel = 0
 var speed = 20
 var max_speed = 5000
-var friction = 0.0001
+var friction = 0.01
 var rot_friction = 0.20
 var traction = "road"
 var on_wal_counter = 0
@@ -21,17 +21,21 @@ var accel_hamper = pow(10, 10)
 func _ready():
 	pass # Replace with function body.
 
+var can_hit_wall = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	var vel_speed = abs(vel.x) + abs(vel.y)
-	speed /= vel_speed/accel_hamper + 1
+#	speed /= vel_speed/accel_hamper + 1
+	
+	speed = clamp(max_speed, 0, speed)
+	
 	if traction == "road":
 		max_speed = 1000
 		
-	if Input.is_action_pressed("ui_up") and (vel_speed < max_speed or vel.y < 0):
+	if Input.is_action_pressed("ui_up"):
 		vel += Vector2.UP.rotated(dir.angle()) * speed
-	if Input.is_action_pressed("ui_down") and (vel_speed < max_speed or vel.y > 0):
+	if Input.is_action_pressed("ui_down"):
 		vel += Vector2.DOWN.rotated(dir.angle()) * speed
 	if Input.is_action_pressed("ui_left"):
 		rotation_vel -= rotation_speed * (abs(vel.y) + abs(vel.x))/1000
@@ -51,7 +55,8 @@ func _physics_process(delta):
 			on_wal_counter += 1
 	else:
 		on_wal_counter = 0
-		
+	
+	
 	
 	rotation_vel *= (1.0 - rot_friction)
 	
@@ -61,5 +66,13 @@ func _physics_process(delta):
 	
 	vel *= (1.0 - friction)
 
-	move_and_slide(vel)
-	
+	var collision = move_and_collide(vel * delta)
+	if collision and can_hit_wall:
+		vel *= 0.97
+		$Timer.start()
+		can_hit_wall = false
+	$Label.text = vel as String
+
+
+func _on_Timer_timeout():
+	can_hit_wall = true
