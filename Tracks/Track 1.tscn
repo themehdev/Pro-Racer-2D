@@ -55,7 +55,7 @@ position = Vector2( -512, 1536 )
 position = Vector2( -512, -2048 )
 
 [node name="Large Curve3" parent="." instance=ExtResource( 2 )]
-position = Vector2( -1528, 3048 )
+position = Vector2( -1536, 3040 )
 rotation = 3.14159
 
 [node name="Large Curve4" parent="." instance=ExtResource( 2 )]
@@ -63,11 +63,11 @@ position = Vector2( 0, 3040 )
 rotation = 1.5708
 
 [node name="Curve" parent="." instance=ExtResource( 13 )]
-position = Vector2( -1536, -2544 )
+position = Vector2( -1536, -2560 )
 rotation = -3.14159
 
 [node name="Curve3" parent="." instance=ExtResource( 13 )]
-position = Vector2( -512, 2040 )
+position = Vector2( -512, 2048 )
 rotation = -3.14159
 
 [node name="Curve5" parent="." instance=ExtResource( 13 )]

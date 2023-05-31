@@ -20,6 +20,7 @@ var is_trying_to_move = false
 var drift = 0
 var drifting = false
 var min_drift_speed = 0
+var drift_turn_speed = 0.005
 
 
 # Called when the node enters the scene tree for the first time.
@@ -71,6 +72,7 @@ func _physics_process(delta):
 	if drifting:
 		drift = 0.5
 		friction = 0.01
+		rotation_vel += drift_turn_speed
 	else:
 		drift = 0
 	
