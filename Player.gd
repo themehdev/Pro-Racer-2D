@@ -8,7 +8,7 @@ var vel = Vector2(0, 0)
 var dir = Vector2.RIGHT
 var rotation_speed = 0.006
 var rotation_vel = 0
-var accel = 10
+var accel = 20
 var max_speed = 5000
 var friction = 0.01
 var rot_friction = 0.20
@@ -68,11 +68,11 @@ func _physics_process(delta):
 
 	var collision = move_and_collide(vel * delta)
 	if collision and can_hit_wall:
-		vel *= 0.97
-		$Timer.start()
+		vel = vel.bounce(collision.normal) * (1.0 - abs(collision.normal.dot(vel.normalized()))) * 0.7
+		$Sprite.global_position = collision.position + collision.normal * 50
+		$HitWall.start()
 		can_hit_wall = false
-	$Label.text = vel as String
 
 
-func _on_Timer_timeout():
+func _on_HitWall_timeout():
 	can_hit_wall = true

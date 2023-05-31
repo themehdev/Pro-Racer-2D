@@ -1,6 +1,7 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Player.gd" type="Script" id=1]
+[ext_resource path="res://icon.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 64 )
@@ -65,12 +66,24 @@ margin_bottom = -40.0
 [node name="Polygon2D" type="Polygon2D" parent="Graphics"]
 polygon = PoolVector2Array( 0, -64, 0, -64, 8, -56, 16, -32, 24, 16, 8, 64, -8, 64, -24, 16, -16, -32, -8, -56 )
 
-[node name="Timer" type="Timer" parent="."]
+[node name="HitWall" type="Timer" parent="."]
+wait_time = 0.4
 one_shot = true
 
 [node name="Label" type="Label" parent="."]
-margin_right = 40.0
-margin_bottom = 14.0
+margin_left = -42.0
+margin_top = -108.0
+margin_right = -2.0
+margin_bottom = -94.0
 rect_scale = Vector2( 2, 2 )
 
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[node name="Sprite2" type="Sprite" parent="."]
+visible = false
+scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+visible = false
+texture = ExtResource( 2 )
+
+[connection signal="timeout" from="HitWall" to="." method="_on_HitWall_timeout"]
