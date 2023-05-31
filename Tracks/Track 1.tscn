@@ -10,69 +10,79 @@
 [ext_resource path="res://Blocks/Start.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Blocks/Road Checkpoint.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Blocks/Dirt Curve.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Blocks/Finish.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Blocks/Sign.tscn" type="PackedScene" id=11]
 [ext_resource path="res://Blocks/Open.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Blocks/Curve.tscn" type="PackedScene" id=13]
 
 [node name="Track 1" type="Node2D"]
+position = Vector2( 0, 512 )
+
+[node name="Road Checkpoint3" parent="." instance=ExtResource( 9 )]
+position = Vector2( 2048, 320 )
+
+[node name="Dirt Curve4" parent="." instance=ExtResource( 10 )]
+rotation = 3.14159
+
+[node name="Straight Dirt3" parent="." instance=ExtResource( 6 )]
+position = Vector2( 512, 0 )
+rotation = 1.5708
+
+[node name="Dirt Curve3" parent="." instance=ExtResource( 10 )]
+position = Vector2( 1016, 0 )
+rotation = 1.5708
+
+[node name="Sign" parent="." instance=ExtResource( 11 )]
+position = Vector2( 1768, 1000 )
+
+[node name="Sign3" parent="." instance=ExtResource( 11 )]
+position = Vector2( 1776, -584 )
+rotation = -1.5708
+
+[node name="Sign2" parent="." instance=ExtResource( 11 )]
+position = Vector2( 568, 936 )
+rotation = 1.5708
 
 [node name="Start" parent="." instance=ExtResource( 8 )]
+position = Vector2( 0, -512 )
 
 [node name="Straight" parent="." instance=ExtResource( 7 )]
 position = Vector2( 0, -1024 )
 
-[node name="Straight3" parent="." instance=ExtResource( 7 )]
-position = Vector2( 0, 2026 )
-rotation = 1.5708
-
 [node name="Straight4" parent="." instance=ExtResource( 7 )]
-position = Vector2( -489, 1505 )
-
-[node name="Straight2" parent="." instance=ExtResource( 7 )]
-position = Vector2( 0, -512 )
-
-[node name="Straight5" parent="." instance=ExtResource( 7 )]
-position = Vector2( 6, 508 )
+position = Vector2( -512, 1536 )
 
 [node name="Large Curve" parent="." instance=ExtResource( 2 )]
 position = Vector2( -512, -2048 )
 
 [node name="Large Curve3" parent="." instance=ExtResource( 2 )]
-position = Vector2( -1523, 3072 )
+position = Vector2( -1528, 3048 )
 rotation = 3.14159
 
 [node name="Large Curve4" parent="." instance=ExtResource( 2 )]
-position = Vector2( 0, 3055 )
+position = Vector2( 0, 3040 )
 rotation = 1.5708
 
 [node name="Curve" parent="." instance=ExtResource( 13 )]
-position = Vector2( -1536, -2552 )
+position = Vector2( -1536, -2544 )
 rotation = -3.14159
 
 [node name="Curve3" parent="." instance=ExtResource( 13 )]
-position = Vector2( -496, 2016 )
+position = Vector2( -512, 2040 )
 rotation = -3.14159
 
 [node name="Curve5" parent="." instance=ExtResource( 13 )]
-position = Vector2( -490, 1019 )
+position = Vector2( -504, 1024 )
 rotation = -1.5708
 
-[node name="Curve6" parent="." instance=ExtResource( 13 )]
-position = Vector2( 8, 1025 )
-rotation = 1.5708
-
-[node name="Curve4" parent="." instance=ExtResource( 13 )]
-position = Vector2( 508, 2029 )
-
 [node name="Slant" parent="." instance=ExtResource( 3 )]
-position = Vector2( -1552, -3064 )
+position = Vector2( -1536, -3056 )
 
 [node name="Slant2" parent="." instance=ExtResource( 3 )]
-position = Vector2( -2064, -3072 )
+position = Vector2( -2048, -3056 )
 rotation = 3.14159
 
 [node name="Curve2" parent="." instance=ExtResource( 13 )]
-position = Vector2( -2056, -3576 )
+position = Vector2( -2056, -3568 )
 
 [node name="Large Curve2" parent="." instance=ExtResource( 2 )]
 position = Vector2( -3592, -3056 )
@@ -109,12 +119,26 @@ position = Vector2( -2056, 1024 )
 position = Vector2( -2568, 1024 )
 rotation = -1.5708
 
-[node name="Finish" parent="." instance=ExtResource( 11 )]
-position = Vector2( -4020, 3483 )
-rotation = 1.5708
-
 [node name="Open2" parent="." instance=ExtResource( 12 )]
 position = Vector2( -2040, 2048 )
 
 [node name="Open" parent="." instance=ExtResource( 12 )]
 position = Vector2( -2056, 1536 )
+
+[node name="Road Checkpoint2" parent="." instance=ExtResource( 9 )]
+position = Vector2( 512, 2048 )
+
+[node name="Curve4" parent="." instance=ExtResource( 13 )]
+position = Vector2( 504, 1536 )
+
+[node name="Slant3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 0, 2048 )
+rotation = 1.5708
+
+[node name="Curve7" parent="." instance=ExtResource( 13 )]
+position = Vector2( -8, 1536 )
+rotation = 4.71239
+
+[node name="Dirt Curve2" parent="." instance=ExtResource( 10 )]
+position = Vector2( 1024, -512 )
+rotation = -1.5708
