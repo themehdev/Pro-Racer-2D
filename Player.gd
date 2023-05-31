@@ -70,7 +70,7 @@ func _physics_process(delta):
 	
 	if drifting:
 		drift = 0.5
-		friction = 0.004
+		friction = 0.01
 	else:
 		drift = 0
 	
