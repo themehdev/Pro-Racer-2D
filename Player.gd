@@ -9,7 +9,7 @@ var dir = Vector2.RIGHT
 var rotation_speed = 0.006
 var rotation_vel = 0
 var accel = 20
-var max_speed = 5000
+var max_speed = 8500
 var friction = 0.01
 var rot_friction = 0.20
 var traction_type = "road"
@@ -21,6 +21,7 @@ var drift = 0
 var drifting = false
 var min_drift_speed = 0
 var drift_turn_speed = 0.005
+var collision
 
 
 # Called when the node enters the scene tree for the first time.
@@ -31,8 +32,9 @@ var can_hit_wall = true
 
 var traction_types = {
 	"road": 0.9,
-	"dirt_drift": 0.5,
+	"dirt": 0.5,
 	"drift": 0.1,
+	"off-road": 0.08
 }
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -69,7 +71,7 @@ func _physics_process(delta):
 	
 	rotation_vel *= (1.0 - rot_friction)
 	
-	if abs(rotation_vel) < 0.01:
+	if abs(rotation_vel) < 0.01 or vel_speed < 150 or collision:
 		drifting = false
 	
 	if drifting:
@@ -89,7 +91,7 @@ func _physics_process(delta):
 	
 	vel *= (1.0 - friction)
 
-	var collision = move_and_collide(vel * delta)
+	collision = move_and_collide(vel * delta)
 	if collision and can_hit_wall:
 		vel = vel.bounce(collision.normal) * (1.0 - abs(collision.normal.dot(vel.normalized()))) * 0.7
 		$Sprite.global_position = collision.position + collision.normal * 50
