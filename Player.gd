@@ -52,11 +52,14 @@ func _physics_process(delta):
 		if vel.length_squared() > min_drift_speed * min_drift_speed and abs(rotation_vel) > 0.01:
 			drifting = true
 		is_trying_to_move = true
+	drift_turn_speed = 0
 	if not Input.is_action_pressed("ui_down") and not Input.is_action_pressed("ui_up"):
 		is_trying_to_move = false
 	if Input.is_action_pressed("ui_left"):
+		drift_turn_speed = -0.003
 		rotation_vel -= rotation_speed * (abs(vel.y) + abs(vel.x))/1000
 	if Input.is_action_pressed("ui_right"):
+		drift_turn_speed = 0.003
 		rotation_vel += rotation_speed * (abs(vel.y) + abs(vel.x))/1000
 	if(is_trying_to_move):
 		friction = 0.015
