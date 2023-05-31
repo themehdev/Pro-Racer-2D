@@ -1,0 +1,28 @@
+[gd_scene format=2]
+
+[node name="Dirt Slant" type="Node2D"]
+
+[node name="Wall" type="StaticBody2D" parent="." groups=["Wall"]]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wall"]
+polygon = PoolVector2Array( -240, -256, -256, -256, -256, -240, 240, 256, 256, 256, 256, 240 )
+one_way_collision_margin = 10.0
+
+[node name="Polygon2D" type="Polygon2D" parent="Wall"]
+color = Color( 0.533333, 0.533333, 0.533333, 1 )
+polygon = PoolVector2Array( -240, -256, -256, -256, -256, -240, 240, 256, 256, 256, 256, 240 )
+
+[node name="Dirt" type="StaticBody2D" parent="." groups=["Dirt"]]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Dirt"]
+polygon = PoolVector2Array( 240, 256, -256, -240, -256, 256 )
+disabled = true
+
+[node name="Area2D" type="Area2D" parent="Dirt"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Dirt/Area2D"]
+polygon = PoolVector2Array( 240, 256, -256, -240, -256, 256 )
+
+[node name="Polygon2D" type="Polygon2D" parent="Dirt"]
+color = Color( 0.360784, 0.243137, 0.152941, 1 )
+polygon = PoolVector2Array( -256, -240, 240, 256, -256, 256 )
