@@ -8,7 +8,7 @@ var vel = Vector2(0, 0)
 var dir = Vector2.RIGHT
 var rotation_speed = 0.006
 var rotation_vel = 0
-var speed = 20
+var accel = 10
 var max_speed = 5000
 var friction = 0.01
 var rot_friction = 0.20
@@ -28,15 +28,15 @@ func _physics_process(delta):
 	var vel_speed = abs(vel.x) + abs(vel.y)
 #	speed /= vel_speed/accel_hamper + 1
 	
-	speed = clamp(max_speed, 0, speed)
+#	speed = clamp(max_speed, 0, speed)
 	
 	if traction == "road":
 		max_speed = 1000
 		
 	if Input.is_action_pressed("ui_up"):
-		vel += Vector2.UP.rotated(dir.angle()) * speed
+		vel += Vector2.UP.rotated(dir.angle()) * accel
 	if Input.is_action_pressed("ui_down"):
-		vel += Vector2.DOWN.rotated(dir.angle()) * speed
+		vel += Vector2.DOWN.rotated(dir.angle()) * accel
 	if Input.is_action_pressed("ui_left"):
 		rotation_vel -= rotation_speed * (abs(vel.y) + abs(vel.x))/1000
 	if Input.is_action_pressed("ui_right"):
