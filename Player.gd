@@ -15,6 +15,7 @@ var rot_friction = 0.20
 var traction = "road"
 var on_wal_counter = 0
 var accel_hamper = pow(10, 10)
+var is_trying_to_move = false
 
 
 # Called when the node enters the scene tree for the first time.
@@ -35,8 +36,12 @@ func _physics_process(delta):
 		
 	if Input.is_action_pressed("ui_up"):
 		vel += Vector2.UP.rotated(dir.angle()) * speed
+		is_trying_to_move = true
 	if Input.is_action_pressed("ui_down"):
 		vel += Vector2.DOWN.rotated(dir.angle()) * speed
+		is_trying_to_move = true
+	if not Input.is_action_pressed("ui_down") and not Input.is_action_pressed("ui_up"):
+		is_trying_to_move = false
 	if Input.is_action_pressed("ui_left"):
 		rotation_vel -= rotation_speed * (abs(vel.y) + abs(vel.x))/1000
 	if Input.is_action_pressed("ui_right"):
@@ -55,7 +60,10 @@ func _physics_process(delta):
 			on_wal_counter += 1
 	else:
 		on_wal_counter = 0
-	
+	if(is_trying_to_move):
+		friction = 0.015
+	else:
+		friction = 0.005
 	
 	
 	rotation_vel *= (1.0 - rot_friction)
