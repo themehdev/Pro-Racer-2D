@@ -8,11 +8,14 @@ var vel = Vector2(0, 0)
 var dir = Vector2.RIGHT
 var rotation_speed = 0.006
 var rotation_vel = 0
-var speed = 70
+var speed = 20
+var max_speed = 5000
 var friction = 0.0001
 var rot_friction = 0.20
-var grip = 3
+var traction = "road"
 var on_wal_counter = 0
+var accel_hamper = pow(10, 10)
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -21,9 +24,14 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	if Input.is_action_pressed("ui_up"):
+	var vel_speed = abs(vel.x) + abs(vel.y)
+	speed /= vel_speed/accel_hamper + 1
+	if traction == "road":
+		max_speed = 1000
+		
+	if Input.is_action_pressed("ui_up") and (vel_speed < max_speed or vel.y < 0):
 		vel += Vector2.UP.rotated(dir.angle()) * speed
-	if Input.is_action_pressed("ui_down"):
+	if Input.is_action_pressed("ui_down") and (vel_speed < max_speed or vel.y > 0):
 		vel += Vector2.DOWN.rotated(dir.angle()) * speed
 	if Input.is_action_pressed("ui_left"):
 		rotation_vel -= rotation_speed * (abs(vel.y) + abs(vel.x))/1000
