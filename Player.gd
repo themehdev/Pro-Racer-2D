@@ -17,6 +17,9 @@ var traction = 0.9
 var on_wal_counter = 0
 var accel_hamper = pow(10, 10)
 var is_trying_to_move = false
+var drift = 0
+var drifting = false
+var min_drift_speed = 0
 
 
 # Called when the node enters the scene tree for the first time.
@@ -45,6 +48,8 @@ func _physics_process(delta):
 		is_trying_to_move = true
 	if Input.is_action_pressed("ui_down"):
 		vel += Vector2.DOWN.rotated(dir.angle()) * accel
+		if vel.length_squared() > min_drift_speed * min_drift_speed and abs(rotation_vel) > 0.01:
+			drifting = true
 		is_trying_to_move = true
 	if not Input.is_action_pressed("ui_down") and not Input.is_action_pressed("ui_up"):
 		is_trying_to_move = false
@@ -52,20 +57,6 @@ func _physics_process(delta):
 		rotation_vel -= rotation_speed * (abs(vel.y) + abs(vel.x))/1000
 	if Input.is_action_pressed("ui_right"):
 		rotation_vel += rotation_speed * (abs(vel.y) + abs(vel.x))/1000
-	if is_on_ceiling() or is_on_floor() or is_on_wall():
-		if(on_wal_counter == 1):
-			vel.x *= -1
-			vel.y *= -1
-		elif abs(vel.y) < abs(vel.x):
-			vel.x /= 2
-			vel.y /= -2
-			on_wal_counter += 1
-		else:
-			vel.x /= -2
-			vel.y /= 2
-			on_wal_counter += 1
-	else:
-		on_wal_counter = 0
 	if(is_trying_to_move):
 		friction = 0.015
 	else:
@@ -74,9 +65,20 @@ func _physics_process(delta):
 	
 	rotation_vel *= (1.0 - rot_friction)
 	
+	if abs(rotation_vel) < 0.01:
+		drifting = false
+	
+	if drifting:
+		drift = 0.5
+		friction = 0.004
+	else:
+		drift = 0
+	
+	$Label.text = drifting as String
+	
 	dir = dir.rotated(rotation_vel)
 	
-	vel = vel.rotated(rotation_vel * traction)
+	vel = vel.rotated(rotation_vel * traction * (1.0 - drift)) 
 	
 	rotation = dir.angle()
 	
