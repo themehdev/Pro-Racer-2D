@@ -71,7 +71,7 @@ func _physics_process(delta):
 	
 	rotation_vel *= (1.0 - rot_friction)
 	
-	if abs(rotation_vel) < 0.01 or vel_speed < 150 or collision:
+	if abs(rotation_vel) < 0.01 or vel_speed < 250 or collision:
 		drifting = false
 	
 	if drifting:
