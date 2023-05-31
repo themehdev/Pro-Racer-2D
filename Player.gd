@@ -12,7 +12,8 @@ var accel = 20
 var max_speed = 5000
 var friction = 0.01
 var rot_friction = 0.20
-var traction = "road"
+var traction_type = "road"
+var traction = 0.9
 var on_wal_counter = 0
 var accel_hamper = pow(10, 10)
 var is_trying_to_move = false
@@ -24,6 +25,12 @@ func _ready():
 
 var can_hit_wall = true
 
+var traction_types = {
+	"road": 0.9,
+	"dirt_drift": 0.5,
+	"drift": 0.1,
+}
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	var vel_speed = abs(vel.x) + abs(vel.y)
@@ -31,8 +38,7 @@ func _physics_process(delta):
 	
 #	speed = clamp(max_speed, 0, speed)
 	
-	if traction == "road":
-		max_speed = 1000
+	traction = traction_types[traction_type]
 		
 	if Input.is_action_pressed("ui_up"):
 		vel += Vector2.UP.rotated(dir.angle()) * accel
@@ -69,6 +75,8 @@ func _physics_process(delta):
 	rotation_vel *= (1.0 - rot_friction)
 	
 	dir = dir.rotated(rotation_vel)
+	
+	vel = vel.rotated(rotation_vel * traction)
 	
 	rotation = dir.angle()
 	
