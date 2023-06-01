@@ -59,10 +59,6 @@ rotation = 3.14159
 position = Vector2( 0, 3072 )
 rotation = 1.5708
 
-[node name="Curve" parent="." instance=ExtResource( 13 )]
-position = Vector2( -1536, -2560 )
-rotation = -3.14159
-
 [node name="Curve3" parent="." instance=ExtResource( 13 )]
 position = Vector2( -512, 2048 )
 rotation = -3.14159
@@ -77,9 +73,6 @@ position = Vector2( -1536, -3072 )
 [node name="Slant2" parent="." instance=ExtResource( 3 )]
 position = Vector2( -2048, -3072 )
 rotation = 3.14159
-
-[node name="Curve2" parent="." instance=ExtResource( 13 )]
-position = Vector2( -2048, -3584 )
 
 [node name="Large Curve2" parent="." instance=ExtResource( 2 )]
 position = Vector2( -3584, -3072 )
@@ -143,3 +136,10 @@ rotation = -1.5708
 [node name="Dirt Slant" parent="." instance=ExtResource( 14 )]
 position = Vector2( 1024, 0 )
 rotation = 1.5708
+
+[node name="Slant4" parent="." instance=ExtResource( 3 )]
+position = Vector2( -2048, -3584 )
+
+[node name="Slant5" parent="." instance=ExtResource( 3 )]
+position = Vector2( -1536, -2560 )
+rotation = 3.14159
