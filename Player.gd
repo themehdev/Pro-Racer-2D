@@ -111,6 +111,8 @@ func _physics_process(delta):
 	collision = move_and_collide(vel * delta)
 	if collision and can_hit_wall:
 		vel = vel.bounce(collision.normal) * (1.0 - abs(collision.normal.dot(vel.normalized()))) * 0.7
+#		rotation_vel += 0.1 * vel.length() * 0.002 * collision.normal.dot(vel.normalized())
+		rotation_vel += 0.04 * (1.0 - abs(collision.normal.dot(vel.normalized()))) * sign(collision.normal.rotated(vel.angle()).x)
 		$HitWall.start()
 		can_hit_wall = false
 
