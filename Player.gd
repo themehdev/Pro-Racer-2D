@@ -9,6 +9,7 @@ var dir = Vector2.RIGHT
 var rotation_speed = 0.006
 var rotation_vel = 0
 var accel = 20
+var b_accel = 12
 var max_speed = 8500
 var friction = 0.01
 var rot_friction = 0.20
@@ -22,6 +23,7 @@ var drifting = false
 var min_drift_speed = 0
 var drift_turn_speed = 0.005
 var collision
+var vel_to_turn_divisor = 800
 
 
 # Called when the node enters the scene tree for the first time.
@@ -50,7 +52,7 @@ func _physics_process(delta):
 		vel += Vector2.UP.rotated(dir.angle()) * accel
 		is_trying_to_move = true
 	if Input.is_action_pressed("ui_down"):
-		vel += Vector2.DOWN.rotated(dir.angle()) * accel
+		vel += Vector2.DOWN.rotated(dir.angle()) * b_accel
 		if vel.length_squared() > min_drift_speed * min_drift_speed and abs(rotation_vel) > 0.01:
 			drifting = true
 		is_trying_to_move = true
@@ -59,10 +61,10 @@ func _physics_process(delta):
 		is_trying_to_move = false
 	if Input.is_action_pressed("ui_left"):
 		drift_turn_speed = -0.003
-		rotation_vel -= rotation_speed * (abs(vel.y) + abs(vel.x))/1000
+		rotation_vel -= rotation_speed * (abs(vel.y) + abs(vel.x))/vel_to_turn_divisor
 	if Input.is_action_pressed("ui_right"):
 		drift_turn_speed = 0.003
-		rotation_vel += rotation_speed * (abs(vel.y) + abs(vel.x))/1000
+		rotation_vel += rotation_speed * (abs(vel.y) + abs(vel.x))/vel_to_turn_divisor
 	if(is_trying_to_move):
 		friction = 0.015
 	else:
@@ -71,17 +73,17 @@ func _physics_process(delta):
 	
 	rotation_vel *= (1.0 - rot_friction)
 	
-	if abs(rotation_vel) < 0.01 or vel_speed < 250 or collision:
+	if abs(rotation_vel) < 0.01 or vel_speed < 20 or vel * Vector2.UP.rotated(dir.angle()) < Vector2.ZERO or collision:
 		drifting = false
 	
 	if drifting:
 		drift = 0.5
-		friction = 0.01
+		friction = 0.03
 		rotation_vel += drift_turn_speed
 	else:
 		drift = 0
 	
-	$Label.text = drifting as String
+	$Label.text = (vel * Vector2.UP.rotated(dir.angle())) as String
 	
 	dir = dir.rotated(rotation_vel)
 	
