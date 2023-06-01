@@ -25,14 +25,14 @@ polygon = PoolVector2Array( 272, 768, 256, 768, 216, 504, 112, 264, -56, 56, -25
 [node name="Dirt" type="StaticBody2D" parent="." groups=["Dirt"]]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Dirt"]
-polygon = PoolVector2Array( -768, -752, -768, -272, -480, -224, -248, -128, -40, 40, 128, 248, 232, 504, 272, 768, 752, 768, 696, 360, 544, 0, 304, -304, -16, -544, -384, -704 )
+polygon = PoolVector2Array( -768, -752, -768, -272, -480, -224, -248, -128, -40, 40, 128, 256, 232, 504, 272, 768, 752, 768, 704, 384, 552, 0, 304, -304, -8, -544, -376, -704 )
 disabled = true
 
 [node name="Area2D" type="Area2D" parent="Dirt"]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Dirt/Area2D"]
-polygon = PoolVector2Array( -768, -752, -768, -272, -480, -224, -248, -128, -40, 40, 128, 248, 232, 504, 272, 768, 752, 768, 696, 360, 544, 0, 304, -304, -16, -544, -384, -704 )
+polygon = PoolVector2Array( -768, -752, -768, -272, -480, -224, -248, -128, -40, 40, 128, 256, 232, 504, 272, 768, 752, 768, 704, 384, 552, 0, 304, -304, -8, -544, -376, -704 )
 
 [node name="Polygon2D" type="Polygon2D" parent="Dirt"]
 color = Color( 0.360784, 0.243137, 0.152941, 1 )
-polygon = PoolVector2Array( -768, -752, -768, -272, -480, -224, -248, -128, -40, 40, 128, 248, 232, 504, 272, 768, 752, 768, 696, 360, 544, 0, 304, -304, -8, -544, -384, -704 )
+polygon = PoolVector2Array( -768, -752, -768, -272, -480, -224, -248, -128, -40, 40, 128, 256, 232, 504, 272, 768, 752, 768, 704, 384, 552, 0, 304, -304, -8, -544, -376, -704 )

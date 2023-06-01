@@ -16,6 +16,3 @@ func _ready():
 #	pass
 
 
-func _on_Area2D_area_entered(area):
-	if area.get_parent().is_in_group("player"):
-		Global.checkpoints_left -= 1
