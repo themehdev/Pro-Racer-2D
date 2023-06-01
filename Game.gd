@@ -8,7 +8,7 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Global.checkpoints_left = len(get_tree().get_nodes_in_group("checkpoint"))
+	pass
 	
 
 

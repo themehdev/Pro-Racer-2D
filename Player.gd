@@ -44,7 +44,7 @@ var traction_types = {
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	timer += delta/1000
+	timer += round(delta * 1000)/1000
 	$Label2.text = timer as String
 	var vel_speed = abs(vel.x) + abs(vel.y)
 	
@@ -97,7 +97,7 @@ func _physics_process(delta):
 	else:
 		drift = 0
 	
-	$Label.text = traction_type as String
+	#$Label.text = Global.checkpoints_left as String
 	traction = traction_types[traction_type]
 	
 	dir = dir.rotated(rotation_vel)
@@ -126,8 +126,9 @@ func _on_Area2D_area_entered(area):
 		dirt_counter += 1
 	if (parent.is_in_group("Checkpoint")):
 		Global.checkpoints_left -= 1
-	if (parent.is_in_group("Finish") and Global.checkpoints_left == 0):
-		$Label.text = "Finish!"
+		$Label.text = timer as String
+	if ((parent.is_in_group("Finish")) and Global.checkpoints_left == 0):
+		$Label.text = "Finish!: " + timer as String
 		
 func _on_Area2D_area_exited(area):
 	var parent = area.get_parent()
