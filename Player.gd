@@ -27,6 +27,8 @@ var vel_to_turn_divisor = 800
 var road_counter = 0
 var dirt_counter = 0
 var timer = 0
+var just_had_collision = false
+var just_went = true
 
 
 # Called when the node enters the scene tree for the first time.
@@ -109,16 +111,32 @@ func _physics_process(delta):
 	vel *= (1.0 - friction)
 
 	collision = move_and_collide(vel * delta)
-	if collision and can_hit_wall:
-		vel = vel.bounce(collision.normal) * (1.0 - abs(collision.normal.dot(vel.normalized()))) * 0.7
-#		rotation_vel += 0.1 * vel.length() * 0.002 * collision.normal.dot(vel.normalized())
-		rotation_vel += 0.04 * (1.0 - abs(collision.normal.dot(vel.normalized()))) * sign(collision.normal.rotated(vel.angle()).x)
-		$HitWall.start()
+	if(collision and just_had_collision):
 		can_hit_wall = false
+		$HitWall.stop()
+	elif (not collision and $HitWall.time_left == 0 and not just_went):
+		$HitWall.start()
+	print($HitWall.time_left)
+	if collision and can_hit_wall:
+#		rotation_vel += 0.1 * vel.length() * 0.002 * collision.normal.dot(vel.normalized())
+		var coll_angle = collision.get_angle(dir.normalized()) if collision.get_angle(dir.normalized()) <= PI/2 else collision.get_angle(dir.normalized()) - PI
+		if(abs(coll_angle) <= PI/5):
+			rotation_vel += coll_angle
+#		elif(collision.get_angle(vel) > PI/6 and collision.get_angle(vel.normalized()) <= PI/4):
+#			rotation_vel += PI/2
+		else:
+			rotation_vel += -(PI/2 * sign(coll_angle) - coll_angle)/4
+		can_hit_wall = false
+		just_had_collision = true
+		just_went = false
+		vel /= 3
 
 
 func _on_HitWall_timeout():
 	can_hit_wall = true
+	just_had_collision = false
+	just_went = true
+	print("running")
 
 func _on_Area2D_area_entered(area):
 	var parent = area.get_parent()
