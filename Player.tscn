@@ -89,7 +89,8 @@ margin_top = 88.0
 margin_right = -3.0
 margin_bottom = 102.0
 rect_scale = Vector2( 2, 2 )
-text = "Your time: xx.xxx"
+text = "Time: xx.xxx"
+align = 1
 
 [node name="Start" type="Timer" parent="."]
 wait_time = 3.0

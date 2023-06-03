@@ -62,6 +62,7 @@ func _physics_process(delta):
 		position = Vector2.ZERO
 		vel = Vector2.ZERO
 		dir = Vector2.RIGHT
+		timer = 0
 		physics = false
 		$Start.start()
 	if Input.is_action_pressed("ui_up"):
@@ -117,11 +118,15 @@ func _physics_process(delta):
 	
 	
 	vel *= (1.0 - friction)
-	if physics:
-		rotation = dir.angle()
+	if not physics:
+		dir = Vector2.RIGHT
+		
+	elif physics:
 		collision = move_and_collide(vel * delta)
 		timer += round(delta * 1000)/1000
 		$Label2.text = "Time: " + timer as String
+	
+	rotation = dir.angle()
 	
 	if(collision and just_had_collision):
 		can_hit_wall = false
@@ -156,8 +161,9 @@ func _on_Area2D_area_entered(area):
 		road_counter += 1
 	if (parent.is_in_group("Dirt")):
 		dirt_counter += 1
-	if (parent.is_in_group("Checkpoint")):
+	if (parent.is_in_group("Checkpoint") and not parent.gotten):
 		Global.checkpoints_left -= 1
+		parent.gotten = true
 		$Label.text = timer as String
 	if ((parent.is_in_group("Finish")) and Global.checkpoints_left == 0):
 		$Label.text = "Finish!: " + timer as String
@@ -174,3 +180,5 @@ func _on_Start_timeout():
 	vel = Vector2.ZERO
 	position = Vector2.ZERO
 	dir = Vector2.RIGHT
+	timer = 0
+	get_tree().call_group("Checkpoint", "reset")
