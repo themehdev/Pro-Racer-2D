@@ -31,38 +31,45 @@ margin_left = 24.0
 margin_top = -56.0
 margin_right = 32.0
 margin_bottom = -32.0
+color = Color( 0, 0, 1, 1 )
 
 [node name="ColorRect2" type="ColorRect" parent="Graphics"]
 margin_left = -32.0
 margin_top = -56.0
 margin_right = -24.0
 margin_bottom = -32.0
+color = Color( 0, 0, 1, 1 )
 
 [node name="ColorRect3" type="ColorRect" parent="Graphics"]
 margin_left = 24.0
 margin_top = 40.0
 margin_right = 32.0
 margin_bottom = 64.0
+color = Color( 0, 0, 1, 1 )
 
 [node name="ColorRect4" type="ColorRect" parent="Graphics"]
 margin_left = -32.0
 margin_top = 40.0
 margin_right = -24.0
 margin_bottom = 64.0
+color = Color( 0, 0, 1, 1 )
 
 [node name="ColorRect5" type="ColorRect" parent="Graphics"]
 margin_left = -24.0
 margin_top = 48.0
 margin_right = 24.0
 margin_bottom = 56.0
+color = Color( 0, 0, 1, 1 )
 
 [node name="ColorRect6" type="ColorRect" parent="Graphics"]
 margin_left = -24.0
 margin_top = -48.0
 margin_right = 24.0
 margin_bottom = -40.0
+color = Color( 0, 0, 1, 1 )
 
 [node name="Polygon2D" type="Polygon2D" parent="Graphics"]
+color = Color( 0, 0, 1, 1 )
 polygon = PoolVector2Array( 0, -64, 0, -64, 8, -56, 16, -32, 24, 16, 8, 64, -8, 64, -24, 16, -16, -32, -8, -56 )
 
 [node name="HitWall" type="Timer" parent="."]
@@ -84,6 +91,23 @@ margin_bottom = 102.0
 rect_scale = Vector2( 2, 2 )
 text = "Your time: xx.xxx"
 
+[node name="Start" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[node name="Start Text" type="Label" parent="."]
+unique_name_in_owner = true
+margin_left = -24.0
+margin_top = -40.0
+margin_right = -14.0
+margin_bottom = -24.0
+rect_scale = Vector2( 5, 5 )
+text = "3"
+align = 1
+valign = 1
+
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="area_exited" from="Area2D" to="." method="_on_Area2D_area_exited"]
 [connection signal="timeout" from="HitWall" to="." method="_on_HitWall_timeout"]
+[connection signal="timeout" from="Start" to="." method="_on_Start_timeout"]

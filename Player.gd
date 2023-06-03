@@ -8,8 +8,8 @@ var vel = Vector2(0, 0)
 var dir = Vector2.RIGHT
 var rotation_speed = 0.006
 var rotation_vel = 0
-var accel = 20
-var b_accel = 12
+var accel = 22.5
+var b_accel = 15
 var max_speed = 20000
 var friction = 0.01
 var rot_friction = 0.20
@@ -29,6 +29,8 @@ var dirt_counter = 0
 var timer = 0
 var just_had_collision = false
 var just_went = true
+var start = 3
+var physics = false
 
 
 # Called when the node enters the scene tree for the first time.
@@ -46,15 +48,22 @@ var traction_types = {
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	timer += round(delta * 1000)/1000
-	$Label2.text = timer as String
 	var vel_speed = abs(vel.x) + abs(vel.y)
+	$"%Start Text".text = ceil($Start.time_left) as String if $Start.time_left != 0 else "Go!"
 	
+	if timer > 1:
+		$"%Start Text".visible = false
 #	speed /= vel_speed/accel_hamper + 1
 	
 #	speed = clamp(max_speed, 0, speed)
 	
-		
+	if Input.is_action_pressed("respawn"):
+		$"%Start Text".visible = true
+		position = Vector2.ZERO
+		vel = Vector2.ZERO
+		dir = Vector2.RIGHT
+		physics = false
+		$Start.start()
 	if Input.is_action_pressed("ui_up"):
 		vel += Vector2.UP.rotated(dir.angle()) * accel
 		is_trying_to_move = true
@@ -106,11 +115,14 @@ func _physics_process(delta):
 	
 	vel = vel.rotated(rotation_vel * traction * (1.0 - drift)) 
 	
-	rotation = dir.angle()
 	
 	vel *= (1.0 - friction)
-
-	collision = move_and_collide(vel * delta)
+	if physics:
+		rotation = dir.angle()
+		collision = move_and_collide(vel * delta)
+		timer += round(delta * 1000)/1000
+		$Label2.text = "Time: " + timer as String
+	
 	if(collision and just_had_collision):
 		can_hit_wall = false
 		$HitWall.stop()
@@ -129,7 +141,7 @@ func _physics_process(delta):
 		can_hit_wall = false
 		just_had_collision = true
 		just_went = false
-		vel /= 3
+		vel /= 2
 
 
 func _on_HitWall_timeout():
@@ -156,3 +168,9 @@ func _on_Area2D_area_exited(area):
 		road_counter -= 1
 	if (parent.is_in_group("Dirt")):
 		dirt_counter -= 1
+
+func _on_Start_timeout():
+	physics = true
+	vel = Vector2.ZERO
+	position = Vector2.ZERO
+	dir = Vector2.RIGHT
