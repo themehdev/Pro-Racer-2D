@@ -62,6 +62,8 @@ func _physics_process(delta):
 		position = Vector2.ZERO
 		vel = Vector2.ZERO
 		dir = Vector2.RIGHT
+		$Label.text = ""
+		$Label2.text = ""
 		timer = 0
 		physics = false
 		$Start.start()
