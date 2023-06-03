@@ -31,11 +31,14 @@ var just_had_collision = false
 var just_went = true
 var start = 3
 var physics = false
+var last_cp_pos = Vector2.ZERO
+var last_cp_dir = Vector2.RIGHT
+onready var start_pos = Vector2.ZERO
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	position = start_pos
 
 var can_hit_wall = true
 
@@ -56,17 +59,6 @@ func _physics_process(delta):
 #	speed /= vel_speed/accel_hamper + 1
 	
 #	speed = clamp(max_speed, 0, speed)
-	
-	if Input.is_action_pressed("respawn"):
-		$"%Start Text".visible = true
-		position = Vector2.ZERO
-		vel = Vector2.ZERO
-		dir = Vector2.RIGHT
-		$Label.text = ""
-		$Label2.text = ""
-		timer = 0
-		physics = false
-		$Start.start()
 	if Input.is_action_pressed("ui_up"):
 		vel += Vector2.UP.rotated(dir.angle()) * accel
 		is_trying_to_move = true
@@ -84,6 +76,26 @@ func _physics_process(delta):
 	if Input.is_action_pressed("ui_right"):
 		drift_turn_speed = 0.003
 		rotation_vel += rotation_speed * vel_speed/vel_to_turn_divisor
+	if Input.is_action_pressed("respawn") and last_cp_pos != start_pos:
+		position = last_cp_pos
+		vel = Vector2.ZERO
+		rotation_vel = 0
+		dir = last_cp_dir
+	if Input.is_action_pressed("restart") or (Input.is_action_pressed("respawn") and last_cp_pos == start_pos):
+		$"%Start Text".visible = true
+		get_tree().call_group("Checkpoint", "reset")
+		position = start_pos
+		position.y += 512
+		vel = Vector2.ZERO
+		dir = Vector2.RIGHT
+		rotation_vel = 0
+		$Label.text = ""
+		$Label2.text = ""
+		timer = 0
+		physics = false
+		last_cp_pos = Vector2.ZERO
+		last_cp_dir = Vector2.RIGHT
+		$Start.start()
 	if(is_trying_to_move):
 		friction = 0.015
 	else:
@@ -132,10 +144,11 @@ func _physics_process(delta):
 	
 	if(collision and just_had_collision):
 		can_hit_wall = false
+		vel = Vector2.ZERO
 		$HitWall.stop()
 	elif (not collision and $HitWall.time_left == 0 and not just_went):
 		$HitWall.start()
-	print($HitWall.time_left)
+	#print($HitWall.time_left)
 	if collision and can_hit_wall:
 #		rotation_vel += 0.1 * vel.length() * 0.002 * collision.normal.dot(vel.normalized())
 		var coll_angle = collision.get_angle(dir.normalized()) if collision.get_angle(dir.normalized()) <= PI/2 else collision.get_angle(dir.normalized()) - PI
@@ -164,8 +177,15 @@ func _on_Area2D_area_entered(area):
 	if (parent.is_in_group("Dirt")):
 		dirt_counter += 1
 	if (parent.is_in_group("Checkpoint") and not parent.gotten):
+		var block = parent.get_parent()
 		Global.checkpoints_left -= 1
 		parent.gotten = true
+		last_cp_pos = block.position
+		last_cp_pos.y += 512
+		last_cp_dir = Vector2.RIGHT.rotated(block.rotation_degrees * PI/180)
+		print(last_cp_dir)
+		print(last_cp_pos)
+		
 		$Label.text = timer as String
 	if ((parent.is_in_group("Finish")) and Global.checkpoints_left == 0):
 		$Label.text = "Finish!: " + timer as String
@@ -180,7 +200,9 @@ func _on_Area2D_area_exited(area):
 func _on_Start_timeout():
 	physics = true
 	vel = Vector2.ZERO
-	position = Vector2.ZERO
+	position = start_pos
+	position.y += 512
 	dir = Vector2.RIGHT
 	timer = 0
+	rotation_vel = 0
 	get_tree().call_group("Checkpoint", "reset")
