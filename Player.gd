@@ -68,10 +68,10 @@ func _physics_process(delta):
 		is_trying_to_move = false
 	if Input.is_action_pressed("ui_left"):
 		drift_turn_speed = -0.003
-		rotation_vel -= rotation_speed * (abs(vel.y) + abs(vel.x))/vel_to_turn_divisor
+		rotation_vel -= rotation_speed * vel_speed/vel_to_turn_divisor
 	if Input.is_action_pressed("ui_right"):
 		drift_turn_speed = 0.003
-		rotation_vel += rotation_speed * (abs(vel.y) + abs(vel.x))/vel_to_turn_divisor
+		rotation_vel += rotation_speed * vel_speed/vel_to_turn_divisor
 	if(is_trying_to_move):
 		friction = 0.015
 	else:
@@ -120,8 +120,8 @@ func _physics_process(delta):
 	if collision and can_hit_wall:
 #		rotation_vel += 0.1 * vel.length() * 0.002 * collision.normal.dot(vel.normalized())
 		var coll_angle = collision.get_angle(dir.normalized()) if collision.get_angle(dir.normalized()) <= PI/2 else collision.get_angle(dir.normalized()) - PI
-		if(abs(coll_angle) <= PI/5):
-			rotation_vel += coll_angle
+		if(abs(coll_angle) <= PI/4.75):
+			rotation_vel += coll_angle/2
 #		elif(collision.get_angle(vel) > PI/6 and collision.get_angle(vel.normalized()) <= PI/4):
 #			rotation_vel += PI/2
 		else:
