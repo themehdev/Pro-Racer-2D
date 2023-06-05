@@ -3,6 +3,7 @@
 [node name="Dirt Slant" type="Node2D"]
 
 [node name="Wall" type="StaticBody2D" parent="." groups=["Wall"]]
+collision_layer = 3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wall"]
 polygon = PoolVector2Array( -240, -256, -256, -256, -256, -240, 240, 256, 256, 256, 256, 240 )
@@ -13,12 +14,14 @@ color = Color( 0.533333, 0.533333, 0.533333, 1 )
 polygon = PoolVector2Array( -240, -256, -256, -256, -256, -240, 240, 256, 256, 256, 256, 240 )
 
 [node name="Dirt" type="StaticBody2D" parent="." groups=["Dirt"]]
+collision_layer = 3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Dirt"]
 polygon = PoolVector2Array( 240, 256, -256, -240, -256, 256 )
 disabled = true
 
 [node name="Area2D" type="Area2D" parent="Dirt"]
+collision_layer = 3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Dirt/Area2D"]
 polygon = PoolVector2Array( 240, 256, -256, -240, -256, 256 )
