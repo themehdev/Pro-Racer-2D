@@ -64,7 +64,7 @@ func _physics_process(delta):
 		visible = true
 		if timer > run["input_splits"][input_on + 1] and run["input_splits"][input_on + 1]:
 			input_on += 1
-		var local_inputs = run["input"][input_on]
+		var local_inputs = run["inputs"][input_on]
 		turning = false
 		var vel_speed = abs(vel.x) + abs(vel.y)
 	#	speed /= vel_speed/accel_hamper + 1

@@ -95,7 +95,7 @@ func _physics_process(delta):
 		dir = last_cp_dir
 	if Input.is_action_just_pressed("restart") or (Input.is_action_pressed("respawn") and last_cp_pos == start_pos):
 		$"%Start Text".visible = true
-		run = {"time": 0, "inputs": [], "splits": []}
+		run = {"time": 0, "inputs": [], "splits": [], "input_splits": []}
 		get_tree().call_group("Checkpoint", "reset")
 		position = start_pos
 		position.y += 512
