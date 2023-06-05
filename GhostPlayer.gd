@@ -57,10 +57,10 @@ var traction_types = {
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	print(run)
+	run = Global.best_time
 	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[1])
 	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[0])
-	if Global.best_time["time"] != 0:
+	if run["time"] != 0:
 		visible = true
 		if timer > run["input_splits"][input_on + 1] and run["input_splits"][input_on + 1]:
 			input_on += 1
