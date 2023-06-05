@@ -107,6 +107,16 @@ text = "3"
 align = 1
 valign = 1
 
+[node name="GrassBackdrop" type="Node2D" parent="."]
+z_index = -2
+
+[node name="Grass" type="ColorRect" parent="GrassBackdrop"]
+margin_left = -2032.0
+margin_top = -1152.0
+margin_right = 2136.0
+margin_bottom = 1568.0
+color = Color( 0.181547, 0.511719, 0.0439758, 1 )
+
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="area_exited" from="Area2D" to="." method="_on_Area2D_area_exited"]
 [connection signal="timeout" from="HitWall" to="." method="_on_HitWall_timeout"]

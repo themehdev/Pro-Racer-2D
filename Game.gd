@@ -10,6 +10,7 @@ func _ready():
 	for i in $"%Track 1".get_children():
 		if(i.name == "Start"):
 			$Player.start_pos = i.position
+			$Player.last_cp_pos = i.position
 	
 
 

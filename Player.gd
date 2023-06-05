@@ -31,9 +31,12 @@ var just_had_collision = false
 var just_went = true
 var start = 3
 var physics = false
-var last_cp_pos = Vector2.ZERO
 var last_cp_dir = Vector2.RIGHT
+var finishing = false
+var turning = false
 onready var start_pos = Vector2.ZERO
+onready var last_cp_pos = start_pos
+
 
 
 # Called when the node enters the scene tree for the first time.
@@ -51,6 +54,7 @@ var traction_types = {
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
+	turning = false
 	var vel_speed = abs(vel.x) + abs(vel.y)
 	$"%Start Text".text = ceil($Start.time_left) as String if $Start.time_left != 0 else "Go!"
 	
@@ -72,11 +76,13 @@ func _physics_process(delta):
 		is_trying_to_move = false
 	if Input.is_action_pressed("ui_left"):
 		drift_turn_speed = -0.003
+		turning = true
 		rotation_vel -= rotation_speed * vel_speed/vel_to_turn_divisor
 	if Input.is_action_pressed("ui_right"):
 		drift_turn_speed = 0.003
+		turning = true
 		rotation_vel += rotation_speed * vel_speed/vel_to_turn_divisor
-	if Input.is_action_pressed("respawn") and last_cp_pos != start_pos:
+	if Input.is_action_pressed("respawn") and last_cp_pos != start_pos and physics:
 		position = last_cp_pos
 		vel = Vector2.ZERO
 		rotation_vel = 0
@@ -88,6 +94,7 @@ func _physics_process(delta):
 		position.y += 512
 		vel = Vector2.ZERO
 		dir = Vector2.RIGHT
+		rotation = dir.angle()
 		rotation_vel = 0
 		$Label.text = ""
 		$Label2.text = ""
@@ -100,6 +107,8 @@ func _physics_process(delta):
 		friction = 0.015
 	else:
 		friction = 0.005
+	if turning:
+		friction += 0.0005
 	
 	if(road_counter > 0):
 		traction_type = "road"
@@ -122,6 +131,10 @@ func _physics_process(delta):
 		traction_type = "drift"
 	else:
 		drift = 0
+		
+#	print(Vector2(abs(vel.x), abs(vel.y)))
+#	if abs(vel.x) > abs(vel.y):
+#		friction = 0.0225
 	
 	#$Label.text = Global.checkpoints_left as String
 	traction = traction_types[traction_type]
@@ -132,15 +145,13 @@ func _physics_process(delta):
 	
 	
 	vel *= (1.0 - friction)
-	if not physics:
+	if not physics and not finishing:
 		dir = Vector2.RIGHT
-		
 	elif physics:
 		collision = move_and_collide(vel * delta)
 		timer += round(delta * 1000)/1000
 		$Label2.text = "Time: " + timer as String
-	
-	rotation = dir.angle()
+		rotation = dir.angle()
 	
 	if(collision and just_had_collision):
 		can_hit_wall = false
@@ -189,6 +200,9 @@ func _on_Area2D_area_entered(area):
 		$Label.text = timer as String
 	if ((parent.is_in_group("Finish")) and Global.checkpoints_left == 0):
 		$Label.text = "Finish!: " + timer as String
+		physics = false
+		finishing = true
+		
 		
 func _on_Area2D_area_exited(area):
 	var parent = area.get_parent()
