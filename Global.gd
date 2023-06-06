@@ -5,6 +5,7 @@ extends Node
 # var a = 2
 # var b = "text"
 var checkpoints_left = 0
+var total_checkpoints = 0
 var best_time = {"time": 0}
 
 

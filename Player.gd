@@ -197,15 +197,18 @@ func _on_Area2D_area_entered(area):
 	if (parent.is_in_group("Checkpoint") and not parent.gotten):
 		run["splits"].append(timer)
 		var block = parent.get_parent()
-		Global.checkpoints_left -= 1
 		parent.gotten = true
 		last_cp_pos = block.position
 		last_cp_pos.y += 512
 		last_cp_dir = Vector2.RIGHT.rotated(block.rotation_degrees * PI/180)
-		
 		$Label.text = timer as String
+		if Global.best_time["time"] != 0:
+			$Label.text += "\n" + (timer - Global.best_time["splits"][Global.total_checkpoints - Global.checkpoints_left]) as String
+		Global.checkpoints_left -= 1
 	if ((parent.is_in_group("Finish")) and Global.checkpoints_left == 0):
 		$Label.text = "Finish!: " + timer as String
+		if Global.best_time["time"] != 0:
+			$Label.text += "\n" + (timer - Global.best_time["time"]) as String
 		run["time"] = timer
 		if timer < Global.best_time["time"] or Global.best_time["time"] == 0:
 			Global.best_time = run
