@@ -36,6 +36,8 @@ var finishing = false
 var turning = false
 var run = Global.best_time
 var input_on = 0
+var local_cps = 0
+var local_inputs
 onready var start_pos = Vector2.ZERO
 onready var last_cp_pos = start_pos
 
@@ -62,9 +64,9 @@ func _physics_process(delta):
 	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[0])
 	if run["time"] != 0:
 		visible = true
-		if timer > run["input_splits"][input_on + 1] and run["input_splits"][input_on + 1]:
+		if run["input_splits"][input_on + 1] and timer >= run["input_splits"][input_on + 1]:
 			input_on += 1
-		var local_inputs = run["inputs"][input_on]
+		local_inputs = run["inputs"][input_on]
 		turning = false
 		var vel_speed = abs(vel.x) + abs(vel.y)
 	#	speed /= vel_speed/accel_hamper + 1
@@ -94,6 +96,20 @@ func _physics_process(delta):
 			vel = Vector2.ZERO
 			rotation_vel = 0
 			dir = last_cp_dir
+		if Input.is_action_just_pressed("restart") or Input.is_action_pressed("respawn") and get_parent().get_child(3).last_cp_pos == start_pos:
+				get_tree().call_group("Checkpoint", "reset")
+				input_on = 0
+				position = start_pos
+				position.y += 512
+				vel = Vector2.ZERO
+				dir = Vector2.RIGHT
+				rotation = dir.angle()
+				rotation_vel = 0
+				timer = 0
+				physics = false
+				last_cp_pos = Vector2.ZERO
+				last_cp_dir = Vector2.RIGHT
+				$Start.start()
 		if(is_trying_to_move):
 			friction = 0.015
 		else:
@@ -182,7 +198,8 @@ func _on_Area2D_area_entered(area):
 		last_cp_pos = block.position
 		last_cp_pos.y += 512
 		last_cp_dir = Vector2.RIGHT.rotated(block.rotation_degrees * PI/180)
-	if ((parent.is_in_group("Finish")) and Global.checkpoints_left == 0):
+		local_cps += 1
+	if ((parent.is_in_group("Finish")) and Global.total_checkpoints - local_cps == 0):
 		physics = false
 		finishing = true
 		

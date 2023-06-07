@@ -9,11 +9,11 @@ var gotten = false
 func reset():
 	if gotten:
 		Global.checkpoints_left += 1
-		Global.total_checkpoints += 1
 	gotten = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Global.total_checkpoints += 1
 	Global.checkpoints_left += 1
 
 
