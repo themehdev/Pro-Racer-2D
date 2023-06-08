@@ -38,6 +38,7 @@ var run = Global.best_time
 var input_on = 0
 var local_cps = 0
 var local_inputs
+var just_changed = false
 onready var start_pos = Vector2.ZERO
 onready var last_cp_pos = start_pos
 
@@ -59,6 +60,9 @@ var traction_types = {
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
+	if Global.best_time != run:
+		physics = false
+		just_changed = true
 	run = Global.best_time
 	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[1])
 	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[0])
@@ -96,7 +100,7 @@ func _physics_process(delta):
 			vel = Vector2.ZERO
 			rotation_vel = 0
 			dir = last_cp_dir
-		if Input.is_action_just_pressed("restart") or Input.is_action_pressed("respawn") and get_parent().get_child(3).last_cp_pos == start_pos:
+		if Input.is_action_just_pressed("restart") or (Input.is_action_pressed("respawn") and get_parent().get_child(3).last_cp_pos == start_pos) or just_changed:
 				get_tree().call_group("Checkpoint", "reset")
 				input_on = 0
 				position = start_pos
@@ -179,6 +183,7 @@ func _physics_process(delta):
 			just_had_collision = true
 			just_went = false
 			vel /= 2
+		just_changed = false
 
 
 func _on_HitWall_timeout():
