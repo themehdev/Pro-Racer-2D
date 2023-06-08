@@ -80,17 +80,17 @@ one_shot = true
 
 [node name="Label" type="Label" parent="."]
 margin_left = -160.0
-margin_top = -120.0
+margin_top = -800.0
 margin_right = -80.0
-margin_bottom = -106.0
+margin_bottom = -786.0
 rect_scale = Vector2( 4, 4 )
 align = 1
 
 [node name="Label2" type="Label" parent="."]
 margin_left = -220.0
-margin_top = 88.0
+margin_top = 300.0
 margin_right = -110.0
-margin_bottom = 102.0
+margin_bottom = 314.0
 rect_scale = Vector2( 4, 4 )
 align = 1
 
@@ -102,9 +102,9 @@ autostart = true
 [node name="Start Text" type="Label" parent="."]
 unique_name_in_owner = true
 margin_left = -373.0
-margin_top = -120.0
+margin_top = -450.0
 margin_right = -298.0
-margin_bottom = -96.0
+margin_bottom = -426.0
 rect_scale = Vector2( 10, 10 )
 text = "3"
 align = 1
