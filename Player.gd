@@ -224,12 +224,11 @@ func _on_Area2D_area_entered(area):
 		if timer < Global.best_time["time"] or Global.best_time["time"] == 0:
 			Global.best_time = run
 			print("new best")
+		physics = false
+		finishing = true
 	
 	if area.is_in_group("Boost Panels"):
 		vel += Vector2.UP.rotated(area.rotation) * area.power
-			
-		physics = false
-		finishing = true
 		
 
 func _on_Area2D_area_exited(area):
