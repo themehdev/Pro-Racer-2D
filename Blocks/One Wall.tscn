@@ -6,7 +6,6 @@
 [node name="One Wall" type="Node2D"]
 
 [node name="Road" parent="." instance=ExtResource( 1 )]
-position = Vector2( 0, -8 )
 
-[node name="Wall" parent="Road" instance=ExtResource( 2 )]
+[node name="Wall" parent="." instance=ExtResource( 2 )]
 position = Vector2( 248, 0 )
