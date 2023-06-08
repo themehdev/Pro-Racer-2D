@@ -31,9 +31,11 @@ var just_had_collision = false
 var just_went = true
 var start = 3
 var physics = false
+var just_physics = false
 var last_cp_dir = Vector2.RIGHT
 var finishing = false
 var turning = false
+var run = {"time": 0, "inputs": [], "splits": [], "input_splits": []}
 onready var start_pos = Vector2.ZERO
 onready var last_cp_pos = start_pos
 
@@ -54,6 +56,9 @@ var traction_types = {
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
+	var actions_changed = Input.is_action_just_pressed("ui_down") or Input.is_action_just_released("ui_down") or Input.is_action_just_pressed("ui_left") or Input.is_action_just_released("ui_left") or Input.is_action_just_pressed("ui_right") or Input.is_action_just_released("ui_right") or Input.is_action_just_pressed("ui_up") or Input.is_action_just_released("ui_up") or Input.is_action_just_pressed("respawn")
+	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[1])
+	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[0])
 	turning = false
 	var vel_speed = abs(vel.x) + abs(vel.y)
 	$"%Start Text".text = ceil($Start.time_left) as String if $Start.time_left != 0 else "Go!"
@@ -63,6 +68,16 @@ func _physics_process(delta):
 #	speed /= vel_speed/accel_hamper + 1
 	
 #	speed = clamp(max_speed, 0, speed)
+	#print(Input.is_action_just_pressed("any_action") as String + Input.is_action_just_pressed("ui_left") as String)
+
+	#
+	#print((Input.is_action_just_pressed("any_action") or Input.is_action_just_released("any_action") or just_physics) and physics)
+	if (actions_changed or just_physics) and physics:
+		run["inputs"].append({"up": Input.is_action_pressed("ui_up"), "down": Input.is_action_pressed("ui_down"), "left": Input.is_action_pressed("ui_left"), "right": Input.is_action_pressed("ui_right"), "respawn": Input.is_action_just_pressed("respawn")})
+		run["input_splits"].append(timer)
+		#
+#	if len(run["inputs"]) == 4:
+#		pass
 	if Input.is_action_pressed("ui_up"):
 		vel += Vector2.UP.rotated(dir.angle()) * accel
 		is_trying_to_move = true
@@ -87,8 +102,9 @@ func _physics_process(delta):
 		vel = Vector2.ZERO
 		rotation_vel = 0
 		dir = last_cp_dir
-	if Input.is_action_pressed("restart") or (Input.is_action_pressed("respawn") and last_cp_pos == start_pos):
+	if Input.is_action_just_pressed("restart") or (Input.is_action_pressed("respawn") and last_cp_pos == start_pos):
 		$"%Start Text".visible = true
+		run = {"time": 0, "inputs": [], "splits": [], "input_splits": []}
 		get_tree().call_group("Checkpoint", "reset")
 		position = start_pos
 		position.y += 512
@@ -173,6 +189,7 @@ func _physics_process(delta):
 		just_had_collision = true
 		just_went = false
 		vel /= 2
+	just_physics = false
 
 
 func _on_HitWall_timeout():
@@ -188,22 +205,29 @@ func _on_Area2D_area_entered(area):
 	if (parent.is_in_group("Dirt")):
 		dirt_counter += 1
 	if (parent.is_in_group("Checkpoint") and not parent.gotten):
+		run["splits"].append(timer)
 		var block = parent.get_parent()
-		Global.checkpoints_left -= 1
 		parent.gotten = true
 		last_cp_pos = block.position
 		last_cp_pos.y += 512
 		last_cp_dir = Vector2.RIGHT.rotated(block.rotation_degrees * PI/180)
-		print(last_cp_dir)
-		print(last_cp_pos)
-		
 		$Label.text = timer as String
+		if Global.best_time["time"] != 0:
+			$Label.text += "\n" + ((timer - Global.best_time["splits"][Global.total_checkpoints - Global.checkpoints_left]) if (timer - Global.best_time["splits"][Global.total_checkpoints - Global.checkpoints_left]) < 0 else "+" + (timer - Global.best_time["splits"][Global.total_checkpoints - Global.checkpoints_left]) as String) as String
+		Global.checkpoints_left -= 1
 	if ((parent.is_in_group("Finish")) and Global.checkpoints_left == 0):
 		$Label.text = "Finish!: " + timer as String
+		if Global.best_time["time"] != 0:
+			$Label.text += "\n" + ((timer - Global.best_time["time"]) if (timer - Global.best_time["time"]) < 0 else "+" + (timer - Global.best_time["time"]) as String) as String
+		run["time"] = timer
+		if timer < Global.best_time["time"] or Global.best_time["time"] == 0:
+			Global.best_time = run
+			print("new best")
+			
 		physics = false
 		finishing = true
 		
-		
+
 func _on_Area2D_area_exited(area):
 	var parent = area.get_parent()
 	if (parent.is_in_group("Road")):
@@ -213,6 +237,7 @@ func _on_Area2D_area_exited(area):
 
 func _on_Start_timeout():
 	physics = true
+	just_physics = true
 	vel = Vector2.ZERO
 	position = start_pos
 	position.y += 512

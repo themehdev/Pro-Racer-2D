@@ -12,12 +12,14 @@ b = Vector2( 256, 0 )
 [node name="Road" parent="." instance=ExtResource( 2 )]
 
 [node name="Finish Line" type="StaticBody2D" parent="." groups=["Finish"]]
+collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Finish Line"]
 shape = SubResource( 1 )
 disabled = true
 
 [node name="Area2D" type="Area2D" parent="Finish Line"]
+collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Finish Line/Area2D"]
 shape = SubResource( 1 )

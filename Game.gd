@@ -11,6 +11,8 @@ func _ready():
 		if(i.name == "Start"):
 			$Player.start_pos = i.position
 			$Player.last_cp_pos = i.position
+			$GhostPlayer.start_pos = i.position
+			$GhostPlayer.last_cp_pos = i.position
 	
 
 

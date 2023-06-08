@@ -12,6 +12,7 @@ b = Vector2( 240, -80 )
 [node name="Road" parent="." instance=ExtResource( 1 )]
 
 [node name="Lap Line" type="StaticBody2D" parent="." groups=["Finish"]]
+collision_layer = 3
 
 [node name="Start Line" type="ColorRect" parent="Lap Line"]
 margin_left = -256.0
@@ -20,22 +21,23 @@ margin_right = 256.0
 margin_bottom = -72.0
 color = Color( 0, 1, 0, 1 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Lap Line"]
-shape = SubResource( 1 )
-disabled = true
-
-[node name="Area2D" type="Area2D" parent="Lap Line"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Lap Line/Area2D"]
-shape = SubResource( 1 )
-
-[node name="Border" type="ReferenceRect" parent="."]
+[node name="Border" type="ReferenceRect" parent="Lap Line"]
 margin_left = -32.0
 margin_top = -64.0
 margin_right = 32.0
 margin_bottom = 64.0
 border_color = Color( 0, 1, 0, 1 )
 border_width = 5.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Lap Line"]
+shape = SubResource( 1 )
+disabled = true
+
+[node name="Area2D" type="Area2D" parent="Lap Line"]
+collision_layer = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Lap Line/Area2D"]
+shape = SubResource( 1 )
 
 [node name="Wall" parent="." instance=ExtResource( 2 )]
 position = Vector2( 248, 0 )

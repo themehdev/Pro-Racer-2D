@@ -13,6 +13,7 @@ func reset():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	Global.total_checkpoints += 1
 	Global.checkpoints_left += 1
 
 
