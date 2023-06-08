@@ -10,7 +10,7 @@ var rotation_speed = 0.006
 var rotation_vel = 0
 var accel = 22.5
 var b_accel = 15
-var max_speed = 20000
+var max_speed = 1800
 var friction = 0.01
 var rot_friction = 0.20
 var traction_type = "road"
@@ -23,7 +23,7 @@ var drifting = false
 var min_drift_speed = 0
 var drift_turn_speed = 0.005
 var collision
-var vel_to_turn_divisor = 800
+var vel_to_turn_divisor = 1000
 var road_counter = 0
 var dirt_counter = 0
 var timer = 0
@@ -62,7 +62,7 @@ func _physics_process(delta):
 	turning = false
 	var vel_speed = abs(vel.x) + abs(vel.y)
 	$"%Start Text".text = ceil($Start.time_left) as String if $Start.time_left != 0 else "Go!"
-	
+	print(vel_speed)
 	if timer > 1:
 		$"%Start Text".visible = false
 #	speed /= vel_speed/accel_hamper + 1
@@ -75,7 +75,9 @@ func _physics_process(delta):
 	if (actions_changed or just_physics) and physics:
 		run["inputs"].append({"up": Input.is_action_pressed("ui_up"), "down": Input.is_action_pressed("ui_down"), "left": Input.is_action_pressed("ui_left"), "right": Input.is_action_pressed("ui_right"), "respawn": Input.is_action_just_pressed("respawn")})
 		run["input_splits"].append(timer)
-		#
+	
+	if vel_speed > max_speed:
+		vel = vel.normalized() * max_speed
 #	if len(run["inputs"]) == 4:
 #		pass
 	if Input.is_action_pressed("ui_up"):
@@ -180,7 +182,7 @@ func _physics_process(delta):
 #		rotation_vel += 0.1 * vel.length() * 0.002 * collision.normal.dot(vel.normalized())
 		var coll_angle = collision.get_angle(dir.normalized()) if collision.get_angle(dir.normalized()) <= PI/2 else collision.get_angle(dir.normalized()) - PI
 		if(abs(coll_angle) <= PI/4.75):
-			rotation_vel += coll_angle/2
+			rotation_vel += coll_angle/3
 #		elif(collision.get_angle(vel) > PI/6 and collision.get_angle(vel.normalized()) <= PI/4):
 #			rotation_vel += PI/2
 		else:
@@ -188,7 +190,7 @@ func _physics_process(delta):
 		can_hit_wall = false
 		just_had_collision = true
 		just_went = false
-		vel /= 2
+		vel *= lerp(1, 0.75, abs(coll_angle / TAU) * 4)
 	just_physics = false
 
 
