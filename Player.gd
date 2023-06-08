@@ -92,11 +92,11 @@ func _physics_process(delta):
 	if Input.is_action_pressed("ui_left"):
 		drift_turn_speed = -0.003
 		turning = true
-		rotation_vel -= rotation_speed * vel_speed/vel_to_turn_divisor
+		rotation_vel -= rotation_speed * min(4, vel_speed/vel_to_turn_divisor)
 	if Input.is_action_pressed("ui_right"):
 		drift_turn_speed = 0.003
 		turning = true
-		rotation_vel += rotation_speed * vel_speed/vel_to_turn_divisor
+		rotation_vel += rotation_speed * min(4, vel_speed/vel_to_turn_divisor)
 	if Input.is_action_pressed("respawn") and last_cp_pos != start_pos and physics:
 		position = last_cp_pos
 		vel = Vector2.ZERO
@@ -226,7 +226,8 @@ func _on_Area2D_area_entered(area):
 			
 		physics = false
 		finishing = true
-		
+	if area.is_in_group("Boost Panels"):
+		vel += Vector2.UP.rotated(area.rotation) * area.power
 
 func _on_Area2D_area_exited(area):
 	var parent = area.get_parent()
