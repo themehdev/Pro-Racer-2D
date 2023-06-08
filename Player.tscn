@@ -11,7 +11,7 @@ script = ExtResource( 1 )
 [node name="Camera2D" type="Camera2D" parent="."]
 rotating = true
 current = true
-zoom = Vector2( 2, 2 )
+zoom = Vector2( 3, 3 )
 process_mode = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
