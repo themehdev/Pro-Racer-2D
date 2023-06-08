@@ -171,7 +171,7 @@ func _physics_process(delta):
 	
 	if(collision and just_had_collision):
 		can_hit_wall = false
-		vel = Vector2.ZERO
+		vel *= 0.9
 		$HitWall.stop()
 	elif (not collision and $HitWall.time_left == 0 and not just_went):
 		$HitWall.start()
@@ -180,7 +180,7 @@ func _physics_process(delta):
 #		rotation_vel += 0.1 * vel.length() * 0.002 * collision.normal.dot(vel.normalized())
 		var coll_angle = collision.get_angle(dir.normalized()) if collision.get_angle(dir.normalized()) <= PI/2 else collision.get_angle(dir.normalized()) - PI
 		if(abs(coll_angle) <= PI/4.75):
-			rotation_vel += coll_angle/2
+			rotation_vel += coll_angle * 0.15
 #		elif(collision.get_angle(vel) > PI/6 and collision.get_angle(vel.normalized()) <= PI/4):
 #			rotation_vel += PI/2
 		else:
@@ -188,7 +188,9 @@ func _physics_process(delta):
 		can_hit_wall = false
 		just_had_collision = true
 		just_went = false
-		vel /= 2
+		vel *= lerp(1, 0.75, abs(coll_angle / TAU) * 4)
+		print(abs(coll_angle / TAU) * 4)
+		print(lerp(1, 0.75, abs(coll_angle / TAU) * 4))
 	just_physics = false
 
 
