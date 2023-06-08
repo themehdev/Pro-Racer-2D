@@ -10,7 +10,7 @@ var rotation_speed = 0.006
 var rotation_vel = 0
 var accel = 22.5
 var b_accel = 15
-var max_speed = 20000
+var max_speed = 22000
 var friction = 0.01
 var rot_friction = 0.20
 var traction_type = "road"
@@ -48,7 +48,7 @@ func _ready():
 var can_hit_wall = true
 
 var traction_types = {
-	"road": 0.9,
+	"road": 0.7,
 	"dirt": 0.5,
 	"drift": 0.1,
 	"off_road": 0.15
