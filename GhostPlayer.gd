@@ -82,7 +82,7 @@ func _physics_process(delta):
 	#	speed /= vel_speed/accel_hamper + 1
 	#	speed = clamp(max_speed, 0, speed)
 		if vel_speed > max_speed:
-			vel = vel.normalized() * max_speed
+			vel = vel.normalized() * (max_speed - 1)
 		if local_inputs["up"]:
 			vel += Vector2.UP.rotated(dir.angle()) * accel
 			is_trying_to_move = true
@@ -218,8 +218,8 @@ func _on_Area2D_area_entered(area):
 		physics = false
 		finishing = true
 		input_on = 0
-		
-		
+	if area.is_in_group("Boost Panels"):
+		vel += Vector2.UP.rotated(area.rotation) * area.power
 func _on_Area2D_area_exited(area):
 	var parent = area.get_parent()
 	if (parent.is_in_group("Road")):

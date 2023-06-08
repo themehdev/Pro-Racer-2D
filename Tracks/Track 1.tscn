@@ -18,7 +18,7 @@
 
 [node name="Track 1" type="Node2D"]
 position = Vector2( 0, 512 )
-scale = Vector2( 1.25, 1.25 )
+scale = Vector2( 1.2, 1.2 )
 
 [node name="Road Checkpoint3" parent="." instance=ExtResource( 9 )]
 position = Vector2( 2048, 320 )

@@ -62,7 +62,7 @@ func _physics_process(delta):
 	turning = false
 	var vel_speed = abs(vel.x) + abs(vel.y)
 	$"%Start Text".text = ceil($Start.time_left) as String if $Start.time_left != 0 else "Go!"
-	print(vel_speed)
+	#print(vel_speed)
 	if timer > 1:
 		$"%Start Text".visible = false
 #	speed /= vel_speed/accel_hamper + 1
@@ -76,14 +76,13 @@ func _physics_process(delta):
 		run["inputs"].append({"up": Input.is_action_pressed("ui_up"), "down": Input.is_action_pressed("ui_down"), "left": Input.is_action_pressed("ui_left"), "right": Input.is_action_pressed("ui_right"), "respawn": Input.is_action_just_pressed("respawn")})
 		run["input_splits"].append(timer)
 	
-	if vel_speed > max_speed:
-		vel = vel.normalized() * max_speed
+	print(vel.normalized())
 #	if len(run["inputs"]) == 4:
 #		pass
-	if Input.is_action_pressed("ui_up"):
+	if Input.is_action_pressed("ui_up") and physics:
 		vel += Vector2.UP.rotated(dir.angle()) * accel
 		is_trying_to_move = true
-	if Input.is_action_pressed("ui_down"):
+	if Input.is_action_pressed("ui_down") and physics:
 		vel += Vector2.DOWN.rotated(dir.angle()) * b_accel
 		if vel.length_squared() > min_drift_speed * min_drift_speed and abs(rotation_vel) > 0.01:
 			drifting = true
@@ -114,8 +113,8 @@ func _physics_process(delta):
 		dir = Vector2.RIGHT
 		rotation = dir.angle()
 		rotation_vel = 0
-		$Label.text = ""
-		$Label2.text = ""
+		$Camera2D/Label.text = ""
+		$Camera2D/Label2.text = ""
 		timer = 0
 		physics = false
 		last_cp_pos = Vector2.ZERO
@@ -168,7 +167,7 @@ func _physics_process(delta):
 	elif physics:
 		collision = move_and_collide(vel * delta)
 		timer += round(delta * 1000)/1000
-		$Label2.text = "Time: " + timer as String
+		$Camera2D/Label2.text = "Time: " + timer as String
 		rotation = dir.angle()
 	
 	if(collision and just_had_collision):
@@ -193,7 +192,7 @@ func _physics_process(delta):
 		vel *= lerp(1, 0.75, abs(coll_angle / TAU) * 4)
 	just_physics = false
 	
-	$Camera2D.position += (lerp(Vector2.ZERO, Vector2(0, -350), vel.length() / max_speed) - $Camera2D.position) / 80
+	$Camera2D.zoom = Vector2(1.5 + vel_speed/1333, 1.5 + vel_speed/1333)
 
 func _on_HitWall_timeout():
 	can_hit_wall = true
@@ -214,14 +213,14 @@ func _on_Area2D_area_entered(area):
 		last_cp_pos = block.position
 		last_cp_pos.y += 512
 		last_cp_dir = Vector2.RIGHT.rotated(block.rotation_degrees * PI/180)
-		$Label.text = timer as String
+		$Camera2D/Label.text = timer as String
 		if Global.best_time["time"] != 0:
-			$Label.text += "\n" + ((timer - Global.best_time["splits"][Global.total_checkpoints - Global.checkpoints_left]) if (timer - Global.best_time["splits"][Global.total_checkpoints - Global.checkpoints_left]) < 0 else "+" + (timer - Global.best_time["splits"][Global.total_checkpoints - Global.checkpoints_left]) as String) as String
+			$Camera2D/Label.text += "\n" + ((timer - Global.best_time["splits"][Global.total_checkpoints - Global.checkpoints_left]) if (timer - Global.best_time["splits"][Global.total_checkpoints - Global.checkpoints_left]) < 0 else "+" + (timer - Global.best_time["splits"][Global.total_checkpoints - Global.checkpoints_left]) as String) as String
 		Global.checkpoints_left -= 1
 	if ((parent.is_in_group("Finish")) and Global.checkpoints_left == 0):
-		$Label.text = "Finish!: " + timer as String
+		$Camera2D/Label.text = "Finish!: " + timer as String
 		if Global.best_time["time"] != 0:
-			$Label.text += "\n" + ((timer - Global.best_time["time"]) if (timer - Global.best_time["time"]) < 0 else "+" + (timer - Global.best_time["time"]) as String) as String
+			$Camera2D/Label.text += "\n" + ((timer - Global.best_time["time"]) if (timer - Global.best_time["time"]) < 0 else "+" + (timer - Global.best_time["time"]) as String) as String
 		run["time"] = timer
 		if timer < Global.best_time["time"] or Global.best_time["time"] == 0:
 			Global.best_time = run

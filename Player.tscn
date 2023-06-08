@@ -16,6 +16,44 @@ current = true
 zoom = Vector2( 2, 2 )
 process_mode = 0
 
+[node name="Label2" type="Label" parent="Camera2D"]
+margin_left = -220.0
+margin_top = 650.0
+margin_right = -110.0
+margin_bottom = 664.0
+rect_scale = Vector2( 4, 4 )
+align = 1
+
+[node name="Start Text" type="Label" parent="Camera2D"]
+unique_name_in_owner = true
+margin_left = -373.0
+margin_top = -100.0
+margin_right = -298.0
+margin_bottom = -76.0
+rect_scale = Vector2( 10, 10 )
+text = "3"
+align = 1
+valign = 1
+
+[node name="Label" type="Label" parent="Camera2D"]
+margin_left = -160.0
+margin_top = -450.0
+margin_right = -80.0
+margin_bottom = -436.0
+rect_scale = Vector2( 4, 4 )
+align = 1
+
+[node name="GrassBackdrop" type="Node2D" parent="Camera2D"]
+position = Vector2( 0, 350 )
+z_index = -2
+
+[node name="Grass" type="ColorRect" parent="Camera2D/GrassBackdrop"]
+margin_left = -2133.33
+margin_top = -1600.0
+margin_right = 2090.67
+margin_bottom = 1600.0
+color = Color( 0.181547, 0.511719, 0.0439758, 1 )
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
@@ -78,47 +116,10 @@ polygon = PoolVector2Array( 0, -64, 0, -64, 8, -56, 16, -32, 24, 16, 8, 64, -8, 
 wait_time = 0.1
 one_shot = true
 
-[node name="Label" type="Label" parent="."]
-margin_left = -160.0
-margin_top = -800.0
-margin_right = -80.0
-margin_bottom = -786.0
-rect_scale = Vector2( 4, 4 )
-align = 1
-
-[node name="Label2" type="Label" parent="."]
-margin_left = -220.0
-margin_top = 300.0
-margin_right = -110.0
-margin_bottom = 314.0
-rect_scale = Vector2( 4, 4 )
-align = 1
-
 [node name="Start" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
 autostart = true
-
-[node name="Start Text" type="Label" parent="."]
-unique_name_in_owner = true
-margin_left = -373.0
-margin_top = -450.0
-margin_right = -298.0
-margin_bottom = -426.0
-rect_scale = Vector2( 10, 10 )
-text = "3"
-align = 1
-valign = 1
-
-[node name="GrassBackdrop" type="Node2D" parent="."]
-z_index = -2
-
-[node name="Grass" type="ColorRect" parent="GrassBackdrop"]
-margin_left = -2133.33
-margin_top = -1600.0
-margin_right = 2090.67
-margin_bottom = 1600.0
-color = Color( 0.181547, 0.511719, 0.0439758, 1 )
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="area_exited" from="Area2D" to="." method="_on_Area2D_area_exited"]
