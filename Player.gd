@@ -189,8 +189,6 @@ func _physics_process(delta):
 		just_had_collision = true
 		just_went = false
 		vel *= lerp(1, 0.75, abs(coll_angle / TAU) * 4)
-		print(abs(coll_angle / TAU) * 4)
-		print(lerp(1, 0.75, abs(coll_angle / TAU) * 4))
 	just_physics = false
 
 
