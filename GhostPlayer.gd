@@ -34,13 +34,14 @@ var physics = false
 var last_cp_dir = Vector2.RIGHT
 var finishing = false
 var turning = false
-var run = Global.best_time
 var input_on = 0
 var local_cps = 0
 var local_inputs
 var just_changed = false
 onready var start_pos = Vector2.ZERO
 onready var last_cp_pos = start_pos
+onready var run = Global.best_time
+onready var input_len
 
 
 
@@ -63,13 +64,18 @@ func _physics_process(delta):
 	if Global.best_time != run:
 		physics = false
 		just_changed = true
+		input_len = len(Global.best_time["inputs"])
 	run = Global.best_time
+	
 	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[1])
 	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[0])
 	if run["time"] != 0:
 		visible = true
-		if run["input_splits"][input_on + 1] and timer >= run["input_splits"][input_on + 1]:
-			input_on += 1
+		if not physics:
+			input_on = 0
+		if physics and input_on < input_len - 1:
+			if timer >= run["input_splits"][input_on + 1]:
+				input_on += 1
 		local_inputs = run["inputs"][input_on]
 		turning = false
 		var vel_speed = abs(vel.x) + abs(vel.y)
@@ -113,6 +119,7 @@ func _physics_process(delta):
 				physics = false
 				last_cp_pos = Vector2.ZERO
 				last_cp_dir = Vector2.RIGHT
+				local_cps = 0
 				$Start.start()
 		if(is_trying_to_move):
 			friction = 0.015
@@ -205,8 +212,11 @@ func _on_Area2D_area_entered(area):
 		last_cp_dir = Vector2.RIGHT.rotated(block.rotation_degrees * PI/180)
 		local_cps += 1
 	if ((parent.is_in_group("Finish")) and Global.total_checkpoints - local_cps == 0):
+		print("ghost finish")
+		local_cps = 0
 		physics = false
 		finishing = true
+		input_on = 0
 		
 		
 func _on_Area2D_area_exited(area):

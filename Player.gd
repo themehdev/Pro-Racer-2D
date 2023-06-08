@@ -68,15 +68,14 @@ func _physics_process(delta):
 #	speed /= vel_speed/accel_hamper + 1
 	
 #	speed = clamp(max_speed, 0, speed)
-	print(Input.is_action_just_pressed("any_action") as String + Input.is_action_just_pressed("ui_left") as String)
+	#print(Input.is_action_just_pressed("any_action") as String + Input.is_action_just_pressed("ui_left") as String)
 
-	if(actions_changed or just_physics):
-		print("yay")
+	#
 	#print((Input.is_action_just_pressed("any_action") or Input.is_action_just_released("any_action") or just_physics) and physics)
 	if (actions_changed or just_physics) and physics:
 		run["inputs"].append({"up": Input.is_action_pressed("ui_up"), "down": Input.is_action_pressed("ui_down"), "left": Input.is_action_pressed("ui_left"), "right": Input.is_action_pressed("ui_right"), "respawn": Input.is_action_just_pressed("respawn")})
 		run["input_splits"].append(timer)
-		print("something")
+		#
 #	if len(run["inputs"]) == 4:
 #		pass
 	if Input.is_action_pressed("ui_up"):
