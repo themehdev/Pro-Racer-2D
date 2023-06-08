@@ -10,7 +10,7 @@ var rotation_speed = 0.006
 var rotation_vel = 0
 var accel = 22.5
 var b_accel = 15
-var max_speed = 20000
+var max_speed = 3000
 var friction = 0.01
 var rot_friction = 0.20
 var traction_type = "road"
@@ -190,7 +190,8 @@ func _physics_process(delta):
 		just_went = false
 		vel /= 2
 	just_physics = false
-
+	
+	$Camera2D.position += (lerp(Vector2.ZERO, Vector2(0, -350), vel.length() / max_speed) - $Camera2D.position) / 80
 
 func _on_HitWall_timeout():
 	can_hit_wall = true
