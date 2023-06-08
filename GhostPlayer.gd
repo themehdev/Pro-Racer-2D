@@ -23,7 +23,7 @@ var drifting = false
 var min_drift_speed = 0
 var drift_turn_speed = 0.005
 var collision
-var vel_to_turn_divisor = 800
+var vel_to_turn_divisor = 1000
 var road_counter = 0
 var dirt_counter = 0
 var timer = 0
@@ -80,8 +80,9 @@ func _physics_process(delta):
 		turning = false
 		var vel_speed = abs(vel.x) + abs(vel.y)
 	#	speed /= vel_speed/accel_hamper + 1
-		
 	#	speed = clamp(max_speed, 0, speed)
+		if vel_speed > max_speed:
+			vel = vel.normalized() * max_speed
 		if local_inputs["up"]:
 			vel += Vector2.UP.rotated(dir.angle()) * accel
 			is_trying_to_move = true
@@ -181,7 +182,7 @@ func _physics_process(delta):
 	#		rotation_vel += 0.1 * vel.length() * 0.002 * collision.normal.dot(vel.normalized())
 			var coll_angle = collision.get_angle(dir.normalized()) if collision.get_angle(dir.normalized()) <= PI/2 else collision.get_angle(dir.normalized()) - PI
 			if(abs(coll_angle) <= PI/4.75):
-				rotation_vel += coll_angle/2
+				rotation_vel += coll_angle/3
 	#		elif(collision.get_angle(vel) > PI/6 and collision.get_angle(vel.normalized()) <= PI/4):
 	#			rotation_vel += PI/2
 			else:
@@ -189,7 +190,7 @@ func _physics_process(delta):
 			can_hit_wall = false
 			just_had_collision = true
 			just_went = false
-			vel /= 2
+			vel *= lerp(1, 0.75, abs(coll_angle / TAU) * 4)
 		just_changed = false
 
 
