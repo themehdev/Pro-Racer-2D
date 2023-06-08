@@ -6,10 +6,11 @@ extends KinematicBody2D
 # var b = "text"
 var vel = Vector2(0, 0)
 var dir = Vector2.RIGHT
+var boost_vel = 100
 var rotation_speed = 0.006
 var rotation_vel = 0
-var accel = 22.5
-var b_accel = 15
+var accel = 27.5
+var b_accel = 20
 var max_speed = 20000
 var friction = 0.01
 var rot_friction = 0.20
@@ -23,9 +24,11 @@ var drifting = false
 var min_drift_speed = 0
 var drift_turn_speed = 0.005
 var collision
-var vel_to_turn_divisor = 1000
+var vel_to_turn_divisor = 950
 var road_counter = 0
 var dirt_counter = 0
+var boost_counter = 0
+var boost_dir = 0
 var timer = 0
 var just_had_collision = false
 var just_went = true
@@ -128,7 +131,8 @@ func _physics_process(delta):
 			friction = 0.005
 		if turning:
 			friction += 0.0005
-		
+		if(boost_counter > 0):
+			vel += Vector2.UP.rotated(PI * boost_dir/180) * boost_vel
 		if(road_counter > 0):
 			traction_type = "road"
 		elif (dirt_counter > 0): 
@@ -219,13 +223,16 @@ func _on_Area2D_area_entered(area):
 		finishing = true
 		input_on = 0
 	if area.is_in_group("Boost Panels"):
-		vel += Vector2.UP.rotated(area.rotation) * area.power
+		boost_counter += 1
+		boost_dir = area.rotation_degrees
 func _on_Area2D_area_exited(area):
 	var parent = area.get_parent()
 	if (parent.is_in_group("Road")):
 		road_counter -= 1
 	if (parent.is_in_group("Dirt")):
 		dirt_counter -= 1
+	if area.is_in_group("Boost Panels"):
+		boost_counter -= 1
 
 func _on_Start_timeout():
 	physics = true

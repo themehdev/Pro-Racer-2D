@@ -10,6 +10,7 @@ extents = Vector2( 32, 64 )
 
 [node name="GhostPlayer" type="KinematicBody2D" groups=["Player"]]
 scale = Vector2( 0.75, 0.75 )
+z_index = 2
 collision_layer = 2
 script = ExtResource( 1 )
 

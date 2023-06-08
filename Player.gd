@@ -4,12 +4,13 @@ extends KinematicBody2D
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
+var boost_vel = 100
 var vel = Vector2(0, 0)
 var dir = Vector2.RIGHT
 var rotation_speed = 0.006
 var rotation_vel = 0
-var accel = 22.5
-var b_accel = 15
+var accel = 27.5
+var b_accel = 20
 var max_speed = 1800
 var friction = 0.01
 var rot_friction = 0.20
@@ -23,9 +24,11 @@ var drifting = false
 var min_drift_speed = 0
 var drift_turn_speed = 0.005
 var collision
-var vel_to_turn_divisor = 1000
+var vel_to_turn_divisor = 950
 var road_counter = 0
 var dirt_counter = 0
+var boost_counter = 0
+var boost_dir = 0
 var timer = 0
 var just_had_collision = false
 var just_went = true
@@ -76,7 +79,6 @@ func _physics_process(delta):
 		run["inputs"].append({"up": Input.is_action_pressed("ui_up"), "down": Input.is_action_pressed("ui_down"), "left": Input.is_action_pressed("ui_left"), "right": Input.is_action_pressed("ui_right"), "respawn": Input.is_action_just_pressed("respawn")})
 		run["input_splits"].append(timer)
 	
-	print(vel.normalized())
 #	if len(run["inputs"]) == 4:
 #		pass
 	if Input.is_action_pressed("ui_up") and physics:
@@ -113,13 +115,15 @@ func _physics_process(delta):
 		dir = Vector2.RIGHT
 		rotation = dir.angle()
 		rotation_vel = 0
-		$Camera2D/Label.text = ""
-		$Camera2D/Label2.text = ""
+		$Label.text = ""
+		$Label2.text = ""
 		timer = 0
 		physics = false
 		last_cp_pos = Vector2.ZERO
 		last_cp_dir = Vector2.RIGHT
 		$Start.start()
+	if(boost_counter > 0):
+		vel += Vector2.UP.rotated(PI * boost_dir/180) * boost_vel
 	if(is_trying_to_move):
 		friction = 0.015
 	else:
@@ -167,7 +171,7 @@ func _physics_process(delta):
 	elif physics:
 		collision = move_and_collide(vel * delta)
 		timer += round(delta * 1000)/1000
-		$Camera2D/Label2.text = "Time: " + timer as String
+		$Label2.text = "Time: " + timer as String
 		rotation = dir.angle()
 	
 	if(collision and just_had_collision):
@@ -192,7 +196,7 @@ func _physics_process(delta):
 		vel *= lerp(1, 0.75, abs(coll_angle / TAU) * 4)
 	just_physics = false
 	
-	$Camera2D.zoom = Vector2(1.5 + vel_speed/1333, 1.5 + vel_speed/1333)
+	$Camera2D.zoom = Vector2(clamp(1.75, 2.75, 1.5 + vel_speed/1500),clamp(1.75, 2.75, 1.5 + vel_speed/1500))
 
 func _on_HitWall_timeout():
 	can_hit_wall = true
@@ -213,14 +217,14 @@ func _on_Area2D_area_entered(area):
 		last_cp_pos = block.position
 		last_cp_pos.y += 512
 		last_cp_dir = Vector2.RIGHT.rotated(block.rotation_degrees * PI/180)
-		$Camera2D/Label.text = timer as String
+		$Label.text = timer as String
 		if Global.best_time["time"] != 0:
-			$Camera2D/Label.text += "\n" + ((timer - Global.best_time["splits"][Global.total_checkpoints - Global.checkpoints_left]) if (timer - Global.best_time["splits"][Global.total_checkpoints - Global.checkpoints_left]) < 0 else "+" + (timer - Global.best_time["splits"][Global.total_checkpoints - Global.checkpoints_left]) as String) as String
+			$Label.text += "\n" + ((timer - Global.best_time["splits"][Global.total_checkpoints - Global.checkpoints_left]) if (timer - Global.best_time["splits"][Global.total_checkpoints - Global.checkpoints_left]) < 0 else "+" + (timer - Global.best_time["splits"][Global.total_checkpoints - Global.checkpoints_left]) as String) as String
 		Global.checkpoints_left -= 1
 	if ((parent.is_in_group("Finish")) and Global.checkpoints_left == 0):
-		$Camera2D/Label.text = "Finish!: " + timer as String
+		$Label.text = "Finish!: " + timer as String
 		if Global.best_time["time"] != 0:
-			$Camera2D/Label.text += "\n" + ((timer - Global.best_time["time"]) if (timer - Global.best_time["time"]) < 0 else "+" + (timer - Global.best_time["time"]) as String) as String
+			$Label.text += "\n" + ((timer - Global.best_time["time"]) if (timer - Global.best_time["time"]) < 0 else "+" + (timer - Global.best_time["time"]) as String) as String
 		run["time"] = timer
 		if timer < Global.best_time["time"] or Global.best_time["time"] == 0:
 			Global.best_time = run
@@ -229,7 +233,8 @@ func _on_Area2D_area_entered(area):
 		finishing = true
 	
 	if area.is_in_group("Boost Panels"):
-		vel += Vector2.UP.rotated(area.rotation) * area.power
+		boost_counter += 1
+		boost_dir = area.rotation_degrees
 		
 
 func _on_Area2D_area_exited(area):
@@ -238,6 +243,8 @@ func _on_Area2D_area_exited(area):
 		road_counter -= 1
 	if (parent.is_in_group("Dirt")):
 		dirt_counter -= 1
+	if area.is_in_group("Boost Panels"):
+		boost_counter -= 1
 
 func _on_Start_timeout():
 	physics = true
