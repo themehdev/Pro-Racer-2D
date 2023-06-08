@@ -192,7 +192,8 @@ func _physics_process(delta):
 		just_went = false
 		vel *= lerp(1, 0.75, abs(coll_angle / TAU) * 4)
 	just_physics = false
-
+	
+	$Camera2D.position += (lerp(Vector2.ZERO, Vector2(0, -350), vel.length() / max_speed) - $Camera2D.position) / 80
 
 func _on_HitWall_timeout():
 	can_hit_wall = true
