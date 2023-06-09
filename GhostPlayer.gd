@@ -4,13 +4,14 @@ extends KinematicBody2D
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
+var lap = 1
 var vel = Vector2(0, 0)
 var dir = Vector2.RIGHT
 var boost_vel = 100
 var rotation_speed = 0.006
 var rotation_vel = 0
-var accel = 25
-var b_accel = 18
+var accel = 22.5
+var b_accel = 15
 var max_speed = 20000
 var friction = 0.01
 var rot_friction = 0.20
@@ -124,6 +125,7 @@ func _physics_process(delta):
 				last_cp_pos = Vector2.ZERO
 				last_cp_dir = Vector2.RIGHT
 				local_cps = 0
+				lap = 1
 				$Start.start()
 		if(is_trying_to_move):
 			friction = 0.015
@@ -216,12 +218,18 @@ func _on_Area2D_area_entered(area):
 		last_cp_pos.y += 512
 		last_cp_dir = Vector2.RIGHT.rotated(block.rotation_degrees * PI/180)
 		local_cps += 1
-	if ((parent.is_in_group("Finish")) and Global.total_checkpoints - local_cps == 0):
+	if ((parent.is_in_group("Finish") or (parent.is_in_group("Start") and lap == 3)) and Global.total_checkpoints - local_cps == 0):
 		print("ghost finish")
 		local_cps = 0
 		physics = false
 		finishing = true
 		input_on = 0
+	elif parent.is_in_group("Start") and Global.total_checkpoints - local_cps == 0:
+		local_cps = 0
+		last_cp_pos = start_pos
+		last_cp_dir = Vector2.RIGHT
+		lap += 1
+	
 	if area.is_in_group("Boost Panels"):
 		boost_counter += 1
 		boost_dir = area.rotation_degrees

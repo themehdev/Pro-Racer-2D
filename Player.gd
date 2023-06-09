@@ -12,8 +12,8 @@ var vel = Vector2(0, 0)
 var dir = Vector2.RIGHT
 var rotation_speed = 0.006
 var rotation_vel = 0
-var accel = 25
-var b_accel = 18
+var accel = 22.5
+var b_accel = 15
 var max_speed = 1800
 var friction = 0.01
 var rot_friction = 0.20
@@ -184,7 +184,7 @@ func _physics_process(delta):
 		can_hit_wall = false
 		vel = Vector2.ZERO
 		$HitWall.stop()
-		print("why")
+		#print("why")
 	elif (not collision and $HitWall.time_left == 0 and not just_went):
 		$HitWall.start()
 	#print($HitWall.time_left)
@@ -198,6 +198,7 @@ func _physics_process(delta):
 #			rotation_vel += PI/2
 		else:
 			rotation_vel += -(PI/2 * sign(coll_angle) - coll_angle)/4
+			vel = Vector2.ZERO
 		can_hit_wall = false
 		just_had_collision = true
 		just_went = false
