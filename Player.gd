@@ -5,12 +5,15 @@ extends KinematicBody2D
 # var a = 2
 # var b = "text"
 var boost_vel = 100
+var lap = 1
+var split_on = 0
+var smooth_zoom = 0
 var vel = Vector2(0, 0)
 var dir = Vector2.RIGHT
 var rotation_speed = 0.006
 var rotation_vel = 0
-var accel = 27.5
-var b_accel = 20
+var accel = 25
+var b_accel = 18
 var max_speed = 1800
 var friction = 0.01
 var rot_friction = 0.20
@@ -59,6 +62,7 @@ var traction_types = {
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
+	Global.player = self
 	var actions_changed = Input.is_action_just_pressed("ui_down") or Input.is_action_just_released("ui_down") or Input.is_action_just_pressed("ui_left") or Input.is_action_just_released("ui_left") or Input.is_action_just_pressed("ui_right") or Input.is_action_just_released("ui_right") or Input.is_action_just_pressed("ui_up") or Input.is_action_just_released("ui_up") or Input.is_action_just_pressed("respawn")
 	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[1])
 	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[0])
@@ -100,12 +104,12 @@ func _physics_process(delta):
 		drift_turn_speed = 0.003
 		turning = true
 		rotation_vel += rotation_speed * vel_speed/vel_to_turn_divisor
-	if Input.is_action_pressed("respawn") and last_cp_pos != start_pos and physics:
+	if Input.is_action_pressed("respawn") and (last_cp_pos != start_pos or lap != 1) and physics:
 		position = last_cp_pos
 		vel = Vector2.ZERO
 		rotation_vel = 0
 		dir = last_cp_dir
-	if Input.is_action_just_pressed("restart") or (Input.is_action_pressed("respawn") and last_cp_pos == start_pos):
+	if Input.is_action_just_pressed("restart") or (Input.is_action_pressed("respawn") and last_cp_pos == start_pos and lap == 1):
 		$"%Start Text".visible = true
 		run = {"time": 0, "inputs": [], "splits": [], "input_splits": []}
 		get_tree().call_group("Checkpoint", "reset")
@@ -113,14 +117,16 @@ func _physics_process(delta):
 		position.y += 512
 		vel = Vector2.ZERO
 		dir = Vector2.RIGHT
+		split_on = 0
 		rotation = dir.angle()
 		rotation_vel = 0
-		$Label.text = ""
-		$Label2.text = ""
+		$"%Label".text = ""
+		$"%Label2".text = ""
 		timer = 0
 		physics = false
-		last_cp_pos = Vector2.ZERO
+		last_cp_pos = start_pos
 		last_cp_dir = Vector2.RIGHT
+		lap = 1
 		$Start.start()
 	if(boost_counter > 0):
 		vel += Vector2.UP.rotated(PI * boost_dir/180) * boost_vel
@@ -171,13 +177,14 @@ func _physics_process(delta):
 	elif physics:
 		collision = move_and_collide(vel * delta)
 		timer += round(delta * 1000)/1000
-		$Label2.text = "Time: " + timer as String
+		$"%Label2".text = "Time: " + timer as String
 		rotation = dir.angle()
 	
 	if(collision and just_had_collision):
 		can_hit_wall = false
 		vel = Vector2.ZERO
 		$HitWall.stop()
+		print("why")
 	elif (not collision and $HitWall.time_left == 0 and not just_went):
 		$HitWall.start()
 	#print($HitWall.time_left)
@@ -185,7 +192,8 @@ func _physics_process(delta):
 #		rotation_vel += 0.1 * vel.length() * 0.002 * collision.normal.dot(vel.normalized())
 		var coll_angle = collision.get_angle(dir.normalized()) if collision.get_angle(dir.normalized()) <= PI/2 else collision.get_angle(dir.normalized()) - PI
 		if(abs(coll_angle) <= PI/4.75):
-			rotation_vel += coll_angle/3
+			rotation_vel += coll_angle/2
+			vel = vel.bounce(collision.normal)
 #		elif(collision.get_angle(vel) > PI/6 and collision.get_angle(vel.normalized()) <= PI/4):
 #			rotation_vel += PI/2
 		else:
@@ -193,16 +201,22 @@ func _physics_process(delta):
 		can_hit_wall = false
 		just_had_collision = true
 		just_went = false
-		vel *= lerp(1, 0.75, abs(coll_angle / TAU) * 4)
+		vel *= lerp(0.25, 0.1, abs(coll_angle / TAU))
 	just_physics = false
-	
-	$Camera2D.zoom = Vector2(clamp(1.75, 2.75, 1.5 + vel_speed/1500),clamp(1.75, 2.75, 1.5 + vel_speed/1500))
+	if smooth_zoom >= vel_speed/1900 + 0.05:
+		smooth_zoom -= 0.05
+	else :
+		smooth_zoom = vel_speed/1900
+	$Camera2D.zoom = Vector2(1.5 + smooth_zoom, 1.5 + smooth_zoom)
+	if smooth_zoom >= 1:
+		$Camera2D.zoom = Vector2(2.5, 2.5)
+	$"%No Zoom".scale = $Camera2D.zoom
 
 func _on_HitWall_timeout():
 	can_hit_wall = true
 	just_had_collision = false
 	just_went = true
-	print("running")
+	#print("running")
 
 func _on_Area2D_area_entered(area):
 	var parent = area.get_parent()
@@ -216,21 +230,33 @@ func _on_Area2D_area_entered(area):
 		parent.gotten = true
 		last_cp_pos = block.position
 		last_cp_pos.y += 512
+#		last_cp_pos.y -= 206
 		last_cp_dir = Vector2.RIGHT.rotated(block.rotation_degrees * PI/180)
-		$Label.text = timer as String
+		$"%Label".text = timer as String
 		if Global.best_time["time"] != 0:
-			$Label.text += "\n" + ((timer - Global.best_time["splits"][Global.total_checkpoints - Global.checkpoints_left]) if (timer - Global.best_time["splits"][Global.total_checkpoints - Global.checkpoints_left]) < 0 else "+" + (timer - Global.best_time["splits"][Global.total_checkpoints - Global.checkpoints_left]) as String) as String
+			$"%Label".text += "\n" + ((timer - Global.best_time["splits"][split_on]) if (timer - Global.best_time["splits"][split_on]) <= 0 else "+" + (timer - Global.best_time["splits"][split_on]) as String) as String
 		Global.checkpoints_left -= 1
-	if ((parent.is_in_group("Finish")) and Global.checkpoints_left == 0):
-		$Label.text = "Finish!: " + timer as String
+		split_on += 1
+	if ((parent.is_in_group("Finish") or (parent.is_in_group("Start") and lap == 3)) and Global.checkpoints_left == 0):
+		$"%No Zoom/Label".text = "Finish!: " + timer as String
 		if Global.best_time["time"] != 0:
-			$Label.text += "\n" + ((timer - Global.best_time["time"]) if (timer - Global.best_time["time"]) < 0 else "+" + (timer - Global.best_time["time"]) as String) as String
+			$"%No Zoom/Label".text += "\n" + ((timer - Global.best_time["time"]) if (timer - Global.best_time["time"]) < 0 else "+" + (timer - Global.best_time["time"]) as String) as String
 		run["time"] = timer
 		if timer < Global.best_time["time"] or Global.best_time["time"] == 0:
 			Global.best_time = run
 			print("new best")
 		physics = false
 		finishing = true
+	elif parent.is_in_group("Start") and Global.checkpoints_left == 0:
+		run["splits"].append(timer)
+		get_tree().call_group("Checkpoint", "reset")
+		last_cp_pos = start_pos
+		last_cp_dir = Vector2.RIGHT
+		$"%Label".text = timer as String
+		if Global.best_time["time"] != 0:
+			$"%Label".text += "\n" + ((timer - Global.best_time["splits"][split_on]) if (timer - Global.best_time["splits"][split_on]) <= 0 else "+" + (timer - Global.best_time["splits"][split_on]) as String) as String
+		lap += 1
+		split_on += 1
 	
 	if area.is_in_group("Boost Panels"):
 		boost_counter += 1
@@ -250,6 +276,7 @@ func _on_Start_timeout():
 	physics = true
 	just_physics = true
 	vel = Vector2.ZERO
+	split_on = 0
 	position = start_pos
 	position.y += 512
 	dir = Vector2.RIGHT

@@ -11,7 +11,7 @@ b = Vector2( 240, -80 )
 
 [node name="Road" parent="." instance=ExtResource( 1 )]
 
-[node name="Lap Line" type="StaticBody2D" parent="." groups=["Finish"]]
+[node name="Lap Line" type="StaticBody2D" parent="." groups=["Start"]]
 collision_layer = 3
 
 [node name="Start Line" type="ColorRect" parent="Lap Line"]

@@ -9,8 +9,8 @@ var dir = Vector2.RIGHT
 var boost_vel = 100
 var rotation_speed = 0.006
 var rotation_vel = 0
-var accel = 27.5
-var b_accel = 20
+var accel = 25
+var b_accel = 18
 var max_speed = 20000
 var friction = 0.01
 var rot_friction = 0.20
@@ -110,7 +110,7 @@ func _physics_process(delta):
 			vel = Vector2.ZERO
 			rotation_vel = 0
 			dir = last_cp_dir
-		if Input.is_action_just_pressed("restart") or (Input.is_action_pressed("respawn") and get_parent().get_child(3).last_cp_pos == start_pos) or just_changed:
+		if Input.is_action_just_pressed("restart") or (Input.is_action_pressed("respawn") and Global.player.last_cp_pos == start_pos) or just_changed:
 				get_tree().call_group("Checkpoint", "reset")
 				input_on = 0
 				position = start_pos
