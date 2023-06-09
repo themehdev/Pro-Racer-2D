@@ -19,9 +19,6 @@
 
 [node name="Track 2" type="Node2D"]
 
-[node name="BoostPanel7" parent="." instance=ExtResource( 2 )]
-position = Vector2( -215, -840 )
-
 [node name="Wide Road2" parent="." instance=ExtResource( 4 )]
 position = Vector2( 0, -1536 )
 
@@ -30,6 +27,12 @@ position = Vector2( 0, -1024 )
 
 [node name="Wider" parent="." instance=ExtResource( 1 )]
 position = Vector2( 0, -512 )
+
+[node name="BoostPanel8" parent="." instance=ExtResource( 2 )]
+position = Vector2( 352, -840 )
+
+[node name="BoostPanel7" parent="." instance=ExtResource( 2 )]
+position = Vector2( -136, -840 )
 
 [node name="BoostPanel" parent="." instance=ExtResource( 2 )]
 position = Vector2( -152, -176 )
@@ -46,10 +49,10 @@ position = Vector2( 160, -176 )
 [node name="Start" parent="." instance=ExtResource( 3 )]
 
 [node name="BoostPanel9" parent="." instance=ExtResource( 2 )]
-position = Vector2( -8, -840 )
+position = Vector2( -352, -840 )
 
 [node name="BoostPanel11" parent="." instance=ExtResource( 2 )]
-position = Vector2( 200, -840 )
+position = Vector2( 136, -840 )
 
 [node name="BoostPanel14" parent="." instance=ExtResource( 2 )]
 position = Vector2( -280, -1560 )
@@ -81,8 +84,8 @@ rotation = 1.5708
 position = Vector2( -1280, -3584 )
 
 [node name="BoostPanel16" parent="." instance=ExtResource( 2 )]
-position = Vector2( -2200, -3456 )
-rotation = 1.0472
+position = Vector2( -2264, -3424 )
+rotation = 1.22173
 
 [node name="Curve" parent="." instance=ExtResource( 12 )]
 position = Vector2( -2304, -3072 )
@@ -93,8 +96,8 @@ position = Vector2( -1792, -3072 )
 rotation = 1.5708
 
 [node name="BoostPanel17" parent="." instance=ExtResource( 2 )]
-position = Vector2( -1376, -3480 )
-rotation = -1.0472
+position = Vector2( -1328, -3472 )
+rotation = -1.22173
 
 [node name="Wall2" parent="." instance=ExtResource( 10 )]
 position = Vector2( -2552, -3584 )
@@ -172,5 +175,9 @@ position = Vector2( -1792, -5888 )
 rotation = -3.14159
 
 [node name="BoostPanel5" parent="." instance=ExtResource( 2 )]
-position = Vector2( -2304, -3128 )
+position = Vector2( -2328, -3216 )
+rotation = 0.785398
+
+[node name="BoostPanel6" parent="." instance=ExtResource( 2 )]
+position = Vector2( -2288, -3064 )
 rotation = 0.523599
