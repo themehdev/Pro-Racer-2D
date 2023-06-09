@@ -17,7 +17,6 @@
 [ext_resource path="res://Blocks/BoostPanel.tscn" type="PackedScene" id=15]
 
 [node name="Track 1" type="Node2D"]
-position = Vector2( 0, 512 )
 
 [node name="Road Checkpoint3" parent="." instance=ExtResource( 9 )]
 position = Vector2( 2048, 320 )

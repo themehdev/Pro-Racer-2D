@@ -115,7 +115,7 @@ func _physics_process(delta):
 				get_tree().call_group("Checkpoint", "reset")
 				input_on = 0
 				position = start_pos
-				position.y += 512
+				#position.y += 512
 				vel = Vector2.ZERO
 				dir = Vector2.RIGHT
 				rotation = dir.angle()
@@ -172,6 +172,7 @@ func _physics_process(delta):
 		vel *= (1.0 - friction)
 		if not physics and not finishing:
 			dir = Vector2.RIGHT
+			position = start_pos
 		elif physics:
 			collision = move_and_collide(vel * delta)
 			timer += round(delta * 1000)/1000
@@ -215,7 +216,7 @@ func _on_Area2D_area_entered(area):
 	if (parent.is_in_group("Checkpoint") and not parent.gotten):
 		var block = parent.get_parent()
 		last_cp_pos = block.position
-		last_cp_pos.y += 512
+		#last_cp_pos.y += 512
 		last_cp_dir = Vector2.RIGHT.rotated(block.rotation_degrees * PI/180)
 		local_cps += 1
 	if ((parent.is_in_group("Finish") or (parent.is_in_group("Start") and lap == 3)) and Global.total_checkpoints - local_cps == 0):
@@ -246,7 +247,7 @@ func _on_Start_timeout():
 	physics = true
 	vel = Vector2.ZERO
 	position = start_pos
-	position.y += 512
+	#position.y += 512
 	dir = Vector2.RIGHT
 	timer = 0
 	rotation_vel = 0

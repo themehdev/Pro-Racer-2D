@@ -1,6 +1,6 @@
 [gd_scene format=2]
 
-[node name="Wider" type="Node2D"]
+[node name="Dirt Wider" type="Node2D"]
 
 [node name="Wall" type="StaticBody2D" parent="." groups=["Wall"]]
 
@@ -20,17 +20,17 @@ polygon = PoolVector2Array( 256, 248, 256, 256, 264, 256, 512, -248, 512, -256, 
 color = Color( 0.533333, 0.533333, 0.533333, 1 )
 polygon = PoolVector2Array( 264, 256, 256, 256, 256, 248, 504, -256, 512, -256, 512, -248 )
 
-[node name="Road" type="StaticBody2D" parent="." groups=["Road"]]
+[node name="Dirt" type="StaticBody2D" parent="." groups=["Dirt"]]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Road"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Dirt"]
 polygon = PoolVector2Array( -256, 256, 256, 256, 256, 248, 504, -256, -504, -256, -256, 248 )
 disabled = true
 
-[node name="Area2D" type="Area2D" parent="Road"]
+[node name="Area2D" type="Area2D" parent="Dirt"]
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Road/Area2D"]
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Dirt/Area2D"]
 polygon = PoolVector2Array( -256, 256, 256, 256, 256, 248, 504, -256, -504, -256, -256, 248 )
 
-[node name="Polygon2D" type="Polygon2D" parent="Road"]
-color = Color( 0.223529, 0.223529, 0.223529, 1 )
+[node name="Polygon2D" type="Polygon2D" parent="Dirt"]
+color = Color( 0.368627, 0.235294, 0.152941, 1 )
 polygon = PoolVector2Array( -256, 256, 256, 256, 256, 248, 504, -256, -504, -256, -256, 248 )

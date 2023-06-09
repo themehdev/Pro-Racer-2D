@@ -15,6 +15,7 @@ func reset():
 func _ready():
 	Global.total_checkpoints += 1
 	Global.checkpoints_left += 1
+	print(Global.checkpoints_left)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

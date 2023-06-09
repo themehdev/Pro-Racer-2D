@@ -28,6 +28,7 @@ margin_right = 32.0
 margin_bottom = 64.0
 border_color = Color( 0, 1, 0, 1 )
 border_width = 5.0
+editor_only = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Lap Line"]
 shape = SubResource( 1 )

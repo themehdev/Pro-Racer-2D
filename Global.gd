@@ -8,7 +8,7 @@ var checkpoints_left = 0
 var total_checkpoints = 0
 var best_time = {"time": 0}
 var player
-var tracks = 1
+var tracks = 2
 var track_playing
 
 
