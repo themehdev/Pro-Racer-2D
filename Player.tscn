@@ -95,10 +95,10 @@ z_as_relative = false
 
 [node name="Grass" type="ColorRect" parent="No Zoom/GrassBackdrop"]
 unique_name_in_owner = true
-margin_left = -4224.0
-margin_top = -2576.0
-margin_right = 4000.0
-margin_bottom = 2304.0
+margin_left = -4176.0
+margin_top = -2434.0
+margin_right = 4048.0
+margin_bottom = 2446.0
 color = Color( 0.181547, 0.511719, 0.0439758, 1 )
 
 [node name="Start Text" type="Label" parent="No Zoom"]
@@ -130,7 +130,48 @@ margin_bottom = -276.0
 rect_scale = Vector2( 4, 4 )
 align = 1
 
+[node name="CanvasLayer" type="CanvasLayer" parent="No Zoom"]
+
+[node name="Popup" type="Popup" parent="No Zoom/CanvasLayer"]
+unique_name_in_owner = true
+visible = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = 8.0
+
+[node name="ColorRect" type="ColorRect" parent="No Zoom/CanvasLayer/Popup"]
+margin_right = 1024.0
+margin_bottom = 608.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color( 0.223529, 0.223529, 0.223529, 0.643137 )
+
+[node name="HBoxContainer" type="VBoxContainer" parent="No Zoom/CanvasLayer/Popup"]
+margin_left = 280.0
+margin_top = 170.0
+margin_right = 800.0
+margin_bottom = 434.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Menu" type="Button" parent="No Zoom/CanvasLayer/Popup/HBoxContainer"]
+margin_right = 520.0
+margin_bottom = 130.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Menu"
+
+[node name="Resume" type="Button" parent="No Zoom/CanvasLayer/Popup/HBoxContainer"]
+margin_top = 134.0
+margin_right = 520.0
+margin_bottom = 264.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Resume"
+
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="area_exited" from="Area2D" to="." method="_on_Area2D_area_exited"]
 [connection signal="timeout" from="HitWall" to="." method="_on_HitWall_timeout"]
 [connection signal="timeout" from="Start" to="." method="_on_Start_timeout"]
+[connection signal="pressed" from="No Zoom/CanvasLayer/Popup/HBoxContainer/Menu" to="." method="_on_Menu_pressed"]
+[connection signal="pressed" from="No Zoom/CanvasLayer/Popup/HBoxContainer/Resume" to="." method="_on_Resume_pressed"]

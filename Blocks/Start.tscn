@@ -16,21 +16,22 @@ collision_layer = 3
 
 [node name="Start Line" type="ColorRect" parent="Lap Line"]
 margin_left = -256.0
-margin_top = -80.0
+margin_top = -64.0
 margin_right = 256.0
-margin_bottom = -72.0
+margin_bottom = -56.0
 color = Color( 0, 1, 0, 1 )
 
 [node name="Border" type="ReferenceRect" parent="Lap Line"]
-margin_left = -32.0
-margin_top = -64.0
-margin_right = 32.0
-margin_bottom = 64.0
+margin_left = -24.0
+margin_top = -40.0
+margin_right = 24.0
+margin_bottom = 40.0
 border_color = Color( 0, 1, 0, 1 )
-border_width = 5.0
+border_width = 3.0
 editor_only = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Lap Line"]
+position = Vector2( 0, 24 )
 shape = SubResource( 1 )
 disabled = true
 
@@ -38,6 +39,7 @@ disabled = true
 collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Lap Line/Area2D"]
+position = Vector2( 0, 24 )
 shape = SubResource( 1 )
 
 [node name="Wall" parent="." instance=ExtResource( 2 )]

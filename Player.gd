@@ -42,6 +42,7 @@ var last_cp_dir = Vector2.RIGHT
 var finishing = false
 var turning = false
 var run = {"time": 0, "inputs": [], "splits": [], "input_splits": []}
+var has_popup = false
 onready var start_pos = Vector2.ZERO
 onready var last_cp_pos = start_pos
 
@@ -62,8 +63,9 @@ var traction_types = {
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
+	has_popup = $"%Popup".visible
 	Global.player = self
-	var actions_changed = Input.is_action_just_pressed("ui_down") or Input.is_action_just_released("ui_down") or Input.is_action_just_pressed("ui_left") or Input.is_action_just_released("ui_left") or Input.is_action_just_pressed("ui_right") or Input.is_action_just_released("ui_right") or Input.is_action_just_pressed("ui_up") or Input.is_action_just_released("ui_up") or Input.is_action_just_pressed("respawn")
+	#var actions_changed = Input.is_action_just_pressed("ui_down") or Input.is_action_just_released("ui_down") or Input.is_action_just_pressed("ui_left") or Input.is_action_just_released("ui_left") or Input.is_action_just_pressed("ui_right") or Input.is_action_just_released("ui_right") or Input.is_action_just_pressed("ui_up") or Input.is_action_just_released("ui_up") or Input.is_action_just_pressed("respawn")
 	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[1])
 	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[0])
 	turning = false
@@ -76,12 +78,12 @@ func _physics_process(delta):
 	
 #	speed = clamp(max_speed, 0, speed)
 	#print(Input.is_action_just_pressed("any_action") as String + Input.is_action_just_pressed("ui_left") as String)
-
+	
 	#
 	#print((Input.is_action_just_pressed("any_action") or Input.is_action_just_released("any_action") or just_physics) and physics)
-	if (actions_changed or just_physics) and physics:
-		run["inputs"].append({"up": Input.is_action_pressed("ui_up"), "down": Input.is_action_pressed("ui_down"), "left": Input.is_action_pressed("ui_left"), "right": Input.is_action_pressed("ui_right"), "respawn": Input.is_action_just_pressed("respawn")})
-		run["input_splits"].append(timer)
+#	if (actions_changed or just_physics) and physics:
+#		run["inputs"].append({"up": Input.is_action_pressed("ui_up"), "down": Input.is_action_pressed("ui_down"), "left": Input.is_action_pressed("ui_left"), "right": Input.is_action_pressed("ui_right"), "respawn": Input.is_action_just_pressed("respawn")})
+#		run["input_splits"].append(timer)
 	
 #	if len(run["inputs"]) == 4:
 #		pass
@@ -109,6 +111,9 @@ func _physics_process(delta):
 		vel = Vector2.ZERO
 		rotation_vel = 0
 		dir = last_cp_dir
+	if Input.is_action_just_pressed("pause"):
+		$"%Popup".popup_centered()
+		physics = false
 	if Input.is_action_just_pressed("restart") or (Input.is_action_pressed("respawn") and last_cp_pos == start_pos and lap == 1):
 		$"%Start Text".visible = true
 		run = {"time": 0, "inputs": [], "splits": [], "input_splits": []}
@@ -170,9 +175,11 @@ func _physics_process(delta):
 	
 	vel = vel.rotated(rotation_vel * traction * (1.0 - drift)) 
 	
+	if has_popup:
+		friction = 0
 	
 	vel *= (1.0 - friction)
-	if not physics and not finishing:
+	if not physics and not finishing and $"%Popup".visible == false:
 		dir = Vector2.RIGHT
 		position = start_pos
 	elif physics:
@@ -180,6 +187,10 @@ func _physics_process(delta):
 		timer += round(delta * 1000)/1000
 		$"%Label2".text = "Time: " + timer as String
 		rotation = dir.angle()
+		run["inputs"].append({"pos": position, "dir" : rotation})
+		run["input_splits"].append(timer)
+		
+	
 	
 	if(collision and just_had_collision):
 		can_hit_wall = false
@@ -240,6 +251,8 @@ func _on_Area2D_area_entered(area):
 		Global.checkpoints_left -= 1
 		split_on += 1
 	if ((parent.is_in_group("Finish") or (parent.is_in_group("Start") and lap == 3)) and Global.checkpoints_left == 0):
+		run["inputs"].append({"pos": position, "dir" : rotation})
+		run["input_splits"].append(timer)
 		$"%No Zoom/Label".text = "Finish!: " + timer as String
 		if Global.best_time["time"] != 0:
 			$"%No Zoom/Label".text += "\n" + ((timer - Global.best_time["time"]) if (timer - Global.best_time["time"]) < 0 else "+" + (timer - Global.best_time["time"]) as String) as String
@@ -285,3 +298,12 @@ func _on_Start_timeout():
 	timer = 0
 	rotation_vel = 0
 	get_tree().call_group("Checkpoint", "reset")
+
+func _on_Menu_pressed():
+	get_tree().change_scene("res://Menu.tscn")
+	$"%Popup".hide()
+	get_parent().queue_free()
+
+func _on_Resume_pressed():
+	physics = true
+	$"%Popup".hide()
