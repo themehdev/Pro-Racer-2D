@@ -61,6 +61,9 @@ var traction_types = {
 	"off_road": 0.15
 }
 
+func set_start(pos):
+	start_pos = pos
+	last_cp_pos = pos
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	has_popup = $"%Popup".visible
@@ -246,8 +249,8 @@ func _on_Area2D_area_entered(area):
 #		last_cp_pos.y -= 206
 		last_cp_dir = Vector2.RIGHT.rotated(block.rotation_degrees * PI/180)
 		$"%Label".text = timer as String
-		if Global.best_time["time"] != 0:
-			$"%Label".text += "\n" + ((timer - Global.best_time["splits"][split_on]) if (timer - Global.best_time["splits"][split_on]) <= 0 else "+" + (timer - Global.best_time["splits"][split_on]) as String) as String
+		if Global.tracks[Global.track_playing]["best_run"]["time"] != 0:
+			$"%Label".text += "\n" + ((timer - Global.tracks[Global.track_playing]["best_run"]["splits"][split_on]) if (timer - Global.tracks[Global.track_playing]["best_run"]["splits"][split_on]) <= 0 else "+" + (timer - Global.tracks[Global.track_playing]["best_run"]["splits"][split_on]) as String) as String
 		Global.checkpoints_left -= 1
 		split_on += 1
 	if ((parent.is_in_group("Finish") or (parent.is_in_group("Start") and lap == 3)) and Global.checkpoints_left == 0):
@@ -259,9 +262,11 @@ func _on_Area2D_area_entered(area):
 		run["time"] = timer
 		if timer < Global.tracks[Global.track_playing]["best_run"]["time"] or Global.tracks[Global.track_playing]["best_run"]["time"] == 0:
 			Global.tracks[Global.track_playing]["best_run"] = run
-			print("new best")
+			#print("new best")
 		physics = false
 		finishing = true
+		#print(run)
+		
 	elif parent.is_in_group("Start") and Global.checkpoints_left == 0:
 		run["splits"].append(timer)
 		get_tree().call_group("Checkpoint", "reset")
@@ -303,6 +308,7 @@ func _on_Menu_pressed():
 	get_tree().change_scene("res://Menu.tscn")
 	$"%Popup".hide()
 	get_parent().queue_free()
+	Global.player = null
 
 func _on_Resume_pressed():
 	physics = true

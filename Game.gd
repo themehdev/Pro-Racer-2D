@@ -18,10 +18,7 @@ func _process(delta):
 	if yay:
 		for i in get_child(2).get_children():
 			if(i.name == "Start"):
-				$Player.start_pos = i.position# + Vector2(0, -512)
-				$Player.last_cp_pos = i.position# + Vector2(0, -512)
-				$GhostPlayer.start_pos = i.position# + Vector2(0, -512)
-				$GhostPlayer.last_cp_pos = i.position# + Vector2(0, -512)
+				get_tree().call_group("Player", "set_start", i.position)
 		yay = false
 		happened = true
 	elif not happened:

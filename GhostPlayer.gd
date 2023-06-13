@@ -5,6 +5,7 @@ extends KinematicBody2D
 # var a = 2
 # var b = "text"
 var lap = 1
+var type = "pb"
 var vel = Vector2(0, 0)
 var dir = Vector2.RIGHT
 var boost_vel = 100
@@ -42,6 +43,17 @@ var input_on = 0
 var local_cps = 0
 var local_inputs
 var just_changed = false
+onready var color = Color("640000ff") if type == "pb" else Color(255, 50, 0, 100)
+
+var can_hit_wall = true
+
+var traction_types = {
+	"road": 0.9,
+	"dirt": 0.5,
+	"drift": 0.1,
+	"off_road": 0.15
+}
+
 onready var start_pos = Vector2.ZERO
 onready var last_cp_pos = start_pos
 onready var run = Global.tracks[Global.track_playing]["best_run"]
@@ -54,22 +66,17 @@ func _ready():
 	position = start_pos
 	visible = false
 
-var can_hit_wall = true
-
-var traction_types = {
-	"road": 0.9,
-	"dirt": 0.5,
-	"drift": 0.1,
-	"off_road": 0.15
-}
+func set_start(pos):
+	start_pos = pos
+	last_cp_pos = pos
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	if Global.tracks[Global.track_playing]["best_run"] != run:
+	if Global.tracks[Global.track_playing]["best_run"] != run or type == "time":
 		physics = false
 		just_changed = true
-		input_len = len(Global.tracks[Global.track_playing]["best_run"]["inputs"])
-	run = Global.tracks[Global.track_playing]["best_run"]
+		input_len = len(Global.tracks[Global.track_playing]["best_run" if type == "pb" else "time"]["inputs"])
+	run = Global.tracks[Global.track_playing]["best_run" if type == "pb" else "time"] 
 	
 	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[1])
 	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[0])
