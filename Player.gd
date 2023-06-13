@@ -273,8 +273,8 @@ func _on_Area2D_area_entered(area):
 		last_cp_pos = start_pos
 		last_cp_dir = Vector2.RIGHT
 		$"%Label".text = timer as String
-		if Global.best_time["time"] != 0:
-			$"%Label".text += "\n" + ((timer - Global.best_time["splits"][split_on]) if (timer - Global.best_time["splits"][split_on]) <= 0 else "+" + (timer - Global.best_time["splits"][split_on]) as String) as String
+		if Global.tracks[Global.track_playing]["best_run"]["time"] != 0:
+			$"%Label".text += "\n" + ((timer - Global.tracks[Global.track_playing]["best_run"]["splits"][split_on]) if (timer - Global.tracks[Global.track_playing]["best_run"]["splits"][split_on]) <= 0 else "+" + (timer - Global.tracks[Global.track_playing]["best_run"]["splits"][split_on]) as String) as String
 		lap += 1
 		split_on += 1
 	
