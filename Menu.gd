@@ -9,7 +9,7 @@ var tracks = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	for i in Global.tracks:
+	for i in Global.num_tracks:
 		var button = $GridContainer/Base.duplicate()
 		button.visible = true
 		button.text = "Track " + (i + 1) as String

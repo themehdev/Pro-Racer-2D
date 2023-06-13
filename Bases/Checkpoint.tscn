@@ -23,3 +23,5 @@ shape = SubResource( 1 )
 [node name="Polygon2D" type="Polygon2D" parent="."]
 color = Color( 1, 1, 0, 1 )
 polygon = PoolVector2Array( -256, 0, -256, 8, 256, 8, 256, 0, 129.01, 0, 96, -64, 64.6817, 0, 32.7277, 0, 0, -64, -30.3396, 0, -63.1345, 0, -96, -64, -128, 0 )
+
+[connection signal="tree_exited" from="." to="." method="_on_Checkpoint_tree_exited"]

@@ -23,3 +23,10 @@ func _ready():
 #	pass
 
 
+
+
+func _on_Checkpoint_tree_exited():
+	gotten = false
+	Global.total_checkpoints = 0
+	Global.checkpoints_left = 0
+	

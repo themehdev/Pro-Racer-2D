@@ -41,7 +41,7 @@ var just_physics = false
 var last_cp_dir = Vector2.RIGHT
 var finishing = false
 var turning = false
-var run = {"time": 0, "inputs": [], "splits": [], "input_splits": []}
+var run = {"time": 0, "inputs": [], "splits": []}
 var has_popup = false
 onready var start_pos = Vector2.ZERO
 onready var last_cp_pos = start_pos
@@ -188,7 +188,7 @@ func _physics_process(delta):
 		$"%Label2".text = "Time: " + timer as String
 		rotation = dir.angle()
 		run["inputs"].append({"pos": position, "dir" : rotation})
-		run["input_splits"].append(timer)
+		#run["input_splits"].append(timer)
 		
 	
 	
@@ -252,13 +252,13 @@ func _on_Area2D_area_entered(area):
 		split_on += 1
 	if ((parent.is_in_group("Finish") or (parent.is_in_group("Start") and lap == 3)) and Global.checkpoints_left == 0):
 		run["inputs"].append({"pos": position, "dir" : rotation})
-		run["input_splits"].append(timer)
+		#run["input_splits"].append(timer)
 		$"%No Zoom/Label".text = "Finish!: " + timer as String
-		if Global.best_time["time"] != 0:
-			$"%No Zoom/Label".text += "\n" + ((timer - Global.best_time["time"]) if (timer - Global.best_time["time"]) < 0 else "+" + (timer - Global.best_time["time"]) as String) as String
+		if Global.tracks[Global.track_playing]["best_run"]["time"] != 0:
+			$"%No Zoom/Label".text += "\n" + ((timer - Global.tracks[Global.track_playing]["best_run"]["time"]) if (timer - Global.tracks[Global.track_playing]["best_run"]["time"]) <= 0 else "+" + (timer - Global.tracks[Global.track_playing]["best_run"]["time"]) as String) as String
 		run["time"] = timer
-		if timer < Global.best_time["time"] or Global.best_time["time"] == 0:
-			Global.best_time = run
+		if timer < Global.tracks[Global.track_playing]["best_run"]["time"] or Global.tracks[Global.track_playing]["best_run"]["time"] == 0:
+			Global.tracks[Global.track_playing]["best_run"] = run
 			print("new best")
 		physics = false
 		finishing = true

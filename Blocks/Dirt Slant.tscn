@@ -3,6 +3,7 @@
 [node name="Dirt Slant" type="Node2D"]
 
 [node name="Wall" type="StaticBody2D" parent="." groups=["Wall"]]
+z_index = 1
 collision_layer = 3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wall"]

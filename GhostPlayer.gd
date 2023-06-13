@@ -44,7 +44,7 @@ var local_inputs
 var just_changed = false
 onready var start_pos = Vector2.ZERO
 onready var last_cp_pos = start_pos
-onready var run = Global.best_time
+onready var run = Global.tracks[Global.track_playing]["best_run"]
 onready var input_len
 
 
@@ -65,11 +65,11 @@ var traction_types = {
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	if Global.best_time != run:
+	if Global.tracks[Global.track_playing]["best_run"] != run:
 		physics = false
 		just_changed = true
-		input_len = len(Global.best_time["inputs"])
-	run = Global.best_time
+		input_len = len(Global.tracks[Global.track_playing]["best_run"]["inputs"])
+	run = Global.tracks[Global.track_playing]["best_run"]
 	
 	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[1])
 	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[0])
