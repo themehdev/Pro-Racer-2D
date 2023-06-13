@@ -307,9 +307,13 @@ func _on_Start_timeout():
 func _on_Menu_pressed():
 	get_tree().change_scene("res://Menu.tscn")
 	$"%Popup".hide()
+	get_parent().get_child(0).queue_free()
 	get_parent().queue_free()
-	Global.player = null
 
 func _on_Resume_pressed():
 	physics = true
 	$"%Popup".hide()
+
+
+func _on_Player_tree_exited():
+	Global.player = {"has_popup" : false}

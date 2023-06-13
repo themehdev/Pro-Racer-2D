@@ -12,3 +12,5 @@ process_priority = -1
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 process_priority = -1
+
+[connection signal="tree_exited" from="Player" to="Player" method="_on_Player_tree_exited"]
