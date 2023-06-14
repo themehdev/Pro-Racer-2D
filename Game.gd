@@ -10,9 +10,9 @@ var tracks = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	for i in Global.num_tracks:
-		tracks.append(Global.tracks[i]["track"])
-	add_child(tracks[Global.track_playing])
+#	print(Global.track_playing)
+#	print(Global.tracks[Global.track_playing]["track"])
+	add_child(Global.tracks[Global.track_playing]["track"].instance())
 
 func _process(delta):
 	if yay:

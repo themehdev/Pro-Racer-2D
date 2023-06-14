@@ -14,7 +14,7 @@ var best_time = {"time": 0}
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	for i in num_tracks:
-		tracks[i]["track"] = load("res://Tracks/Track " + (i + 1) as String + ".tscn").instance()
+		tracks[i]["track"] = load("res://Tracks/Track " + (i + 1) as String + ".tscn")
 
 func process(delta):
 	if track_playing != -1:

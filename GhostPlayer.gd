@@ -69,12 +69,14 @@ func _ready():
 func set_start(pos):
 	start_pos = pos
 	last_cp_pos = pos
+	Input.action_press("restart")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	if Global.tracks[Global.track_playing]["best_run"] != run or type == "time":
 		physics = false
 		just_changed = true
+	if Global.tracks[Global.track_playing]["best_run"]["time"] != 0:
 		input_len = len(Global.tracks[Global.track_playing]["best_run" if type == "pb" else "time"]["inputs"])
 	run = Global.tracks[Global.track_playing]["best_run" if type == "pb" else "time"] 
 	
@@ -90,7 +92,7 @@ func _physics_process(delta):
 		if physics:
 			position = local_inputs["pos"]
 			rotation = local_inputs["dir"]
-			print(position)
+			#print(position)
 #		turning = false
 #		var vel_speed = abs(vel.x) + abs(vel.y)
 #	#	speed /= vel_speed/accel_hamper + 1

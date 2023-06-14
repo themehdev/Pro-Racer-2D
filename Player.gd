@@ -262,7 +262,7 @@ func _on_Area2D_area_entered(area):
 		run["time"] = timer
 		if timer < Global.tracks[Global.track_playing]["best_run"]["time"] or Global.tracks[Global.track_playing]["best_run"]["time"] == 0:
 			Global.tracks[Global.track_playing]["best_run"] = run
-			#print("new best")
+			print(Global.track_playing)
 		physics = false
 		finishing = true
 		#print(run)
