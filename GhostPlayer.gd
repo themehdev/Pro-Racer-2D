@@ -211,6 +211,7 @@ func _physics_process(delta):
 #			just_went = false
 #			vel *= lerp(1, 0.75, abs(coll_angle / TAU) * 4)
 		just_changed = false
+		#Input.action_release("restart")
 #
 #
 func _on_HitWall_timeout():

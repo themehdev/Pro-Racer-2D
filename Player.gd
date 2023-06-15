@@ -43,6 +43,7 @@ var finishing = false
 var turning = false
 var run = {"time": 0, "inputs": [], "splits": []}
 var has_popup = false
+var moving_forward = true
 onready var start_pos = Vector2.ZERO
 onready var last_cp_pos = start_pos
 
@@ -99,12 +100,14 @@ func _physics_process(delta):
 			drifting = true
 		is_trying_to_move = true
 	drift_turn_speed = 0
+#	if vel.normalized() == Vector2.DOWN.rotated(dir.angle()) * b_accel:
+#		moving_forward = false
 	if not Input.is_action_pressed("ui_down") and not Input.is_action_pressed("ui_up"):
 		is_trying_to_move = false
 	if Input.is_action_pressed("ui_left"):
 		drift_turn_speed = -0.003
 		turning = true
-		rotation_vel -= rotation_speed * vel_speed/vel_to_turn_divisor
+		rotation_vel -= rotation_speed * vel_speed/vel_to_turn_divisor * (is_trying_to_move as int * 2 - 1)
 	if Input.is_action_pressed("ui_right"):
 		drift_turn_speed = 0.003
 		turning = true
@@ -117,12 +120,13 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("pause"):
 		$"%Popup".popup_centered()
 		physics = false
+	print(Input.is_action_pressed("restart"))
 	if Input.is_action_just_pressed("restart") or (Input.is_action_pressed("respawn") and last_cp_pos == start_pos and lap == 1):
 		$"%Start Text".visible = true
 		run = {"time": 0, "inputs": [], "splits": [], "input_splits": []}
 		get_tree().call_group("Checkpoint", "reset")
 		position = start_pos
-		#position.y += 512
+		print("restart")
 		vel = Vector2.ZERO
 		dir = Vector2.RIGHT
 		split_on = 0
@@ -227,6 +231,7 @@ func _physics_process(delta):
 	if smooth_zoom >= 1:
 		$Camera2D.zoom = Vector2(2.5, 2.5)
 	$"%No Zoom".scale = $Camera2D.zoom
+	Input.action_release("restart")
 
 func _on_HitWall_timeout():
 	can_hit_wall = true
@@ -311,7 +316,8 @@ func _on_Menu_pressed():
 	get_parent().queue_free()
 
 func _on_Resume_pressed():
-	physics = true
+	if not finishing:
+		physics = true
 	$"%Popup".hide()
 
 
