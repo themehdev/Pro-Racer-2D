@@ -100,18 +100,19 @@ func _physics_process(delta):
 			drifting = true
 		is_trying_to_move = true
 	drift_turn_speed = 0
-#	if vel.normalized() == Vector2.DOWN.rotated(dir.angle()) * b_accel:
-#		moving_forward = false
+	print(vel.rotated(dir.angle()))
+	if vel.normalized() == Vector2.DOWN.rotated(dir.angle()):
+		moving_forward = false
 	if not Input.is_action_pressed("ui_down") and not Input.is_action_pressed("ui_up"):
 		is_trying_to_move = false
 	if Input.is_action_pressed("ui_left"):
 		drift_turn_speed = -0.003
 		turning = true
-		rotation_vel -= rotation_speed * vel_speed/vel_to_turn_divisor * (is_trying_to_move as int * 2 - 1)
+		rotation_vel -= rotation_speed * vel_speed/vel_to_turn_divisor * -sign(vel.rotated(-dir.angle()).y)
 	if Input.is_action_pressed("ui_right"):
 		drift_turn_speed = 0.003
 		turning = true
-		rotation_vel += rotation_speed * vel_speed/vel_to_turn_divisor
+		rotation_vel += rotation_speed * vel_speed/vel_to_turn_divisor * -sign(vel.rotated(-dir.angle()).y)
 	if Input.is_action_pressed("respawn") and (last_cp_pos != start_pos or lap != 1) and physics:
 		position = last_cp_pos
 		vel = Vector2.ZERO
@@ -232,6 +233,7 @@ func _physics_process(delta):
 		$Camera2D.zoom = Vector2(2.5, 2.5)
 	$"%No Zoom".scale = $Camera2D.zoom
 	Input.action_release("restart")
+	moving_forward = true
 
 func _on_HitWall_timeout():
 	can_hit_wall = true
