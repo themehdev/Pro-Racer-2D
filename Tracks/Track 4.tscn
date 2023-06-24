@@ -113,9 +113,9 @@ position = Vector2( 2304, -5632 )
 position = Vector2( 2816, -6656 )
 rotation = -1.5708
 
+[node name="Finish" parent="." instance=ExtResource( 4 )]
+position = Vector2( 5376, -5120 )
+
 [node name="Slant9" parent="." instance=ExtResource( 12 )]
 position = Vector2( 4864, -5632 )
 rotation = 3.14159
-
-[node name="Finish" parent="Slant9" instance=ExtResource( 4 )]
-position = Vector2( -512, -512 )
