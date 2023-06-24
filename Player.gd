@@ -12,7 +12,7 @@ var vel = Vector2(0, 0)
 var dir = Vector2.RIGHT
 var rotation_speed = 0.006
 var rotation_vel = 0
-var accel = 22.5
+var accel = 24
 var b_accel = 15
 var max_speed = 1800
 var friction = 0.01
@@ -301,6 +301,7 @@ func _on_Area2D_area_exited(area):
 
 func _on_Start_timeout():
 	physics = true
+	finishing = true
 	just_physics = true
 	vel = Vector2.ZERO
 	split_on = 0

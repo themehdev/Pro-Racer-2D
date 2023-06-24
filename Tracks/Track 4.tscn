@@ -1,0 +1,121 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Blocks/Straight.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Blocks/Open.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Blocks/Road Checkpoint.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Blocks/Finish.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Blocks/Start.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Blocks/Wider.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Bases/Wall.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Blocks/Curve.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Blocks/Open Checkpoint.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Bases/Sign.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Blocks/Large Curve.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Blocks/Slant.tscn" type="PackedScene" id=12]
+
+[node name="Track 4" type="Node2D"]
+
+[node name="Slant" parent="." instance=ExtResource( 12 )]
+position = Vector2( 256, -768 )
+
+[node name="Straight" parent="." instance=ExtResource( 1 )]
+position = Vector2( 256, -256 )
+
+[node name="Start" parent="." instance=ExtResource( 5 )]
+position = Vector2( 256, 256 )
+
+[node name="Slant4" parent="." instance=ExtResource( 12 )]
+position = Vector2( -256, -1280 )
+
+[node name="Slant3" parent="." instance=ExtResource( 12 )]
+position = Vector2( -768, -1280 )
+rotation = -3.14159
+
+[node name="Slant2" parent="." instance=ExtResource( 12 )]
+position = Vector2( -256, -768 )
+rotation = 3.14159
+
+[node name="Curve" parent="." instance=ExtResource( 8 )]
+position = Vector2( 768, -3328 )
+rotation = 1.5708
+
+[node name="Large Curve" parent="." instance=ExtResource( 11 )]
+position = Vector2( -256, -2816 )
+rotation = -1.5708
+
+[node name="Open Checkpoint" parent="." instance=ExtResource( 9 )]
+position = Vector2( 768, -3840 )
+rotation = 1.5708
+
+[node name="Wider" parent="." instance=ExtResource( 6 )]
+position = Vector2( 768, -4608 )
+rotation = -1.5708
+
+[node name="Wall" parent="." instance=ExtResource( 7 )]
+position = Vector2( 520, -3840 )
+
+[node name="Slant5" parent="." instance=ExtResource( 12 )]
+position = Vector2( 1280, -3840 )
+rotation = 1.5708
+
+[node name="Curve2" parent="." instance=ExtResource( 8 )]
+position = Vector2( 256, -5376 )
+rotation = -1.5708
+
+[node name="Curve3" parent="." instance=ExtResource( 8 )]
+position = Vector2( 256, -4352 )
+rotation = -3.14159
+
+[node name="Open" parent="." instance=ExtResource( 2 )]
+position = Vector2( 1792, -4608 )
+rotation = -1.5708
+
+[node name="Slant6" parent="." instance=ExtResource( 12 )]
+position = Vector2( 1792, -5120 )
+rotation = -1.5708
+
+[node name="Sign" parent="." instance=ExtResource( 10 )]
+position = Vector2( 1280, -5344 )
+rotation = -1.5708
+
+[node name="Road Checkpoint" parent="." instance=ExtResource( 3 )]
+position = Vector2( 256, -4864 )
+rotation = 3.14159
+
+[node name="Open2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 2304, -5120 )
+rotation = 1.5708
+
+[node name="Slant7" parent="." instance=ExtResource( 12 )]
+position = Vector2( 2304, -4608 )
+rotation = 1.5708
+
+[node name="Wall3" parent="." instance=ExtResource( 7 )]
+position = Vector2( 1792, -4360 )
+rotation = 1.5708
+
+[node name="Wall2" parent="." instance=ExtResource( 7 )]
+position = Vector2( 2552, -5120 )
+
+[node name="Road Checkpoint2" parent="." instance=ExtResource( 3 )]
+position = Vector2( -768, -1792 )
+
+[node name="Slant8" parent="." instance=ExtResource( 12 )]
+position = Vector2( 5376, -5632 )
+
+[node name="Large Curve2" parent="." instance=ExtResource( 11 )]
+position = Vector2( 4352, -6656 )
+
+[node name="Road Checkpoint3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 2304, -5632 )
+
+[node name="Large Curve3" parent="." instance=ExtResource( 11 )]
+position = Vector2( 2816, -6656 )
+rotation = -1.5708
+
+[node name="Slant9" parent="." instance=ExtResource( 12 )]
+position = Vector2( 4864, -5632 )
+rotation = 3.14159
+
+[node name="Finish" parent="Slant9" instance=ExtResource( 4 )]
+position = Vector2( -512, -512 )
