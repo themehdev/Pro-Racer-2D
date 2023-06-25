@@ -12,8 +12,8 @@ var vel = Vector2(0, 0)
 var dir = Vector2.RIGHT
 var rotation_speed = 0.006
 var rotation_vel = 0
-var accel = 24
-var b_accel = 15
+var accel = 19
+var b_accel = 12
 var max_speed = 1800
 var friction = 0.01
 var rot_friction = 0.20
@@ -147,10 +147,7 @@ func _physics_process(delta):
 		$Start.start()
 	if(boost_counter > 0):
 		vel += Vector2.UP.rotated(PI * boost_dir/180) * boost_vel
-	if(is_trying_to_move):
-		friction = 0.015
-	else:
-		friction = 0.005
+	friction = 0.01
 	if turning:
 		friction += 0.001
 	

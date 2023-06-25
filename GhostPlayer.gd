@@ -72,6 +72,8 @@ func set_start(args):
 	last_cp_pos = args[0]
 	start_dir = Vector2.RIGHT.rotated(args[1])
 	last_cp_dir = Vector2.RIGHT.rotated(args[1])
+	position = start_pos
+	rotation = args[1]
 	Input.action_press("restart")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -126,7 +128,7 @@ func _physics_process(delta):
 #			vel = Vector2.ZERO
 #			rotation_vel = 0
 #			dir = last_cp_dir
-		if Input.is_action_just_pressed("restart") or (Input.is_action_pressed("respawn") and Global.player.last_cp_pos == start_pos):
+		if Input.is_action_just_pressed("restart") or (Input.is_action_pressed("respawn") and Global.player.last_cp_pos == start_pos and Global.player.lap == 1):
 				#get_tree().call_group("Checkpoint", "reset")
 				input_on = 0
 				position = start_pos

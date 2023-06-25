@@ -3,7 +3,7 @@
 [ext_resource path="res://Bases/Dirt.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Bases/Wall.tscn" type="PackedScene" id=2]
 
-[node name="Straight Dirt" type="Node2D"]
+[node name="Dirt Straight" type="Node2D"]
 
 [node name="Dirt" parent="." instance=ExtResource( 1 )]
 
