@@ -38,14 +38,15 @@ var just_went = true
 var start = 3
 var physics = false
 var just_physics = false
-var last_cp_dir = Vector2.RIGHT
 var finishing = false
 var turning = false
 var run = {"time": 0, "inputs": [], "splits": []}
 var has_popup = false
 var moving_forward = true
 onready var start_pos = Vector2.ZERO
+onready var start_dir = Vector2.RIGHT
 onready var last_cp_pos = start_pos
+onready var last_cp_dir = Vector2.RIGHT
 
 
 
@@ -62,9 +63,12 @@ var traction_types = {
 	"off_road": 0.15
 }
 
-func set_start(pos):
-	start_pos = pos
-	last_cp_pos = pos
+func set_start(args):
+	start_pos = args[0]
+	last_cp_pos = args[0]
+	start_dir = Vector2.RIGHT.rotated(args[1])
+	last_cp_dir = Vector2.RIGHT.rotated(args[1])
+	print(args[1])
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	has_popup = $"%Popup".visible
@@ -100,7 +104,7 @@ func _physics_process(delta):
 			drifting = true
 		is_trying_to_move = true
 	drift_turn_speed = 0
-	print(vel.rotated(dir.angle()))
+	#print(vel.rotated(dir.angle()))
 	if vel.normalized() == Vector2.DOWN.rotated(dir.angle()):
 		moving_forward = false
 	if not Input.is_action_pressed("ui_down") and not Input.is_action_pressed("ui_up"):
@@ -121,15 +125,15 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("pause"):
 		$"%Popup".popup_centered()
 		physics = false
-	print(Input.is_action_pressed("restart"))
+	#print(Input.is_action_pressed("restart"))
 	if Input.is_action_just_pressed("restart") or (Input.is_action_pressed("respawn") and last_cp_pos == start_pos and lap == 1):
 		$"%Start Text".visible = true
 		run = {"time": 0, "inputs": [], "splits": [], "input_splits": []}
 		get_tree().call_group("Checkpoint", "reset")
 		position = start_pos
-		print("restart")
+		#print("restart")
 		vel = Vector2.ZERO
-		dir = Vector2.RIGHT
+		dir = start_dir
 		split_on = 0
 		rotation = dir.angle()
 		rotation_vel = 0
@@ -138,7 +142,7 @@ func _physics_process(delta):
 		timer = 0
 		physics = false
 		last_cp_pos = start_pos
-		last_cp_dir = Vector2.RIGHT
+		last_cp_dir = start_dir
 		lap = 1
 		$Start.start()
 	if(boost_counter > 0):
@@ -148,7 +152,7 @@ func _physics_process(delta):
 	else:
 		friction = 0.005
 	if turning:
-		friction += 0.0005
+		friction += 0.001
 	
 	if(road_counter > 0):
 		traction_type = "road"
@@ -188,7 +192,8 @@ func _physics_process(delta):
 	
 	vel *= (1.0 - friction)
 	if not physics and not finishing and $"%Popup".visible == false:
-		dir = Vector2.RIGHT
+		dir = start_dir
+		rotation = start_dir.angle()
 		position = start_pos
 	elif physics:
 		collision = move_and_collide(vel * delta)
@@ -269,7 +274,7 @@ func _on_Area2D_area_entered(area):
 		run["time"] = timer
 		if timer < Global.tracks[Global.track_playing]["best_run"]["time"] or Global.tracks[Global.track_playing]["best_run"]["time"] == 0:
 			Global.tracks[Global.track_playing]["best_run"] = run
-			print(Global.track_playing)
+			#print(Global.track_playing)
 		physics = false
 		finishing = true
 		#print(run)
@@ -278,7 +283,7 @@ func _on_Area2D_area_entered(area):
 		run["splits"].append(timer)
 		get_tree().call_group("Checkpoint", "reset")
 		last_cp_pos = start_pos
-		last_cp_dir = Vector2.RIGHT
+		last_cp_dir = start_dir
 		$"%Label".text = timer as String
 		if Global.tracks[Global.track_playing]["best_run"]["time"] != 0:
 			$"%Label".text += "\n" + ((timer - Global.tracks[Global.track_playing]["best_run"]["splits"][split_on]) if (timer - Global.tracks[Global.track_playing]["best_run"]["splits"][split_on]) <= 0 else "+" + (timer - Global.tracks[Global.track_playing]["best_run"]["splits"][split_on]) as String) as String
@@ -307,7 +312,7 @@ func _on_Start_timeout():
 	split_on = 0
 	position = start_pos
 	#position.y += 512
-	dir = Vector2.RIGHT
+	dir = start_dir
 	timer = 0
 	rotation_vel = 0
 	get_tree().call_group("Checkpoint", "reset")

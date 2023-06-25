@@ -36,7 +36,6 @@ var just_had_collision = false
 var just_went = true
 var start = 3
 var physics = false
-var last_cp_dir = Vector2.RIGHT
 var finishing = false
 var turning = false
 var input_on = 0
@@ -56,6 +55,8 @@ var traction_types = {
 
 onready var start_pos = Vector2.ZERO
 onready var last_cp_pos = start_pos
+onready var start_dir = Vector2.RIGHT
+onready var last_cp_dir = Vector2.RIGHT
 onready var run = Global.tracks[Global.track_playing]["best_run"]
 onready var input_len
 
@@ -66,9 +67,11 @@ func _ready():
 	position = start_pos
 	visible = false
 
-func set_start(pos):
-	start_pos = pos
-	last_cp_pos = pos
+func set_start(args):
+	start_pos = args[0]
+	last_cp_pos = args[0]
+	start_dir = Vector2.RIGHT.rotated(args[1])
+	last_cp_dir = Vector2.RIGHT.rotated(args[1])
 	Input.action_press("restart")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -129,13 +132,13 @@ func _physics_process(delta):
 				position = start_pos
 				#position.y += 512
 				vel = Vector2.ZERO
-				dir = Vector2.RIGHT
+				dir = start_dir
 				rotation = dir.angle()
 				rotation_vel = 0
 				timer = 0
 				physics = false
 				last_cp_pos = Vector2.ZERO
-				last_cp_dir = Vector2.RIGHT
+				last_cp_dir = start_dir
 				local_cps = 0
 				lap = 1
 				$Start.start()
@@ -264,7 +267,7 @@ func _on_Start_timeout():
 	physics = true
 	position = start_pos
 	#position.y += 512
-	dir = Vector2.RIGHT
+	dir = start_dir
 	timer = 0
 	rotation_vel = 0
 

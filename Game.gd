@@ -18,7 +18,7 @@ func _process(delta):
 	if yay:
 		for i in get_child(2).get_children():
 			if(i.name == "Start"):
-				get_tree().call_group("Player", "set_start", i.position)
+				get_tree().call_group("Player", "set_start", [i.position, i.rotation])
 		yay = false
 		happened = true
 	elif not happened:
