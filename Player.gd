@@ -58,7 +58,7 @@ var can_hit_wall = true
 
 var traction_types = {
 	"road": 0.9,
-	"dirt": 0.5,
+	"dirt": 0.55,
 	"drift": 0.1,
 	"off_road": 0.15
 }
@@ -78,6 +78,7 @@ func _physics_process(delta):
 	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[0])
 	turning = false
 	var vel_speed = abs(vel.x) + abs(vel.y)
+	var acc_vel = vel.rotated(-dir.angle())
 	$"%Start Text".text = ceil($Start.time_left) as String if $Start.time_left != 0 else "Go!"
 	#print(vel_speed)
 	if timer > 1:
@@ -147,19 +148,22 @@ func _physics_process(delta):
 		$Start.start()
 	if(boost_counter > 0):
 		vel += Vector2.UP.rotated(PI * boost_dir/180) * boost_vel
-	friction = 0.01
-	if turning:
-		friction += 0.001
 	
 	if(road_counter > 0):
 		traction_type = "road"
+		friction = 0.01
+		if abs(acc_vel.x) > abs(acc_vel.y):
+			friction += 0.0175
 	elif (dirt_counter > 0): 
 		traction_type = "dirt"
-		friction = 0.012
+		friction = 0.011
+		if abs(acc_vel.x) > abs(acc_vel.y):
+			friction += 0.01
 	else:
 		traction_type = "off_road"
-		friction = 0.02
-	
+		friction = 0.0175
+	if turning:
+		friction += 0.001
 	rotation_vel *= (1.0 - rot_friction)
 	
 	if abs(rotation_vel) < 0.01 or vel_speed < 20 or vel * Vector2.UP.rotated(dir.angle()) < Vector2.ZERO or collision or traction_type == "off_road":
