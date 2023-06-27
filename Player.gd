@@ -58,7 +58,7 @@ var can_hit_wall = true
 
 var traction_types = {
 	"road": 0.9,
-	"dirt": 0.55,
+	"dirt": 0.51,
 	"drift": 0.1,
 	"off_road": 0.15
 }

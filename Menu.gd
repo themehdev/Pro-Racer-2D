@@ -15,7 +15,7 @@ func _ready():
 	for i in Global.num_tracks:
 		var button = $GridContainer/Base.duplicate()
 		button.visible = true
-		button.text = "Track " + (i + 1) as String
+		button.text = "First Time " + (i + 1) as String
 		button.connect("button_up", self, "_button_pressed", [i])
 		$GridContainer.add_child(button)
 
