@@ -218,12 +218,12 @@ func _physics_process(delta):
 #		rotation_vel += 0.1 * vel.length() * 0.002 * collision.normal.dot(vel.normalized())
 		var coll_angle = collision.get_angle(dir.normalized()) if collision.get_angle(dir.normalized()) <= PI/2 else collision.get_angle(dir.normalized()) - PI
 		if(abs(coll_angle) <= PI/4.75):
-			rotation_vel += coll_angle/2
+			rotation_vel += coll_angle/2 * -sign(vel.rotated(-dir.angle()).y)
 			vel = vel.bounce(collision.normal)
 #		elif(collision.get_angle(vel) > PI/6 and collision.get_angle(vel.normalized()) <= PI/4):
 #			rotation_vel += PI/2
 		else:
-			rotation_vel += -(PI/2 * sign(coll_angle) - coll_angle)/4
+			rotation_vel += -(PI/2 * sign(coll_angle) - coll_angle)/4 * -sign(vel.rotated(-dir.angle()).y)
 			vel = Vector2.ZERO
 		can_hit_wall = false
 		just_had_collision = true

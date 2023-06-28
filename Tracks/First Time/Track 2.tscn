@@ -74,5 +74,21 @@ position = Vector2( -4352, -2560 )
 rotation = 1.5708
 
 [node name="Finish" parent="." instance=ExtResource( 6 )]
-position = Vector2( -5888, -2048 )
+position = Vector2( -6400, -4096 )
 rotation = 1.5708
+
+[node name="Dirt Large Slant 4" parent="." instance=ExtResource( 4 )]
+position = Vector2( -7424, -3840 )
+rotation = 1.5708
+
+[node name="Dirt Large Curve2" parent="." instance=ExtResource( 12 )]
+position = Vector2( -6912, -2560 )
+rotation = 3.14159
+
+[node name="Dirt Straight Checkpoint3" parent="." instance=ExtResource( 3 )]
+position = Vector2( -5888, -2048 )
+rotation = -1.5708
+
+[node name="Sign2" parent="." instance=ExtResource( 2 )]
+position = Vector2( -6968, -3848 )
+rotation = 1.0472
