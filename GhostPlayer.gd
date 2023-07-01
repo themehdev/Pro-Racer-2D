@@ -42,6 +42,7 @@ var input_on = 0
 var local_cps = 0
 var local_inputs
 var just_changed = false
+#var old_run
 onready var color = Color("640000ff") if type == "pb" else Color(255, 50, 0, 100)
 
 var can_hit_wall = true
@@ -58,7 +59,7 @@ onready var last_cp_pos = start_pos
 onready var start_dir = Vector2.RIGHT
 onready var last_cp_dir = Vector2.RIGHT
 onready var run = Global.tracks[Global.track_playing]["best_run"]
-onready var input_len
+var input_len = 0
 
 
 
@@ -78,12 +79,16 @@ func set_start(args):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
-	if Global.tracks[Global.track_playing]["best_run"] != run or type == "time":
+	#old_run = run
+	if run["time"] != 0:
+		input_len = len(run["inputs"])
+	if (Global.tracks[Global.track_playing]["best_run"]["time"] != 0 and run["time"] == 0) or type == "time" or input_on >= input_len - 1:
 		physics = false
+#		if not (Global.tracks[Global.track_playing]["best_run"]["time"] == 0 and run["time"] == 0) and input_on >= input_len - 1:
+#
+#			pass
 		just_changed = true
-	if Global.tracks[Global.track_playing]["best_run"]["time"] != 0:
-		input_len = len(Global.tracks[Global.track_playing]["best_run" if type == "pb" else "time"]["inputs"])
-	run = Global.tracks[Global.track_playing]["best_run" if type == "pb" else "time"] 
+		run = Global.tracks[Global.track_playing]["best_run" if type == "pb" else "time"] 
 	
 	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[1])
 	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[0])
@@ -132,6 +137,7 @@ func _physics_process(delta):
 				#get_tree().call_group("Checkpoint", "reset")
 				input_on = 0
 				position = start_pos
+				run = Global.tracks[Global.track_playing]["best_run" if type == "pb" else "time"] 
 				#position.y += 512
 				vel = Vector2.ZERO
 				dir = start_dir

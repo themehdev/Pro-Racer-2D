@@ -20,4 +20,4 @@ func _on_Area2D_area_entered(area):
 
 func _on_Area2D_area_exited(area):
 	if area.get_parent().is_in_group("player"):
-		Global.dirts_on += 1
+		Global.roads_on -= 1

@@ -16,9 +16,12 @@ func _ready():
 
 func _process(delta):
 	if yay:
+		Global.track_has_finish = false
 		for i in get_child(2).get_children():
-			if(i.name == "Start"):
+			if("Start" == i.name):
 				get_tree().call_group("Player", "set_start", [i.position, i.rotation])
+			if("Finish" in i.name):
+				Global.track_has_finish = true
 		yay = false
 		happened = true
 	elif not happened:
