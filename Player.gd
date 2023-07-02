@@ -136,7 +136,7 @@ func _physics_process(delta):
 		position = start_pos
 		#print("restart")
 		vel = Vector2.ZERO
-		dir = start_dir.angle()
+		dir = start_dir
 		split_on = 0
 		rotation = dir.angle()
 		rotation_vel = 0
@@ -230,7 +230,7 @@ func _physics_process(delta):
 #		elif(collision.get_angle(vel) > PI/6 and collision.get_angle(vel.normalized()) <= PI/4):
 #			rotation_vel += PI/2
 		else:
-			rotation_vel += -(PI/2 * sign(coll_angle) - coll_angle)/4 * -sign(vel.rotated(-dir.angle()).y)
+			rotation_vel += -(PI/2 * sign(coll_angle) - coll_angle)/8 * -sign(vel.rotated(-dir.angle()).y)
 			vel = Vector2.ZERO
 		can_hit_wall = false
 		just_had_collision = true
