@@ -12,8 +12,8 @@ var vel = Vector2(0, 0)
 var dir = Vector2.RIGHT
 var rotation_speed = 0.006
 var rotation_vel = 0
-var accel = 19
-var b_accel = 12
+var accel = 20
+var b_accel = 17.5
 var max_speed = 1800
 var friction = 0.01
 var rot_friction = 0.20
@@ -230,7 +230,7 @@ func _physics_process(delta):
 #		elif(collision.get_angle(vel) > PI/6 and collision.get_angle(vel.normalized()) <= PI/4):
 #			rotation_vel += PI/2
 		else:
-			rotation_vel += -(PI/2 * sign(coll_angle) - coll_angle)/8 * -sign(vel.rotated(-dir.angle()).y)
+			#rotation_vel += -(PI/2 * sign(coll_angle) - coll_angle)/4 * -sign(vel.rotated(-dir.angle()).y)
 			vel = Vector2.ZERO
 		can_hit_wall = false
 		just_had_collision = true
