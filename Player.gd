@@ -4,7 +4,7 @@ extends KinematicBody2D
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-var boost_vel = 100
+var boost_vel = 75
 var lap = 1
 var split_on = 0
 var smooth_zoom = 0
@@ -98,20 +98,13 @@ func _physics_process(delta):
 	
 #	if len(run["inputs"]) == 4:
 #		pass
-	if Input.is_action_pressed("ui_up") and physics:
-		vel += Vector2.UP.rotated(dir.angle()) * accel
-		is_trying_to_move = true
-	if Input.is_action_pressed("ui_down") and physics:
-		vel += Vector2.DOWN.rotated(dir.angle()) * b_accel
-		if vel.length_squared() > min_drift_speed * min_drift_speed and abs(rotation_vel) > 0.01:
-			drifting = true
-		is_trying_to_move = true
-	drift_turn_speed = 0
+	
 	#print(vel.rotated(dir.angle()))
 	if vel.normalized() == Vector2.DOWN.rotated(dir.angle()):
 		moving_forward = false
 	if not Input.is_action_pressed("ui_down") and not Input.is_action_pressed("ui_up"):
 		is_trying_to_move = false
+	drift_turn_speed = 0
 	if Input.is_action_pressed("ui_left"):
 		drift_turn_speed = -0.005
 		turning = true
@@ -120,6 +113,14 @@ func _physics_process(delta):
 		drift_turn_speed = 0.005
 		turning = true
 		rotation_vel += rotation_speed * abs(acc_vel.y)/vel_to_turn_divisor * -sign(vel.rotated(-dir.angle()).y)
+	if Input.is_action_pressed("ui_up") and physics:
+		vel += Vector2.UP.rotated(dir.angle()) * accel
+		is_trying_to_move = true
+	if Input.is_action_pressed("ui_down") and physics:
+		vel += Vector2.DOWN.rotated(dir.angle()) * b_accel
+		if vel.length_squared() > min_drift_speed * min_drift_speed and turning:
+			drifting = true
+		is_trying_to_move = true
 	if Input.is_action_pressed("respawn") and (last_cp_pos != start_pos or lap != 1) and physics:
 		position = last_cp_pos
 		vel = Vector2.ZERO
@@ -169,7 +170,7 @@ func _physics_process(delta):
 		friction += 0.001
 	rotation_vel *= (1.0 - rot_friction)
 	
-	if abs(rotation_vel) < 0.01 or vel_speed < 20 or collision or traction_type == "off_road":
+	if not turning or vel_speed < 20 or collision or traction_type == "off_road":
 		drifting = false
 	
 	if drifting:
