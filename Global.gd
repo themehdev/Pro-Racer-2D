@@ -7,7 +7,7 @@ extends Node
 var checkpoints_left = 0
 var total_checkpoints = 0
 var player
-var num_tracks = 4
+var num_tracks = 5
 var track_has_finish = true
 var track_playing = -1
 var tracks = []

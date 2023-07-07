@@ -245,8 +245,8 @@ func _physics_process(delta):
 		#print(log(-0.15497))
 		vel *= lerp(0.2, 0, -abs(boing_angle/(PI/2)) + 1)
 	just_physics = false
-	if smooth_zoom >= vel_speed/1900 + 0.05:
-		smooth_zoom -= 0.05
+	if smooth_zoom >= vel_speed/1900 + 0.025:
+		smooth_zoom -= 0.025
 	else :
 		smooth_zoom = vel_speed/1900
 	$Camera2D.zoom = Vector2(1.5 + smooth_zoom, 1.5 + smooth_zoom)
