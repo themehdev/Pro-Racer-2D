@@ -44,6 +44,7 @@ var turning = false
 var run = {"time": 0, "inputs": [], "splits": []}
 var has_popup = false
 var moving_forward = true
+var start_stopped = false
 onready var start_pos = Vector2.ZERO
 onready var start_dir = Vector2.RIGHT
 onready var last_cp_pos = start_pos
@@ -129,6 +130,10 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("pause"):
 		$"%Popup".popup_centered()
 		physics = false
+		if $Start.time_left != 0:
+			$Start.wait_time = $Start.time_left
+			$Start.stop()
+			start_stopped = true
 	#print(Input.is_action_pressed("restart"))
 	if Input.is_action_just_pressed("restart") or (Input.is_action_pressed("respawn") and last_cp_pos == start_pos and lap == 1):
 		$"%Start Text".visible = true
@@ -170,7 +175,7 @@ func _physics_process(delta):
 		friction += 0.001
 	rotation_vel *= (1.0 - rot_friction)
 	
-	if not turning or vel_speed < 20 or collision or traction_type == "off_road":
+	if not turning or -acc_vel.y + abs(acc_vel.x) < 20 or collision or traction_type == "off_road":
 		drifting = false
 	
 	if drifting:
@@ -198,6 +203,7 @@ func _physics_process(delta):
 		rotation = start_dir.angle()
 		position = start_pos
 	elif physics:
+		$Start.wait_time = 3
 		dir = dir.rotated(rotation_vel)
 		vel = vel.rotated(rotation_vel * traction) #* 1.0 - drift
 		collision = move_and_collide(vel * delta)
@@ -335,9 +341,12 @@ func _on_Menu_pressed():
 	get_parent().queue_free()
 
 func _on_Resume_pressed():
-	if not finishing:
+	if not finishing and not start_stopped:
 		physics = true
 		#print("yay")
+	if start_stopped:
+		$Start.start()
+		start_stopped = false
 	pop_needs_hiding = true
 
 

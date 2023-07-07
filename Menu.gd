@@ -16,6 +16,8 @@ func _ready():
 		var button = $GridContainer/Base.duplicate()
 		button.visible = true
 		button.text = "Intermediate " + (i + 1) as String
+		if Global.tracks[i]["best_run"]["time"] != 0:
+			button.text += "  PB time: " + Global.tracks[i]["best_run"]["time"] as String
 		button.connect("button_up", self, "_button_pressed", [i])
 		$GridContainer.add_child(button)
 
