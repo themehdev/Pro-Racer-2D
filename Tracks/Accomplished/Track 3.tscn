@@ -1,0 +1,194 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Blocks/Dirt Large Curve.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Bases/Wall.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Blocks/Slant.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Blocks/Open Checkpoint.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Blocks/One Wall.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Blocks/Wider.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Blocks/Straight.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Blocks/Start.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Blocks/Road Checkpoint.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Blocks/Open.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Blocks/Curve.tscn" type="PackedScene" id=13]
+[ext_resource path="res://Blocks/BoostPanel.tscn" type="PackedScene" id=15]
+
+[node name="Track 1" type="Node2D"]
+__meta__ = {
+"_edit_horizontal_guides_": [  ]
+}
+
+[node name="One Wall" parent="." instance=ExtResource( 5 )]
+position = Vector2( 5783, -3872 )
+
+[node name="One Wall2" parent="." instance=ExtResource( 5 )]
+position = Vector2( 5786, -3872 )
+rotation = -1.5708
+
+[node name="Start" parent="." instance=ExtResource( 8 )]
+position = Vector2( 0, -512 )
+
+[node name="Straight" parent="." instance=ExtResource( 7 )]
+position = Vector2( 0, -1024 )
+
+[node name="Straight2" parent="." instance=ExtResource( 7 )]
+position = Vector2( 0, -1024 )
+
+[node name="Straight4" parent="." instance=ExtResource( 7 )]
+position = Vector2( 2731, -1315 )
+
+[node name="Straight3" parent="." instance=ExtResource( 7 )]
+position = Vector2( 5284, -3873 )
+rotation = 1.5708
+
+[node name="Curve5" parent="." instance=ExtResource( 13 )]
+position = Vector2( 3297, -4369 )
+
+[node name="Curve8" parent="." instance=ExtResource( 13 )]
+position = Vector2( 2728, -811 )
+rotation = 3.14159
+
+[node name="Curve9" parent="." instance=ExtResource( 13 )]
+position = Vector2( 2735, -1816 )
+
+[node name="Curve6" parent="." instance=ExtResource( 13 )]
+position = Vector2( 3306, -3862 )
+rotation = 3.14159
+
+[node name="Curve7" parent="." instance=ExtResource( 13 )]
+position = Vector2( 3806, -3862 )
+rotation = 1.5708
+
+[node name="Slant2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 4300, -3861 )
+rotation = 3.14159
+
+[node name="Slant3" parent="." instance=ExtResource( 3 )]
+position = Vector2( 2234, -1815 )
+rotation = -1.5708
+
+[node name="Slant5" parent="." instance=ExtResource( 3 )]
+position = Vector2( 2229, -1308 )
+rotation = 1.5708
+
+[node name="Slant7" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1742, -1330 )
+rotation = -1.5708
+
+[node name="Slant8" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1737, -823 )
+rotation = 1.5708
+
+[node name="Slant9" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1244, -839 )
+rotation = -1.5708
+
+[node name="Slant10" parent="." instance=ExtResource( 3 )]
+position = Vector2( 1239, -332 )
+rotation = 1.5708
+
+[node name="Slant11" parent="." instance=ExtResource( 3 )]
+position = Vector2( 742, -348 )
+rotation = -1.5708
+
+[node name="Slant12" parent="." instance=ExtResource( 3 )]
+position = Vector2( 737, 159 )
+rotation = 1.5708
+
+[node name="Slant13" parent="." instance=ExtResource( 3 )]
+position = Vector2( 231, 162 )
+rotation = 3.14159
+
+[node name="Slant14" parent="." instance=ExtResource( 3 )]
+position = Vector2( -121, -161 )
+rotation = 3.14159
+scale = Vector2( 0.5, 0.4 )
+
+[node name="Slant15" parent="." instance=ExtResource( 3 )]
+position = Vector2( 371, -183 )
+scale = Vector2( 0.5, 0.35 )
+
+[node name="Road Checkpoint" parent="." instance=ExtResource( 9 )]
+position = Vector2( 4800, -3872 )
+rotation = 1.5708
+
+[node name="Slant4" parent="." instance=ExtResource( 3 )]
+position = Vector2( 4300, -4373 )
+
+[node name="Slant6" parent="." instance=ExtResource( 3 )]
+position = Vector2( 3810, -4375 )
+rotation = -1.5708
+
+[node name="BoostPanel" parent="." instance=ExtResource( 15 )]
+position = Vector2( 5408, -3992 )
+rotation = 1.5708
+
+[node name="BoostPanel4" parent="." instance=ExtResource( 15 )]
+position = Vector2( 5233, -3763 )
+rotation = 1.5708
+
+[node name="Dirt Large Curve2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 1026, -3321 )
+rotation = -1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Dirt Large Curve3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 4515, -2084 )
+rotation = 1.5708
+scale = Vector2( 2, 2 )
+
+[node name="Wider" parent="." instance=ExtResource( 6 )]
+position = Vector2( -4, -1530 )
+
+[node name="Wider3" parent="." instance=ExtResource( 6 )]
+position = Vector2( 5114, -2421 )
+rotation = 2.86234
+scale = Vector2( 1.05, 1.05 )
+
+[node name="Wider2" parent="." instance=ExtResource( 6 )]
+position = Vector2( 2803, -4356 )
+rotation = -1.5708
+
+[node name="Open Checkpoint" parent="." instance=ExtResource( 4 )]
+position = Vector2( 5116, -2426 )
+rotation = 2.86932
+
+[node name="Wall" parent="." instance=ExtResource( 2 )]
+position = Vector2( -193, -2040 )
+rotation = -1.5324
+
+[node name="Wall2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 307, -2286 )
+rotation = -1.42593
+
+[node name="Wall3" parent="." instance=ExtResource( 2 )]
+position = Vector2( 256, -3074 )
+rotation = 0.832522
+
+[node name="Wall4" parent="." instance=ExtResource( 2 )]
+position = Vector2( 723, -3134 )
+rotation = -0.158825
+
+[node name="Wall5" parent="." instance=ExtResource( 2 )]
+position = Vector2( 597, -3817 )
+rotation = 1.91114
+
+[node name="Wall6" parent="." instance=ExtResource( 2 )]
+position = Vector2( 1320, -3912 )
+rotation = 1.37706
+
+[node name="Wall7" parent="." instance=ExtResource( 2 )]
+position = Vector2( 2123, -4210 )
+rotation = 2.9531
+
+[node name="Wall8" parent="." instance=ExtResource( 2 )]
+position = Vector2( 3850, -1238 )
+rotation = 2.9531
+
+[node name="Wall9" parent="." instance=ExtResource( 2 )]
+position = Vector2( 3450, -822 )
+rotation = 5.42623
+
+[node name="Open" parent="." instance=ExtResource( 12 )]
+position = Vector2( 132, -169 )
+scale = Vector2( 0.5, 0.4 )
