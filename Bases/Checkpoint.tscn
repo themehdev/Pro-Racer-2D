@@ -7,6 +7,7 @@ a = Vector2( -256, 0 )
 b = Vector2( 256, 0 )
 
 [node name="Checkpoint" type="StaticBody2D" groups=["Checkpoint"]]
+z_index = 1
 collision_layer = 3
 script = ExtResource( 1 )
 
