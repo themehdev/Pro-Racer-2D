@@ -19,18 +19,6 @@ rotation = 1.5708
 position = Vector2( 512, -1903 )
 rotation = 1.5708
 
-[node name="Pillar3" parent="." instance=ExtResource( 11 )]
-position = Vector2( 2123, -707 )
-rotation = 1.5708
-
-[node name="Pillar4" parent="." instance=ExtResource( 11 )]
-position = Vector2( 3495, 541 )
-rotation = 1.5708
-
-[node name="Pillar6" parent="." instance=ExtResource( 11 )]
-position = Vector2( 1737, 1042 )
-rotation = 1.5708
-
 [node name="Pillar5" parent="." instance=ExtResource( 11 )]
 position = Vector2( 2864, -198 )
 rotation = 1.5708
@@ -46,6 +34,10 @@ rotation = -1.5708
 [node name="Road Checkpoint5" parent="." instance=ExtResource( 7 )]
 position = Vector2( 1494, 1030 )
 rotation = -1.5708
+
+[node name="Pillar6" parent="." instance=ExtResource( 11 )]
+position = Vector2( 1736, 968 )
+rotation = 1.5708
 
 [node name="Sign2" parent="." instance=ExtResource( 4 )]
 position = Vector2( 3475, 23 )
@@ -79,7 +71,7 @@ position = Vector2( 3006, 1054 )
 rotation = 1.5708
 
 [node name="Large Curve6" parent="." instance=ExtResource( 10 )]
-position = Vector2( 510, 518 )
+position = Vector2( 512, 512 )
 rotation = 3.14159
 
 [node name="Curve4" parent="." instance=ExtResource( 9 )]
@@ -118,12 +110,13 @@ rotation = -1.5708
 position = Vector2( 1491, -2526 )
 rotation = 1.5708
 
+[node name="Pillar4" parent="." instance=ExtResource( 11 )]
+position = Vector2( 3376, 1112 )
+rotation = 1.5708
+
 [node name="Slant10" parent="." instance=ExtResource( 1 )]
 position = Vector2( 1492, -3027 )
 rotation = -1.5708
-
-[node name="Slant11" parent="." instance=ExtResource( 1 )]
-position = Vector2( 1992, -3016 )
 
 [node name="Curve7" parent="." instance=ExtResource( 9 )]
 position = Vector2( 4523, -1457 )
@@ -136,3 +129,10 @@ rotation = 4.71239
 [node name="Curve8" parent="." instance=ExtResource( 9 )]
 position = Vector2( 4532, -954 )
 rotation = 1.5708
+
+[node name="Pillar3" parent="." instance=ExtResource( 11 )]
+position = Vector2( 2056, -624 )
+rotation = 1.5708
+
+[node name="Curve" parent="." instance=ExtResource( 9 )]
+position = Vector2( 1987, -3024 )
