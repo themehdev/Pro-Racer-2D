@@ -28,8 +28,7 @@ position = Vector2( 1988, -1504 )
 rotation = 3.14159
 
 [node name="Road Checkpoint4" parent="." instance=ExtResource( 7 )]
-position = Vector2( 4028, -955 )
-rotation = -1.5708
+position = Vector2( 5048, -1480 )
 
 [node name="Road Checkpoint5" parent="." instance=ExtResource( 7 )]
 position = Vector2( 1494, 1030 )
@@ -75,7 +74,7 @@ position = Vector2( 512, 512 )
 rotation = 3.14159
 
 [node name="Curve4" parent="." instance=ExtResource( 9 )]
-position = Vector2( 5035, -1457 )
+position = Vector2( 5048, -1976 )
 
 [node name="Slant4" parent="." instance=ExtResource( 1 )]
 position = Vector2( -1, -1534 )
@@ -119,7 +118,7 @@ position = Vector2( 1492, -3027 )
 rotation = -1.5708
 
 [node name="Curve7" parent="." instance=ExtResource( 9 )]
-position = Vector2( 4523, -1457 )
+position = Vector2( 4536, -1976 )
 rotation = 4.71239
 
 [node name="Curve9" parent="." instance=ExtResource( 9 )]
@@ -127,12 +126,19 @@ position = Vector2( 3514, -955 )
 rotation = 4.71239
 
 [node name="Curve8" parent="." instance=ExtResource( 9 )]
-position = Vector2( 4532, -954 )
+position = Vector2( 4544, -960 )
 rotation = 1.5708
 
 [node name="Pillar3" parent="." instance=ExtResource( 11 )]
 position = Vector2( 2056, -624 )
 rotation = 1.5708
 
+[node name="Straight4" parent="." instance=ExtResource( 2 )]
+position = Vector2( 4536, -1472 )
+
 [node name="Curve" parent="." instance=ExtResource( 9 )]
 position = Vector2( 1987, -3024 )
+
+[node name="Straight6" parent="." instance=ExtResource( 2 )]
+position = Vector2( 4032, -952 )
+rotation = 1.5708
