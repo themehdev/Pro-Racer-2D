@@ -98,7 +98,6 @@ rotation = 1.5708
 
 [node name="BoostPanel" parent="." instance=ExtResource( 11 )]
 position = Vector2( 280, 720 )
-scale = Vector2( 5, 8 )
 
 [node name="Sign2" parent="." instance=ExtResource( 2 )]
 position = Vector2( 656, 1648 )
