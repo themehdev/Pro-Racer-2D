@@ -174,12 +174,18 @@ rotation = -1.5708
 position = Vector2( 2736, -808 )
 rotation = 3.14159
 
+[node name="Pillar3" parent="." instance=ExtResource( 8 )]
+position = Vector2( 4064, -3752 )
+rotation = -1.5708
+
+[node name="Pillar4" parent="." instance=ExtResource( 8 )]
+position = Vector2( 4064, -3976 )
+rotation = -1.5708
+
 [node name="Wider5" parent="." instance=ExtResource( 9 )]
 position = Vector2( 4328, -3864 )
 rotation = -1.5708
 
-[node name="Pillar" parent="Wider5" instance=ExtResource( 8 )]
-position = Vector2( 112, -264 )
-
-[node name="Pillar2" parent="Wider5" instance=ExtResource( 8 )]
-position = Vector2( -112, -264 )
+[node name="Straight4" parent="." instance=ExtResource( 1 )]
+position = Vector2( 2232, -1320 )
+rotation = 1.5708
