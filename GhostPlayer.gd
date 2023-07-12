@@ -94,14 +94,24 @@ func _physics_process(delta):
 	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[0])
 	if run["time"] != 0:
 		visible = true
-		if not physics and not Global.player.has_popup:
+		if Global.player.pop_needs_hiding and $Start.wait_time == 3:
+			physics = true
+		if not physics and not Global.player.has_popup and ($Start.time_left != 0):
 			input_on = 0
 		if physics and not Global.player.has_popup and input_on < input_len - 1:
 			input_on += 1
 		local_inputs = run["inputs"][input_on]
 		if physics:
+			$Start.wait_time = 3
 			position = local_inputs["pos"]
 			rotation = local_inputs["dir"]
+		if Global.player.start_stopped:
+			$Start.start()
+		if Input.is_action_just_pressed("pause"):
+			physics = false
+			if $Start.time_left != 0:
+				$Start.wait_time = $Start.time_left
+				$Start.stop()
 			#print(position)
 #		turning = false
 #		var vel_speed = abs(vel.x) + abs(vel.y)
