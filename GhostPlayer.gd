@@ -94,24 +94,24 @@ func _physics_process(delta):
 	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[0])
 	if run["time"] != 0:
 		visible = true
-		if Global.player.pop_needs_hiding and $Start.wait_time == 3:
-			physics = true
-		if not physics and not Global.player.has_popup and ($Start.time_left != 0):
-			input_on = 0
-		if physics and not Global.player.has_popup and input_on < input_len - 1:
+		if not Global.player.finishing:
+			physics = Global.player.physics
+			
+		if physics and input_on < input_len - 2 and $Start.time_left == 0:
 			input_on += 1
+			
 		local_inputs = run["inputs"][input_on]
 		if physics:
 			$Start.wait_time = 3
 			position = local_inputs["pos"]
 			rotation = local_inputs["dir"]
-		if Global.player.start_stopped:
-			$Start.start()
-		if Input.is_action_just_pressed("pause"):
-			physics = false
-			if $Start.time_left != 0:
-				$Start.wait_time = $Start.time_left
-				$Start.stop()
+#		if Global.player.start_stopped and not Global.player.has_popup:
+#			$Start.start()
+#		if Input.is_action_just_pressed("pause"):
+#			physics = false
+#			if $Start.time_left != 0:
+#				$Start.wait_time = $Start.time_left
+#				$Start.stop()
 			#print(position)
 #		turning = false
 #		var vel_speed = abs(vel.x) + abs(vel.y)
@@ -149,17 +149,17 @@ func _physics_process(delta):
 				position = start_pos
 				run = Global.tracks[Global.track_playing]["best_run" if type == "pb" else "time"] 
 				#position.y += 512
-				vel = Vector2.ZERO
+#				vel = Vector2.ZERO
 				dir = start_dir
 				rotation = dir.angle()
-				rotation_vel = 0
-				timer = 0
-				physics = false
-				last_cp_pos = Vector2.ZERO
-				last_cp_dir = start_dir
-				local_cps = 0
-				lap = 1
-				$Start.start()
+#				rotation_vel = 0
+#				timer = 0
+#				physics = false
+#				last_cp_pos = Vector2.ZERO
+#				last_cp_dir = start_dir
+#				local_cps = 0
+#				lap = 1
+#				$Start.start()
 #		if(is_trying_to_move):
 #			friction = 0.015
 #		else:
@@ -282,10 +282,7 @@ func _on_Area2D_area_exited(area):
 #
 func _on_Start_timeout():
 	input_on = 0
-	physics = true
 	position = start_pos
 	#position.y += 512
 	dir = start_dir
-	timer = 0
-	rotation_vel = 0
 

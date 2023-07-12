@@ -351,4 +351,4 @@ func _on_Resume_pressed():
 
 
 func _on_Player_tree_exited():
-	Global.player = {"has_popup" : false}
+	Global.player = {"physics" : false, "finishing": false}

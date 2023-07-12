@@ -66,4 +66,12 @@ position = Vector2( -2816, 2048 )
 rotation = 1.5708
 
 [node name="Finish" parent="." instance=ExtResource( 10 )]
+position = Vector2( -1792, 2304 )
+
+[node name="Curve3" parent="." instance=ExtResource( 2 )]
+position = Vector2( -1792, 2816 )
+rotation = 1.5708
+
+[node name="Curve4" parent="." instance=ExtResource( 2 )]
 position = Vector2( -2304, 2816 )
+rotation = 3.14159
