@@ -60,7 +60,7 @@ var can_hit_wall = true
 
 var traction_types = {
 	"road": 0.9,
-	"dirt": 0.51,
+	"dirt": 0.45,
 	"drift": 0.15,
 	"off_road": 0.25
 }
@@ -165,9 +165,9 @@ func _physics_process(delta):
 			friction += 0.0175
 	elif (dirt_counter > 0): 
 		traction_type = "dirt"
-		friction = 0.011
+		friction = 0.01125
 		if abs(acc_vel.x) > abs(acc_vel.y):
-			friction += 0.01
+			friction += 0.00825
 	else:
 		traction_type = "off_road"
 		friction = 0.0175
