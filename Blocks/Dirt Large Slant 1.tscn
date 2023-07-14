@@ -18,6 +18,7 @@ color = Color( 0.368627, 0.235294, 0.152941, 1 )
 polygon = PoolVector2Array( 512, 248, 512, -256, -496, -256 )
 
 [node name="Wall" type="StaticBody2D" parent="." groups=["Wall"]]
+z_index = 1
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wall"]
 polygon = PoolVector2Array( 512, 248, 512, 256, -512, -256, -496, -256 )
