@@ -24,7 +24,7 @@ position = Vector2( 2864, -198 )
 rotation = 1.5708
 
 [node name="Road Checkpoint3" parent="." instance=ExtResource( 7 )]
-position = Vector2( 1988, -1504 )
+position = Vector2( 1987, -1512 )
 rotation = 3.14159
 
 [node name="Road Checkpoint4" parent="." instance=ExtResource( 7 )]
@@ -59,7 +59,7 @@ position = Vector2( 1987, -2017 )
 position = Vector2( 3516, -457 )
 
 [node name="Large Curve3" parent="." instance=ExtResource( 10 )]
-position = Vector2( 2501, -479 )
+position = Vector2( 2504, -488 )
 rotation = 3.14159
 
 [node name="Large Curve4" parent="." instance=ExtResource( 10 )]
@@ -123,7 +123,7 @@ position = Vector2( 4544, -1976 )
 rotation = 4.71239
 
 [node name="Curve9" parent="." instance=ExtResource( 9 )]
-position = Vector2( 3514, -955 )
+position = Vector2( 3528, -952 )
 rotation = 4.71239
 
 [node name="Curve8" parent="." instance=ExtResource( 9 )]
