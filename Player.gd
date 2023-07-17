@@ -175,7 +175,7 @@ func _physics_process(delta):
 		friction += 0.001
 	rotation_vel *= (1.0 - rot_friction)
 	
-	if not turning or -acc_vel.y + abs(acc_vel.x) < 20 or collision or traction_type == "off_road":
+	if not turning or -acc_vel.y + abs(acc_vel.x) < 100 or collision or traction_type == "off_road" or abs(rotation_vel) < 0.005:
 		drifting = false
 	
 	if drifting:
