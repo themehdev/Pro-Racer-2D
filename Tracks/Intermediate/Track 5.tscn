@@ -5,7 +5,7 @@
 [ext_resource path="res://Blocks/Slant.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Blocks/Large Slant 1.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Blocks/Road Checkpoint.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Bases/Pillar.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Blocks/Pillar.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Bases/Wall.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Blocks/Finish.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Blocks/Curve.tscn" type="PackedScene" id=16]

@@ -7,12 +7,12 @@ z_index = 1
 collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionPolygon2D" parent="Wall"]
-polygon = PoolVector2Array( -256, -240, -256, -256, -256, -256, -240, -256, -120, -240, -8, -192, 112, -104, 184, 0, 240, 120, 256, 240, 256, 256, 240, 256, 224, 120, 168, 8, 104, -88, -16, -176, -128, -224 )
+polygon = PoolVector2Array( -256, -240, -256, -256, -256, -256, -240, -256, -120, -240, 0, -192, 112, -104, 184, 0, 240, 120, 256, 240, 256, 256, 240, 256, 224, 120, 168, 8, 104, -88, -8, -176, -128, -224 )
 one_way_collision_margin = 10.0
 
 [node name="Polygon2D" type="Polygon2D" parent="Wall"]
 color = Color( 0.533333, 0.533333, 0.533333, 1 )
-polygon = PoolVector2Array( -256, -240, -256, -256, -256, -256, -240, -256, -120, -240, -8, -192, 112, -104, 184, 0, 240, 120, 256, 240, 256, 256, 240, 256, 224, 120, 168, 8, 104, -88, -16, -176, -128, -224 )
+polygon = PoolVector2Array( -256, -240, -256, -256, -256, -256, -240, -256, -120, -240, 0, -192, 112, -104, 184, 0, 240, 120, 256, 240, 256, 256, 240, 256, 224, 120, 168, 8, 104, -88, -8, -176, -128, -224 )
 
 [node name="Wall2" type="StaticBody2D" parent="." groups=["Wall"]]
 visible = false
@@ -31,15 +31,15 @@ polygon = PoolVector2Array( -256, 256, -256, 240, -240, 256 )
 collision_layer = 3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Road"]
-polygon = PoolVector2Array( -256, -240, -128, -224, -16, -176, 104, -88, 176, 16, 224, 120, 240, 256, -256, 256, -256, 239.114 )
+polygon = PoolVector2Array( -256, -240, -128, -224, -8, -176, 104, -88, 176, 16, 224, 120, 240, 256, -256, 256, -256, 239.114 )
 disabled = true
 
 [node name="Area2D" type="Area2D" parent="Road"]
 collision_layer = 3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Road/Area2D"]
-polygon = PoolVector2Array( -256, -240, -128, -224, -16, -176, 104, -88, 176, 16, 224, 120, 240, 256, -256, 256, -256, 239.114 )
+polygon = PoolVector2Array( -256, -240, -128, -224, -8, -176, 104, -88, 176, 16, 224, 120, 240, 256, -256, 256, -256, 239.114 )
 
 [node name="Polygon2D" type="Polygon2D" parent="Road"]
 color = Color( 0.223529, 0.223529, 0.223529, 1 )
-polygon = PoolVector2Array( -256, -240, -128, -224, -16, -176, 104, -88, 176, 16, 224, 120, 240, 256, -256, 256, -256, 239.114 )
+polygon = PoolVector2Array( -256, -240, -128, -224, -8, -176, 104, -88, 176, 16, 224, 120, 240, 256, -256, 256, -256, 239.114 )

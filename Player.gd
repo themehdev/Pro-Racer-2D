@@ -232,7 +232,8 @@ func _physics_process(delta):
 		var boing_angle = collision.get_angle(vel.normalized()) if collision.get_angle(vel.normalized()) <= PI/2 else collision.get_angle(vel.normalized()) - PI
 		#print(-abs(boing_angle/(PI/2)) + 1)
 		if(abs(coll_angle) <= PI/4.75):
-			rotation_vel += coll_angle/2 * -sign(vel.rotated(-dir.angle()).y)
+			print((collision.get_position() - position).rotated(dir.angle()).y)
+			rotation_vel += coll_angle/2 * -sign((collision.get_position() - position).rotated(-dir.angle()).y)
 			vel = vel.bounce(collision.normal)
 #		elif(collision.get_angle(vel) > PI/6 and collision.get_angle(vel.normalized()) <= PI/4):
 #			rotation_vel += PI/2

@@ -7,7 +7,7 @@
 [ext_resource path="res://Blocks/Road Checkpoint.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Blocks/Curve.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Blocks/Large Curve.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Bases/Pillar.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Blocks/Pillar.tscn" type="PackedScene" id=11]
 
 [node name="Track 1" type="Node2D"]
 
