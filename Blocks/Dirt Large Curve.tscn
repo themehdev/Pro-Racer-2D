@@ -19,7 +19,7 @@ z_index = 1
 collision_layer = 3
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wall2"]
-polygon = PoolVector2Array( 272, 768, 256, 768, 216, 504, 112, 264, -52, 52, -256, -112, -480, -208, -768, -256, -768, -272, -480, -224, -248, -128, -40, 40, 128, 256, 232, 504 )
+polygon = PoolVector2Array( 272, 768, 256, 768, 216, 504, 112, 256, -52, 52, -256, -112, -480, -208, -768, -256, -768, -272, -480, -224, -248, -128, -40, 40, 128, 248, 232, 504 )
 one_way_collision_margin = 10.0
 
 [node name="Polygon2D" type="Polygon2D" parent="Wall2"]
