@@ -165,7 +165,7 @@ func _physics_process(delta):
 			friction += 0.0175
 	elif (dirt_counter > 0): 
 		traction_type = "dirt"
-		friction = 0.01125
+		friction = 0.01075
 		if abs(acc_vel.x) > abs(acc_vel.y):
 			friction += 0.00825
 	else:
@@ -278,19 +278,19 @@ func _on_Area2D_area_entered(area):
 #		last_cp_pos.y -= 206
 		last_cp_dir = Vector2.RIGHT.rotated(block.rotation_degrees * PI/180)
 		$"%Label".text = timer as String
-		if Global.tracks[Global.track_playing]["best_run"]["time"] != 0:
-			$"%Label".text += "\n" + ((timer - Global.tracks[Global.track_playing]["best_run"]["splits"][split_on]) if (timer - Global.tracks[Global.track_playing]["best_run"]["splits"][split_on]) <= 0 else "+" + (timer - Global.tracks[Global.track_playing]["best_run"]["splits"][split_on]) as String) as String
+		if Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"] != 0:
+			$"%Label".text += "\n" + ((timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["splits"][split_on]) if (timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["splits"][split_on]) <= 0 else "+" + (timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["splits"][split_on]) as String) as String
 		Global.checkpoints_left -= 1
 		split_on += 1
 	if ((parent.is_in_group("Finish") or (parent.is_in_group("Start") and lap == 3)) and Global.checkpoints_left == 0):
 		run["inputs"].append({"pos": position, "dir" : rotation})
 		#run["input_splits"].append(timer)
 		$"%No Zoom/Label".text = "Finish!: " + timer as String
-		if Global.tracks[Global.track_playing]["best_run"]["time"] != 0:
-			$"%No Zoom/Label".text += "\n" + ((timer - Global.tracks[Global.track_playing]["best_run"]["time"]) if (timer - Global.tracks[Global.track_playing]["best_run"]["time"]) <= 0 else "+" + (timer - Global.tracks[Global.track_playing]["best_run"]["time"]) as String) as String
+		if Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"] != 0:
+			$"%No Zoom/Label".text += "\n" + ((timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"]) if (timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"]) <= 0 else "+" + (timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"]) as String) as String
 		run["time"] = timer
-		if timer < Global.tracks[Global.track_playing]["best_run"]["time"] or Global.tracks[Global.track_playing]["best_run"]["time"] == 0:
-			Global.tracks[Global.track_playing]["best_run"] = run
+		if timer < Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"] or Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"] == 0:
+			Global.tracks[Global.sec_playing][Global.track_playing]["best_run"] = run
 			#print(Global.track_playing)
 		physics = false
 		finishing = true
@@ -302,8 +302,8 @@ func _on_Area2D_area_entered(area):
 		last_cp_pos = start_pos
 		last_cp_dir = start_dir
 		$"%Label".text = timer as String
-		if Global.tracks[Global.track_playing]["best_run"]["time"] != 0:
-			$"%Label".text += "\n" + ((timer - Global.tracks[Global.track_playing]["best_run"]["splits"][split_on]) if (timer - Global.tracks[Global.track_playing]["best_run"]["splits"][split_on]) <= 0 else "+" + (timer - Global.tracks[Global.track_playing]["best_run"]["splits"][split_on]) as String) as String
+		if Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"] != 0:
+			$"%Label".text += "\n" + ((timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["splits"][split_on]) if (timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["splits"][split_on]) <= 0 else "+" + (timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["splits"][split_on]) as String) as String
 		$"%Label".text += "\n" + ("Last lap!" if 3 - lap == 1 else (3 - lap) as String + " laps to go!")
 		lap += 1
 		split_on += 1
@@ -336,7 +336,7 @@ func _on_Start_timeout():
 	get_tree().call_group("Checkpoint", "reset")
 
 func _on_Menu_pressed():
-	get_tree().change_scene("res://Menu.tscn")
+	get_tree().change_scene("res://Main Menu.tscn")
 	$"%Popup".hide()
 	get_parent().get_child(0).queue_free()
 	get_parent().queue_free()
