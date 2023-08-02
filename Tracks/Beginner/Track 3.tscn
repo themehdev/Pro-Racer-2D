@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Blocks/Large Slant 2.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Blocks/Curve.tscn" type="PackedScene" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://Blocks/Dirt Large Curve.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Blocks/Straight.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Blocks/Road Checkpoint.tscn" type="PackedScene" id=14]
+[ext_resource path="res://Blocks/Mid Curve.tscn" type="PackedScene" id=15]
 
 [node name="Track 3" type="Node2D"]
 
@@ -76,19 +77,15 @@ position = Vector2( -5680, 456 )
 rotation = -1.91986
 
 [node name="Finish" parent="." instance=ExtResource( 11 )]
-position = Vector2( -8960, -1280 )
+position = Vector2( -8448, -768 )
 rotation = 1.5708
 
 [node name="Sign4" parent="." instance=ExtResource( 3 )]
 position = Vector2( -1208, -3104 )
 rotation = -1.0472
 
-[node name="Large Curve3" parent="." instance=ExtResource( 9 )]
-position = Vector2( -7936, 256 )
-rotation = 3.14159
-
 [node name="Curve2" parent="." instance=ExtResource( 2 )]
-position = Vector2( -8448, -1280 )
+position = Vector2( -7936, -768 )
 
 [node name="Road Checkpoint" parent="." instance=ExtResource( 14 )]
 position = Vector2( -6912, 768 )
@@ -99,4 +96,8 @@ position = Vector2( -5032, -264 )
 rotation = -2.53073
 
 [node name="Straight" parent="." instance=ExtResource( 13 )]
-position = Vector2( -8448, -768 )
+position = Vector2( -7936, -256 )
+
+[node name="Mid Curve" parent="." instance=ExtResource( 15 )]
+position = Vector2( -7424, 256 )
+rotation = 3.14159

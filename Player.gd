@@ -250,9 +250,9 @@ func _physics_process(delta):
 		smooth_zoom -= 0.025
 	else :
 		smooth_zoom = vel_speed/1900
-	$Camera2D.zoom = Vector2(1.5 + smooth_zoom, 1.5 + smooth_zoom)
+	$Camera2D.zoom = Vector2(1.75 + smooth_zoom * 1.5, 1.75 + smooth_zoom * 1.5)
 	if smooth_zoom >= 1:
-		$Camera2D.zoom = Vector2(2.5, 2.5)
+		$Camera2D.zoom = Vector2(3.25, 3.25)
 	$"%No Zoom".scale = $Camera2D.zoom
 	Input.action_release("restart")
 	moving_forward = true

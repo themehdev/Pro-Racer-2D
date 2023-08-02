@@ -156,17 +156,12 @@ position = Vector2( 256, 768 )
 rotation = 3.14159
 
 [node name="Dirt Straight3" parent="." instance=ExtResource( 9 )]
-position = Vector2( -2304, 768 )
+position = Vector2( -1280, 2816 )
+rotation = 1.5708
 
 [node name="Dirt Large Slant 7" parent="." instance=ExtResource( 6 )]
 position = Vector2( -2304, 1536 )
 rotation = 1.5708
-
-[node name="Dirt Straight" parent="Dirt Large Slant 7" instance=ExtResource( 9 )]
-position = Vector2( 1280, -1024 )
-
-[node name="Finish" parent="." instance=ExtResource( 2 )]
-position = Vector2( -2304, 256 )
 
 [node name="Finish2" parent="." instance=ExtResource( 2 )]
 position = Vector2( -1792, 1280 )
@@ -178,3 +173,10 @@ position = Vector2( 256, -3328 )
 [node name="Dirt Mid Curve" parent="." instance=ExtResource( 3 )]
 position = Vector2( -768, 2304 )
 rotation = 1.5708
+
+[node name="Finish" parent="." instance=ExtResource( 2 )]
+position = Vector2( -3328, 256 )
+rotation = 1.5708
+
+[node name="Dirt Mid Curve2" parent="." instance=ExtResource( 3 )]
+position = Vector2( -2816, 768 )
