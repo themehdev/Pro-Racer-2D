@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Blocks/Large Slant 2.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Blocks/Finish.tscn" type="PackedScene" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://Blocks/Pillar.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Blocks/Large Slant 1.tscn" type="PackedScene" id=14]
 [ext_resource path="res://Blocks/Straight.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Blocks/One Wall.tscn" type="PackedScene" id=16]
 
 [node name="Track 2" type="Node2D"]
 
@@ -92,10 +93,13 @@ position = Vector2( 4160, -1984 )
 rotation = -1.5708
 
 [node name="Pillar" parent="." instance=ExtResource( 13 )]
-position = Vector2( 2696, -520 )
+position = Vector2( 2648, -528 )
 
 [node name="Road Checkpoint" parent="." instance=ExtResource( 5 )]
 position = Vector2( 5696, -3520 )
+
+[node name="Pillar4" parent="." instance=ExtResource( 13 )]
+position = Vector2( 2768, -528 )
 
 [node name="Slant4" parent="." instance=ExtResource( 6 )]
 position = Vector2( 4672, -2496 )
@@ -121,7 +125,7 @@ position = Vector2( 5696, -3008 )
 rotation = 1.5708
 
 [node name="Pillar3" parent="." instance=ExtResource( 13 )]
-position = Vector2( 3584, -552 )
+position = Vector2( 3520, -560 )
 
 [node name="Straight" parent="." instance=ExtResource( 15 )]
 position = Vector2( 5696, -4032 )
@@ -147,13 +151,6 @@ position = Vector2( 3904, -6080 )
 position = Vector2( 3136, -5312 )
 rotation = -1.5708
 
-[node name="Finish" parent="." instance=ExtResource( 2 )]
-position = Vector2( 1344, -3264 )
-
-[node name="Finish2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 320, -2752 )
-rotation = 1.5708
-
 [node name="Sign2" parent="." instance=ExtResource( 10 )]
 position = Vector2( 3472, -5312 )
 rotation = 3.49066
@@ -161,3 +158,75 @@ rotation = 3.49066
 [node name="Sign3" parent="." instance=ExtResource( 10 )]
 position = Vector2( 4032, -5856 )
 rotation = -2.26893
+
+[node name="Curve5" parent="." instance=ExtResource( 12 )]
+position = Vector2( 320, -3264 )
+rotation = 3.14159
+
+[node name="Curve6" parent="." instance=ExtResource( 12 )]
+position = Vector2( 320, -3776 )
+rotation = -1.5708
+
+[node name="Road Checkpoint5" parent="." instance=ExtResource( 5 )]
+position = Vector2( 832, -5312 )
+
+[node name="Curve8" parent="." instance=ExtResource( 12 )]
+position = Vector2( 832, -5824 )
+
+[node name="Road Checkpoint4" parent="." instance=ExtResource( 5 )]
+position = Vector2( 832, -4800 )
+
+[node name="Road Checkpoint3" parent="." instance=ExtResource( 5 )]
+position = Vector2( 832, -4288 )
+
+[node name="Curve7" parent="." instance=ExtResource( 12 )]
+position = Vector2( 832, -3776 )
+rotation = 1.5708
+
+[node name="Straight3" parent="." instance=ExtResource( 15 )]
+position = Vector2( 448, -5824 )
+rotation = 1.5708
+scale = Vector2( 1, 0.5 )
+
+[node name="Straight4" parent="." instance=ExtResource( 15 )]
+position = Vector2( 64, -5312 )
+
+[node name="Curve9" parent="." instance=ExtResource( 12 )]
+position = Vector2( 64, -5824 )
+rotation = -1.5708
+
+[node name="Slant9" parent="." instance=ExtResource( 6 )]
+position = Vector2( -448, -4800 )
+rotation = -1.5708
+
+[node name="Side Wide 6" parent="." instance=ExtResource( 14 )]
+position = Vector2( 64, -4544 )
+rotation = -1.5708
+
+[node name="One Wall" parent="." instance=ExtResource( 16 )]
+position = Vector2( -448, -4288 )
+rotation = 1.5708
+
+[node name="Curve10" parent="." instance=ExtResource( 12 )]
+position = Vector2( -960, -3776 )
+rotation = -3.14159
+
+[node name="Finish2" parent="." instance=ExtResource( 2 )]
+position = Vector2( -448, -3776 )
+rotation = 1.5708
+
+[node name="One Wall2" parent="." instance=ExtResource( 16 )]
+position = Vector2( -960, -4288 )
+rotation = -1.5708
+
+[node name="Sign4" parent="." instance=ExtResource( 10 )]
+position = Vector2( 1160, -3000 )
+rotation = -1.22173
+
+[node name="Large Curve4" parent="." instance=ExtResource( 3 )]
+position = Vector2( -1984, -4800 )
+rotation = 3.14159
+
+[node name="Finish" parent="." instance=ExtResource( 2 )]
+position = Vector2( -2456, -5568 )
+scale = Vector2( 1, 1 )
