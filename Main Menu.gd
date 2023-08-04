@@ -42,7 +42,7 @@ func _on_Advanced_pressed():
 	queue_free()
 
 
-func _on_Master_pressed():
-	Global.sec_playing = "Master"
+func _on_Professional_pressed():
+	Global.sec_playing = "Professional"
 	get_tree().change_scene("res://Menu.tscn")
 	queue_free()

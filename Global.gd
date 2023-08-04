@@ -11,8 +11,8 @@ var num_tracks = 5
 var track_has_finish = true
 var sec_playing = 0
 var track_playing = -1
-var times_to_beat = {"Beginner": [0, 0, 0, 0, 0], "Intermediate": [0, 0, 0, 0, 0], "Accomplished": [0, 0, 0, 0, 0], "Advanced": [0, 0, 0, 0, 0], "Master": [0, 0, 0, 0, 0]}
-var tracks = {"Beginner": [], "Intermediate": [], "Accomplished": [], "Advanced": [], "Master": []}
+var times_to_beat = {"Beginner": [0, 0, 0, 0, 0], "Intermediate": [0, 0, 0, 0, 0], "Accomplished": [0, 0, 0, 0, 0], "Advanced": [0, 0, 0, 0, 0], "Professional": [0, 0, 0, 0, 0]}
+var tracks = {"Beginner": [], "Intermediate": [], "Accomplished": [], "Advanced": [], "Professional": []}
 var best_time = {"time": 0}
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -25,7 +25,7 @@ func _ready():
 	for i in num_tracks:
 		tracks["Advanced"].append({"track": load("res://Tracks/Advanced/Track " + (i + 1) as String + ".tscn"), "best_run": {"time": 0}, "time": times_to_beat["Advanced"][i]})
 	for i in num_tracks:
-		tracks["Master"].append({"track": load("res://Tracks/Master/Track " + (i + 1) as String + ".tscn"), "best_run": {"time": 0}, "time": times_to_beat["Master"][i]})
+		tracks["Professional"].append({"track": load("res://Tracks/Professional/Track " + (i + 1) as String + ".tscn"), "best_run": {"time": 0}, "time": times_to_beat["Professional"][i]})
 	
 
 #func process(delta):

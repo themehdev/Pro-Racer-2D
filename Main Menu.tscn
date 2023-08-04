@@ -36,15 +36,15 @@ margin_bottom = 479.0
 size_flags_vertical = 3
 text = "Advanced"
 
-[node name="Master" type="Button" parent="VBoxContainer"]
+[node name="Professional" type="Button" parent="VBoxContainer"]
 margin_top = 483.0
 margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_vertical = 3
-text = "Master"
+text = "Professional"
 
 [connection signal="pressed" from="VBoxContainer/Beginner" to="." method="_on_Beginner_pressed"]
 [connection signal="pressed" from="VBoxContainer/Intermediate" to="." method="_on_Intermediate_pressed"]
 [connection signal="pressed" from="VBoxContainer/Accomplished" to="." method="_on_Accomplished_pressed"]
 [connection signal="pressed" from="VBoxContainer/Advanced" to="." method="_on_Advanced_pressed"]
-[connection signal="pressed" from="VBoxContainer/Master" to="." method="_on_Master_pressed"]
+[connection signal="pressed" from="VBoxContainer/Professional" to="." method="_on_Professional_pressed"]

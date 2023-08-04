@@ -228,5 +228,5 @@ position = Vector2( -1984, -4800 )
 rotation = 3.14159
 
 [node name="Finish" parent="." instance=ExtResource( 2 )]
-position = Vector2( -2456, -5568 )
+position = Vector2( -2496, -5816 )
 scale = Vector2( 1, 1 )
