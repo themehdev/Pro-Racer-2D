@@ -14,7 +14,7 @@
 [ext_resource path="res://Blocks/Curve.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Blocks/Large Slant 2.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Blocks/Sign.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Blocks/Open Checkpoint.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Blocks/Road Checkpoint.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Blocks/Dirt Large Slant 1.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Blocks/Mid Curve.tscn" type="PackedScene" id=17]
 [ext_resource path="res://Blocks/Open.tscn" type="PackedScene" id=18]
@@ -67,10 +67,6 @@ position = Vector2( 2544, -2688 )
 position = Vector2( 4352, -768 )
 rotation = -3.14159
 
-[node name="Open Checkpoint" parent="." instance=ExtResource( 15 )]
-position = Vector2( 3328, -1280 )
-rotation = 3.14159
-
 [node name="Wall2" parent="." instance=ExtResource( 6 )]
 position = Vector2( 3840, -1016 )
 rotation = 1.5708
@@ -99,9 +95,6 @@ rotation = 2.26893
 position = Vector2( 5888, -2048 )
 rotation = 1.5708
 
-[node name="Wall4" parent="." instance=ExtResource( 6 )]
-position = Vector2( 3080, -1280 )
-
 [node name="Dirt Large Slant 1" parent="." instance=ExtResource( 16 )]
 position = Vector2( 6400, -2048 )
 rotation = -1.5708
@@ -125,7 +118,7 @@ position = Vector2( 3840, -3072 )
 rotation = -1.5708
 
 [node name="Just CP" parent="." instance=ExtResource( 10 )]
-position = Vector2( 4736, -1280 )
+position = Vector2( 4736, -1408 )
 rotation = -1.5708
 
 [node name="Dirt Straight2" parent="." instance=ExtResource( 11 )]
@@ -180,3 +173,7 @@ position = Vector2( 4088, -3232 )
 [node name="Wall9" parent="." instance=ExtResource( 6 )]
 position = Vector2( 4336, -2968 )
 rotation = 1.5708
+
+[node name="Road Checkpoint" parent="." instance=ExtResource( 15 )]
+position = Vector2( 3328, -1280 )
+rotation = 3.14159

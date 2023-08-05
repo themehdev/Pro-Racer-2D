@@ -1,6 +1,6 @@
 [gd_scene format=2]
 
-[node name="Side Wide 2" type="Node2D"]
+[node name="Large Slant 2" type="Node2D"]
 
 [node name="Road" type="StaticBody2D" parent="." groups=["Road"]]
 
@@ -21,8 +21,8 @@ polygon = PoolVector2Array( -512, -256, 496, -256, -512, 248 )
 z_index = 1
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wall"]
-polygon = PoolVector2Array( -512, 256, -512, 248, 496, -256, 512, -256 )
+polygon = PoolVector2Array( -512, 256, -512, 248, 496, -256, 512, -256, 512, -248, -496, 256 )
 
 [node name="Polygon2D" type="Polygon2D" parent="Wall"]
 color = Color( 0.533333, 0.533333, 0.533333, 1 )
-polygon = PoolVector2Array( -512, 256, -512, 248, 496, -256, 512, -256 )
+polygon = PoolVector2Array( -512, 256, -512, 248, 496, -256, 512, -256, 512, -248, -496, 256 )

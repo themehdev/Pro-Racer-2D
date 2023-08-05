@@ -6,33 +6,33 @@
 z_index = 1
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wall"]
-polygon = PoolVector2Array( -512, -256, -504, -256, -256, 248, -256, 256, -264, 256, -512, -248 )
+polygon = PoolVector2Array( -512, -256, -504, -256, -248, 248, -248, 256, -256, 256, -512, -248 )
 
 [node name="Polygon2D" type="Polygon2D" parent="Wall"]
 color = Color( 0.533333, 0.533333, 0.533333, 1 )
-polygon = PoolVector2Array( -512, -248, -512, -256, -504, -256, -256, 248, -256, 256, -264, 256 )
+polygon = PoolVector2Array( -512, -248, -512, -256, -504, -256, -248, 248, -248, 256, -256, 256 )
 
 [node name="Wall2" type="StaticBody2D" parent="." groups=["Wall"]]
 z_index = 1
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Wall2"]
-polygon = PoolVector2Array( 256, 248, 256, 256, 264, 256, 512, -248, 512, -256, 504, -256 )
+polygon = PoolVector2Array( 248, 248, 248, 256, 256, 256, 512, -248, 512, -256, 504, -256 )
 
 [node name="Polygon2D" type="Polygon2D" parent="Wall2"]
 color = Color( 0.533333, 0.533333, 0.533333, 1 )
-polygon = PoolVector2Array( 264, 256, 256, 256, 256, 248, 504, -256, 512, -256, 512, -248 )
+polygon = PoolVector2Array( 256, 256, 248, 256, 248, 248, 504, -256, 512, -256, 512, -248 )
 
 [node name="Dirt" type="StaticBody2D" parent="." groups=["Dirt"]]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Dirt"]
-polygon = PoolVector2Array( -256, 256, 256, 256, 256, 248, 504, -256, -504, -256, -256, 248 )
+polygon = PoolVector2Array( -248, 256, 248, 256, 248, 248, 504, -256, -504, -256, -248, 248 )
 disabled = true
 
 [node name="Area2D" type="Area2D" parent="Dirt"]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Dirt/Area2D"]
-polygon = PoolVector2Array( -256, 256, 256, 256, 256, 248, 504, -256, -504, -256, -256, 248 )
+polygon = PoolVector2Array( -248, 256, 248, 256, 248, 248, 504, -256, -504, -256, -248, 248 )
 
 [node name="Polygon2D" type="Polygon2D" parent="Dirt"]
 color = Color( 0.368627, 0.235294, 0.152941, 1 )
-polygon = PoolVector2Array( -256, 256, 256, 256, 256, 248, 504, -256, -504, -256, -256, 248 )
+polygon = PoolVector2Array( -248, 256, 248, 256, 248, 248, 504, -256, -504, -256, -248, 248 )
