@@ -13,7 +13,7 @@ var dir = Vector2.RIGHT
 var rotation_speed = 0.006
 var rotation_vel = 0
 var accel = 20
-var b_accel = 17.5
+var b_accel = 10
 var max_speed = 1800
 var friction = 0.01
 var rot_friction = 0.20
@@ -82,6 +82,10 @@ func _physics_process(delta):
 	turning = false
 	var vel_speed = abs(vel.x) + abs(vel.y)
 	var acc_vel = vel.rotated(-dir.angle())
+	if sign(acc_vel.y) < 0:
+		b_accel = 15
+	else:
+		b_accel = 10
 	$"%Start Text".text = ceil($Start.time_left) as String if $Start.time_left != 0 else "Go!"
 	#print(vel_speed)
 	if timer > 1:

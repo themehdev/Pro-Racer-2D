@@ -184,12 +184,10 @@ rotation = 0.349066
 [node name="Sign6" parent="." instance=ExtResource( 4 )]
 position = Vector2( 720, -680 )
 rotation = -2.79253
-scale = Vector2( 1, 1 )
 
 [node name="Sign5" parent="." instance=ExtResource( 4 )]
 position = Vector2( 2320, -872 )
 rotation = 3.14159
-scale = Vector2( 1, 1 )
 
 [node name="Sign4" parent="." instance=ExtResource( 4 )]
 position = Vector2( 184, 16 )
@@ -202,19 +200,6 @@ rotation = 2.79253
 [node name="Straight3" parent="." instance=ExtResource( 13 )]
 position = Vector2( -1024, 2304 )
 rotation = 1.5708
-
-[node name="Side Wide 7" parent="." instance=ExtResource( 2 )]
-position = Vector2( 704, 3168 )
-scale = Vector2( 0.375, 0.375 )
-
-[node name="Side Wide 6" parent="." instance=ExtResource( 16 )]
-position = Vector2( 64, 3168 )
-scale = Vector2( 0.375, 0.375 )
-
-[node name="Straight4" parent="." instance=ExtResource( 13 )]
-position = Vector2( 384, 3168 )
-rotation = 1.5708
-scale = Vector2( 0.375, 0.5 )
 
 [node name="Curve15" parent="." instance=ExtResource( 10 )]
 position = Vector2( -1536, 1792 )

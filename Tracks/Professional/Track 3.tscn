@@ -14,11 +14,11 @@
 [ext_resource path="res://Blocks/Curve.tscn" type="PackedScene" id=12]
 [ext_resource path="res://Blocks/Large Slant 2.tscn" type="PackedScene" id=13]
 [ext_resource path="res://Blocks/Sign.tscn" type="PackedScene" id=14]
-[ext_resource path="res://Blocks/Road Checkpoint.tscn" type="PackedScene" id=15]
 [ext_resource path="res://Blocks/Dirt Large Slant 1.tscn" type="PackedScene" id=16]
 [ext_resource path="res://Blocks/Mid Curve.tscn" type="PackedScene" id=17]
 [ext_resource path="res://Blocks/Open.tscn" type="PackedScene" id=18]
 [ext_resource path="res://Blocks/Finish.tscn" type="PackedScene" id=19]
+[ext_resource path="res://Blocks/Open Checkpoint.tscn" type="PackedScene" id=20]
 
 [node name="Track 3" type="Node2D"]
 
@@ -46,7 +46,6 @@ position = Vector2( 720, -1800 )
 [node name="Wall" parent="." instance=ExtResource( 6 )]
 position = Vector2( 1768, -2872 )
 rotation = 1.39626
-scale = Vector2( 1, 1 )
 
 [node name="Pillar5" parent="." instance=ExtResource( 4 )]
 position = Vector2( 2936, -2168 )
@@ -144,9 +143,8 @@ position = Vector2( 4352, -2304 )
 rotation = -1.5708
 
 [node name="Wall6" parent="." instance=ExtResource( 6 )]
-position = Vector2( 4704, -2728 )
+position = Vector2( 4696, -2704 )
 rotation = -0.523599
-scale = Vector2( 1, 1 )
 
 [node name="Open" parent="." instance=ExtResource( 18 )]
 position = Vector2( 4352, -2896 )
@@ -163,17 +161,13 @@ rotation = 1.5708
 position = Vector2( 4720, -2144 )
 rotation = -0.471239
 
-[node name="Wall7" parent="." instance=ExtResource( 6 )]
-position = Vector2( 4840, -1928 )
-rotation = 1.0472
-
 [node name="Wall8" parent="." instance=ExtResource( 6 )]
-position = Vector2( 4088, -3232 )
+position = Vector2( 4088, -3272 )
 
 [node name="Wall9" parent="." instance=ExtResource( 6 )]
-position = Vector2( 4336, -2968 )
-rotation = 1.5708
+position = Vector2( 4336, -2960 )
+rotation = 1.8326
 
-[node name="Road Checkpoint" parent="." instance=ExtResource( 15 )]
+[node name="Open Checkpoint" parent="." instance=ExtResource( 20 )]
 position = Vector2( 3328, -1280 )
 rotation = 3.14159
