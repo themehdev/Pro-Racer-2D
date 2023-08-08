@@ -14,7 +14,7 @@ disabled = true
 polygon = PoolVector2Array( 512, 248, 512, -256, -496, -256 )
 
 [node name="Polygon2D" type="Polygon2D" parent="Dirt"]
-color = Color( 0.368627, 0.235294, 0.152941, 1 )
+color = Color( 0.360784, 0.243137, 0.152941, 1 )
 polygon = PoolVector2Array( 512, 248, 512, -256, -496, -256 )
 
 [node name="Wall" type="StaticBody2D" parent="." groups=["Wall"]]

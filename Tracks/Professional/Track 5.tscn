@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Blocks/Start.tscn" type="PackedScene" id=1]
+
+[node name="Track 5" type="Node2D"]
+
+[node name="Start" parent="." instance=ExtResource( 1 )]
+position = Vector2( 256, 256 )
