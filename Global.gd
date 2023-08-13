@@ -14,6 +14,9 @@ var track_playing = -1
 var times_to_beat = {"Beginner": [0, 0, 0, 0, 0], "Intermediate": [0, 0, 0, 0, 0], "Accomplished": [0, 0, 0, 0, 0], "Advanced": [0, 0, 0, 0, 0], "Professional": [0, 0, 0, 0, 0]}
 var tracks = {"Beginner": [], "Intermediate": [], "Accomplished": [], "Advanced": [], "Professional": []}
 var best_time = {"time": 0}
+
+func gen_time(time):
+	return  (floor(time/60) if time >= 0 else ceil(time/60)) as String + ":" + (abs(fmod(time, 60.0)) as String if fmod(time, 60.0) > 10 else ("0" + abs(fmod(time, 60.0)) as String))
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	for i in num_tracks:

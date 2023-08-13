@@ -13,11 +13,11 @@ func _ready():
 #		Global.tracks[i]["track"] = load("res://Tracks/Track " + (i + 1) as String + ".tscn").instance()
 	#Global.track_playing = -1
 	for i in Global.num_tracks:
-		var button = $GridContainer/Base.duplicate()
+		var button = $GridContainer/Back.duplicate()
 		button.visible = true
 		button.text = Global.sec_playing + " " + (i + 1) as String
 		if Global.tracks[Global.sec_playing][i]["best_run"]["time"] != 0:
-			button.text += "  PB time: " + Global.tracks[Global.sec_playing][i]["best_run"]["time"] as String
+			button.text += "  PB time: " + Global.gen_time(Global.tracks[Global.sec_playing][i]["best_run"]["time"]) as String
 		button.connect("button_up", self, "_button_pressed", [i])
 		$GridContainer.add_child(button)
 
@@ -28,3 +28,9 @@ func _button_pressed(id):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+
+func _on_Back_pressed():
+	Global.track_playing = -1
+	get_tree().change_scene("res://Main Menu.tscn")
+	queue_free()

@@ -212,7 +212,7 @@ func _physics_process(delta):
 		vel = vel.rotated(rotation_vel * traction) #* 1.0 - drift
 		collision = move_and_collide(vel * delta)
 		timer += round(delta * 1000)/1000
-		$"%Label2".text = "Time: " + timer as String
+		$"%Label2".text = "Time: " + gen_time(timer)
 		rotation = dir.angle()
 		run["inputs"].append({"pos": position, "dir" : rotation})
 		#run["input_splits"].append(timer)
@@ -261,6 +261,9 @@ func _physics_process(delta):
 	Input.action_release("restart")
 	moving_forward = true
 
+func gen_time(time):
+	return  (floor(time/60) if time >= 0 else ceil(time/60)) as String + ":" + (abs(fmod(time, 60.0)) as String if fmod(time, 60.0) > 10 else ("0" + abs(fmod(time, 60.0)) as String))
+
 func _on_HitWall_timeout():
 	can_hit_wall = true
 	just_had_collision = false
@@ -281,17 +284,18 @@ func _on_Area2D_area_entered(area):
 		#last_cp_pos.y += 512
 #		last_cp_pos.y -= 206
 		last_cp_dir = Vector2.RIGHT.rotated(block.rotation_degrees * PI/180)
-		$"%Label".text = timer as String
+		$"%Label".text = gen_time(timer)
 		if Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"] != 0:
-			$"%Label".text += "\n" + ((timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["splits"][split_on]) if (timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["splits"][split_on]) <= 0 else "+" + (timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["splits"][split_on]) as String) as String
+			print(timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["splits"][split_on])
+			$"%Label".text += "\n" + (gen_time(timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["splits"][split_on]) if (timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["splits"][split_on]) <= 0 else "+" + gen_time(timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["splits"][split_on]))
 		Global.checkpoints_left -= 1
 		split_on += 1
 	if ((parent.is_in_group("Finish") or (parent.is_in_group("Start") and lap == 3)) and Global.checkpoints_left == 0):
 		run["inputs"].append({"pos": position, "dir" : rotation})
 		#run["input_splits"].append(timer)
-		$"%No Zoom/Label".text = "Finish!: " + timer as String
+		$"%No Zoom/Label".text = "Finish!: " + gen_time(timer)
 		if Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"] != 0:
-			$"%No Zoom/Label".text += "\n" + ((timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"]) if (timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"]) <= 0 else "+" + (timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"]) as String) as String
+			$"%No Zoom/Label".text += "\n" + (gen_time(timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"]) if (timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"]) <= 0 else "+" + gen_time(timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"]))
 		run["time"] = timer
 		if timer < Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"] or Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"] == 0:
 			Global.tracks[Global.sec_playing][Global.track_playing]["best_run"] = run
@@ -305,9 +309,9 @@ func _on_Area2D_area_entered(area):
 		get_tree().call_group("Checkpoint", "reset")
 		last_cp_pos = start_pos
 		last_cp_dir = start_dir
-		$"%Label".text = timer as String
+		$"%Label".text = gen_time(timer)
 		if Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"] != 0:
-			$"%Label".text += "\n" + ((timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["splits"][split_on]) if (timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["splits"][split_on]) <= 0 else "+" + (timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["splits"][split_on]) as String) as String
+			$"%Label".text += "\n" + (gen_time(timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["splits"][split_on]) if (timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["splits"][split_on]) <= 0 else "+" + gen_time(timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["splits"][split_on]))
 		$"%Label".text += "\n" + ("Last lap!" if 3 - lap == 1 else (3 - lap) as String + " laps to go!")
 		lap += 1
 		split_on += 1
@@ -340,9 +344,8 @@ func _on_Start_timeout():
 	get_tree().call_group("Checkpoint", "reset")
 
 func _on_Menu_pressed():
-	get_tree().change_scene("res://Main Menu.tscn")
+	get_tree().change_scene("res://Menu.tscn")
 	$"%Popup".hide()
-	get_parent().get_child(0).queue_free()
 	get_parent().queue_free()
 
 func _on_Resume_pressed():

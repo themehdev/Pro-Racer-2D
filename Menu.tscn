@@ -11,12 +11,11 @@ margin_bottom = 608.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Base" type="Button" parent="GridContainer"]
-visible = false
-margin_top = 10.0
-margin_right = 341.0
-margin_bottom = 30.0
-rect_scale = Vector2( 3, 3 )
+[node name="Back" type="Button" parent="GridContainer"]
+margin_right = 1023.0
+margin_bottom = 608.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "This is a text"
+text = "Back"
+
+[connection signal="pressed" from="GridContainer/Back" to="." method="_on_Back_pressed"]

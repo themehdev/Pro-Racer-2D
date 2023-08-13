@@ -143,3 +143,9 @@ position = Vector2( 1987, -3024 )
 [node name="Straight6" parent="." instance=ExtResource( 2 )]
 position = Vector2( 4032, -952 )
 rotation = 1.5708
+
+[node name="Pillar8" parent="." instance=ExtResource( 11 )]
+position = Vector2( 3808, -760 )
+
+[node name="Pillar7" parent="." instance=ExtResource( 11 )]
+position = Vector2( 4032, -1120 )
