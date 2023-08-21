@@ -123,3 +123,7 @@ position = Vector2( -2304, 768 )
 
 [node name="Dirt Straight3" parent="." instance=ExtResource( 7 )]
 position = Vector2( -5376, 768 )
+
+[node name="Sign2" parent="." instance=ExtResource( 11 )]
+position = Vector2( -5240, -112 )
+rotation = 0.785398
