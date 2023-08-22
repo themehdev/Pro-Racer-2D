@@ -12,7 +12,7 @@ var tracks = []
 func _ready():
 #	print(Global.track_playing)
 #	print(Global.tracks[Global.track_playing]["track"])
-	add_child(Global.tracks[Global.sec_playing][Global.track_playing]["track"].instance())
+	add_child(Global.tracks[Global.sec_playing][Global.track_playing].instance())
 
 func _process(delta):
 	if yay:

@@ -214,7 +214,7 @@ func _physics_process(delta):
 		timer += round(delta * 1000)/1000
 		$"%Label2".text = "Time: " + gen_time(timer)
 		rotation = dir.angle()
-		run["inputs"].append({"pos": position, "dir" : rotation})
+		run["inputs"].append({"pos": Global.vec2_to_xy(position), "dir" : rotation})
 		#run["input_splits"].append(timer)
 	if pop_needs_hiding:
 		$"%Popup".hide()
@@ -285,20 +285,20 @@ func _on_Area2D_area_entered(area):
 #		last_cp_pos.y -= 206
 		last_cp_dir = Vector2.RIGHT.rotated(block.rotation_degrees * PI/180)
 		$"%Label".text = gen_time(timer)
-		if Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"] != 0:
-			print(timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["splits"][split_on])
-			$"%Label".text += "\n" + (gen_time(timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["splits"][split_on]) if (timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["splits"][split_on]) <= 0 else "+" + gen_time(timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["splits"][split_on]))
+		if Global.pb_times[Global.sec_playing][Global.track_playing]["time"] != 0:
+			print(timer - Global.pb_times[Global.sec_playing][Global.track_playing]["splits"][split_on])
+			$"%Label".text += "\n" + (gen_time(timer - Global.pb_times[Global.sec_playing][Global.track_playing]["splits"][split_on]) if (timer - Global.pb_times[Global.sec_playing][Global.track_playing]["splits"][split_on]) <= 0 else "+" + gen_time(timer - Global.pb_times[Global.sec_playing][Global.track_playing]["splits"][split_on]))
 		Global.checkpoints_left -= 1
 		split_on += 1
 	if ((parent.is_in_group("Finish") or (parent.is_in_group("Start") and lap == 3)) and Global.checkpoints_left == 0):
 		run["inputs"].append({"pos": position, "dir" : rotation})
 		#run["input_splits"].append(timer)
 		$"%No Zoom/Label".text = "Finish!: " + gen_time(timer)
-		if Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"] != 0:
-			$"%No Zoom/Label".text += "\n" + (gen_time(timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"]) if (timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"]) <= 0 else "+" + gen_time(timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"]))
+		if Global.pb_times[Global.sec_playing][Global.track_playing]["time"] != 0:
+			$"%No Zoom/Label".text += "\n" + (gen_time(timer - Global.pb_times[Global.sec_playing][Global.track_playing]["time"]) if (timer - Global.pb_times[Global.sec_playing][Global.track_playing]["time"]) <= 0 else "+" + gen_time(timer - Global.pb_times[Global.sec_playing][Global.track_playing]["time"]))
 		run["time"] = timer
-		if timer < Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"] or Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"] == 0:
-			Global.tracks[Global.sec_playing][Global.track_playing]["best_run"] = run
+		if timer < Global.pb_times[Global.sec_playing][Global.track_playing]["time"] or Global.pb_times[Global.sec_playing][Global.track_playing]["time"] == 0:
+			Global.pb_times[Global.sec_playing][Global.track_playing] = run
 			#print(Global.track_playing)
 		physics = false
 		finishing = true
@@ -310,8 +310,8 @@ func _on_Area2D_area_entered(area):
 		last_cp_pos = start_pos
 		last_cp_dir = start_dir
 		$"%Label".text = gen_time(timer)
-		if Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"] != 0:
-			$"%Label".text += "\n" + (gen_time(timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["splits"][split_on]) if (timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["splits"][split_on]) <= 0 else "+" + gen_time(timer - Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["splits"][split_on]))
+		if Global.pb_times[Global.sec_playing][Global.track_playing]["time"] != 0:
+			$"%Label".text += "\n" + (gen_time(timer - Global.pb_times[Global.sec_playing][Global.track_playing]["splits"][split_on]) if (timer - Global.pb_times[Global.sec_playing][Global.track_playing]["splits"][split_on]) <= 0 else "+" + gen_time(timer - Global.pb_times[Global.sec_playing][Global.track_playing]["splits"][split_on]))
 		$"%Label".text += "\n" + ("Last lap!" if 3 - lap == 1 else (3 - lap) as String + " laps to go!")
 		lap += 1
 		split_on += 1

@@ -55,7 +55,7 @@ onready var start_pos = Vector2.ZERO
 onready var last_cp_pos = start_pos
 onready var start_dir = Vector2.RIGHT
 onready var last_cp_dir = Vector2.RIGHT
-onready var run = Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]
+onready var run = Global.pb_times[Global.sec_playing][Global.track_playing]
 var input_len = 0
 
 
@@ -79,13 +79,13 @@ func _physics_process(delta):
 	#old_run = run
 	if run["time"] != 0:
 		input_len = len(run["inputs"])
-	if (Global.tracks[Global.sec_playing][Global.track_playing]["best_run"]["time"] != 0 and run["time"] == 0) or input_on >= input_len - 1:
+	if (Global.pb_times[Global.sec_playing][Global.track_playing]["time"] != 0 and run["time"] == 0) or input_on >= input_len - 1:
 		physics = false
 #		if not (Global.tracks[Global.track_playing]["best_run"]["time"] == 0 and run["time"] == 0) and input_on >= input_len - 1:
 #
 #			pass
 		just_changed = true
-		run = Global.tracks[Global.sec_playing][Global.track_playing]["best_run"] 
+		run = Global.pb_times[Global.sec_playing][Global.track_playing]
 	
 	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[1])
 	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[0])
@@ -100,7 +100,7 @@ func _physics_process(delta):
 		local_inputs = run["inputs"][input_on]
 		if physics:
 			$Start.wait_time = 3
-			position = local_inputs["pos"]
+			position = Global.xy_to_vec2(local_inputs["pos"])
 			rotation = local_inputs["dir"]
 #		if Global.player.start_stopped and not Global.player.has_popup:
 #			$Start.start()
@@ -144,7 +144,7 @@ func _physics_process(delta):
 				#get_tree().call_group("Checkpoint", "reset")
 				input_on = 0
 				position = start_pos
-				run = Global.tracks[Global.sec_playing][Global.track_playing]["best_run" ] 
+				run = Global.pb_times[Global.sec_playing][Global.track_playing]
 				#position.y += 512
 #				vel = Vector2.ZERO
 				dir = start_dir
