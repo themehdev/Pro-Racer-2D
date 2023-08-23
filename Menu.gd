@@ -23,11 +23,12 @@ func _ready():
 
 func _button_pressed(id):
 	Global.track_playing = id
-	get_tree().change_scene("res://Game.tscn")
+	get_tree().change_scene("res://Track Menu.tscn")
 	queue_free()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
 
 
 func _on_Back_pressed():

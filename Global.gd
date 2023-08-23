@@ -11,11 +11,12 @@ var num_tracks = 5
 var track_has_finish = true
 var sec_playing = 0
 var track_playing = -1
-var official_times =  {"Beginner": [], "Intermediate": [], "Accomplished": [], "Advanced": [], "Professional": []}
 var tracks = {"Beginner": [], "Intermediate": [], "Accomplished": [], "Advanced": [], "Professional": []}
+var official_times =  {"Beginner": [], "Intermediate": [], "Accomplished": [], "Advanced": [], "Professional": []}
+var world_times =  {"Beginner": [], "Intermediate": [], "Accomplished": [], "Advanced": [], "Professional": []}
 var pb_times =  {"Beginner": [], "Intermediate": [], "Accomplished": [], "Advanced": [], "Professional": []}
 var best_time = {"time": 0}
-
+var opp_type = ""
 var URL_OFFICIAL = "https://pro-racer-2d-default-rtdb.firebaseio.com/Official.json"
 var URL_WORLD = "https://pro-racer-2d-default-rtdb.firebaseio.com/World.json"
 
@@ -45,23 +46,18 @@ func _ready():
 	for i in num_tracks:
 		tracks["Beginner"].append(load("res://Tracks/Beginner/Track " + (i + 1) as String + ".tscn"))
 		pb_times["Beginner"].append({"time":0})
-		official_times["Beginner"].append({"time":0})
 	for i in num_tracks:
 		tracks["Intermediate"].append(load("res://Tracks/Intermediate/Track " + (i + 1) as String + ".tscn"))
 		pb_times["Intermediate"].append({"time":0})
-		official_times["Intermediate"].append({"time":0})
 	for i in num_tracks:
 		tracks["Accomplished"].append(load("res://Tracks/Accomplished/Track " + (i + 1) as String + ".tscn"))
 		pb_times["Accomplished"].append({"time":0})
-		official_times["Accomplished"].append({"time":0})
 	for i in num_tracks:
 		tracks["Advanced"].append(load("res://Tracks/Advanced/Track " + (i + 1) as String + ".tscn"))
 		pb_times["Advanced"].append({"time":0})
-		official_times["Advanced"].append({"time":0})
 	for i in num_tracks:
 		tracks["Professional"].append(load("res://Tracks/Professional/Track " + (i + 1) as String + ".tscn"))
 		pb_times["Professional"].append({"time":0})
-		official_times["Professional"].append({"time":0})
 	$HTTPRequest.request(URL_OFFICIAL)
 	
 func _make_post_request(url, data_to_send, use_ssl = false):
@@ -71,16 +67,16 @@ func _make_post_request(url, data_to_send, use_ssl = false):
 	var headers = ["Content-Type: application/json"]
 	$HTTPRequest.request(url, headers, use_ssl, HTTPClient.METHOD_PUT, query)
 
-var got_stuff = false
+var got_stuff = "official"
 
 func _process(delta):
 	if track_playing != -1:
 		best_time = pb_times[sec_playing][track_playing]
-	if pb_times["Advanced"][1]["time"] != 0:
-		print(pb_times["Advanced"][1]["time"])
-		print("posting")
-		_make_post_request(URL_OFFICIAL, pb_times)
-		pb_times["Advanced"][1] = {"time":0}
+#	if pb_times["Advanced"][1]["time"] != 0:
+#		print(pb_times["Advanced"][1]["time"])
+#		print("posting")
+#		_make_post_request(URL_WORLD, pb_times)
+#		pb_times["Advanced"][1] = {"time":0}
 	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -88,7 +84,13 @@ func _process(delta):
 #	pass
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
-	if not got_stuff:
-		pb_times = JSON.parse(body.get_string_from_utf8()).result
-		got_stuff = true
-	print("why")
+	if got_stuff == "official":
+		official_times = JSON.parse(body.get_string_from_utf8()).result
+		got_stuff = "world"
+		$HTTPRequest.request(URL_WORLD)
+	elif got_stuff == "world":
+		world_times = JSON.parse(body.get_string_from_utf8()).result
+		got_stuff = ""
+		print("done with getting data")
+
+	#print("why")

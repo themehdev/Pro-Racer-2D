@@ -13,11 +13,13 @@ func _ready():
 #	print(Global.track_playing)
 #	print(Global.tracks[Global.track_playing]["track"])
 	add_child(Global.tracks[Global.sec_playing][Global.track_playing].instance())
+	$OpponentGhost.type = Global.opp_type
+	$PBGhost.type = "pb"
 
 func _process(delta):
 	if yay:
 		Global.track_has_finish = false
-		for i in get_child(2).get_children():
+		for i in get_child(3).get_children():
 			if("Start" == i.name):
 				get_tree().call_group("Player", "set_start", [i.position, i.rotation])
 			if("Finish" in i.name):

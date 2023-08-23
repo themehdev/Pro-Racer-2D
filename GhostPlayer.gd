@@ -43,6 +43,7 @@ var local_inputs
 var just_changed = false
 #var old_run
 var can_hit_wall = true
+var type = "pb"
 
 var traction_types = {
 	"road": 0.9,
@@ -55,8 +56,9 @@ onready var start_pos = Vector2.ZERO
 onready var last_cp_pos = start_pos
 onready var start_dir = Vector2.RIGHT
 onready var last_cp_dir = Vector2.RIGHT
-onready var run = Global.pb_times[Global.sec_playing][Global.track_playing]
+onready var run = data[Global.sec_playing][Global.track_playing]
 var input_len = 0
+var data = Global.pb_times
 
 
 
@@ -73,19 +75,41 @@ func set_start(args):
 	position = start_pos
 	rotation = args[1]
 	Input.action_press("restart")
+	
+func set_col(is_pb):
+	var col = Color("64ff6400") if not is_pb else Color("640000ff")
+	$Graphics/ColorRect.color = col
+	$Graphics/ColorRect2.color = col
+	$Graphics/ColorRect3.color = col
+	$Graphics/ColorRect4.color = col
+	$Graphics/ColorRect5.color = col
+	$Graphics/ColorRect6.color = col
+	$Graphics/Polygon2D.color = col
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	#old_run = run
+	set_col(type == "pb" or type == "")
+	if type == "pb" or type == "":
+		data = Global.pb_times
+	elif type == "official":
+		data = Global.official_times
+	elif type == "world":
+		data = Global.world_times
+	if type == "" or (type == "pb" and Global.pb_times[Global.sec_playing][Global.track_playing]["time"] == 0):
+		visible = false
+	else:
+		visible = true
 	if run["time"] != 0:
 		input_len = len(run["inputs"])
-	if (Global.pb_times[Global.sec_playing][Global.track_playing]["time"] != 0 and run["time"] == 0) or input_on >= input_len - 1:
+	if (data[Global.sec_playing][Global.track_playing]["time"] != 0 and run["time"] == 0) or input_on >= input_len - 1:
 		physics = false
 #		if not (Global.tracks[Global.track_playing]["best_run"]["time"] == 0 and run["time"] == 0) and input_on >= input_len - 1:
 #
 #			pass
 		just_changed = true
-		run = Global.pb_times[Global.sec_playing][Global.track_playing]
+		run = data[Global.sec_playing][Global.track_playing]
 	
 	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[1])
 	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[0])
@@ -144,7 +168,7 @@ func _physics_process(delta):
 				#get_tree().call_group("Checkpoint", "reset")
 				input_on = 0
 				position = start_pos
-				run = Global.pb_times[Global.sec_playing][Global.track_playing]
+				run = data[Global.sec_playing][Global.track_playing]
 				#position.y += 512
 #				vel = Vector2.ZERO
 				dir = start_dir

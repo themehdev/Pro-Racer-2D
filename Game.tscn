@@ -7,7 +7,9 @@
 [node name="Game" type="Node2D"]
 script = ExtResource( 3 )
 
-[node name="GhostPlayer" parent="." instance=ExtResource( 4 )]
+[node name="OpponentGhost" parent="." instance=ExtResource( 4 )]
+
+[node name="PBGhost" parent="." instance=ExtResource( 4 )]
 process_priority = -1
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
