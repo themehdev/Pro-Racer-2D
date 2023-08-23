@@ -19,6 +19,8 @@ var best_time = {"time": 0}
 var opp_type = ""
 var URL_OFFICIAL = "https://pro-racer-2d-default-rtdb.firebaseio.com/Official.json"
 var URL_WORLD = "https://pro-racer-2d-default-rtdb.firebaseio.com/World.json"
+var sec_has = 1
+var can_play_world = false
 
 func gen_time(time):
 	return  (floor(time/60) if time >= 0 else ceil(time/60)) as String + ":" + (abs(fmod(time, 60.0)) as String if fmod(time, 60.0) > 10 else ("0" + abs(fmod(time, 60.0)) as String))
@@ -46,16 +48,12 @@ func _ready():
 	for i in num_tracks:
 		tracks["Beginner"].append(load("res://Tracks/Beginner/Track " + (i + 1) as String + ".tscn"))
 		pb_times["Beginner"].append({"time":0})
-	for i in num_tracks:
 		tracks["Intermediate"].append(load("res://Tracks/Intermediate/Track " + (i + 1) as String + ".tscn"))
 		pb_times["Intermediate"].append({"time":0})
-	for i in num_tracks:
 		tracks["Accomplished"].append(load("res://Tracks/Accomplished/Track " + (i + 1) as String + ".tscn"))
 		pb_times["Accomplished"].append({"time":0})
-	for i in num_tracks:
 		tracks["Advanced"].append(load("res://Tracks/Advanced/Track " + (i + 1) as String + ".tscn"))
 		pb_times["Advanced"].append({"time":0})
-	for i in num_tracks:
 		tracks["Professional"].append(load("res://Tracks/Professional/Track " + (i + 1) as String + ".tscn"))
 		pb_times["Professional"].append({"time":0})
 	$HTTPRequest.request(URL_OFFICIAL)
@@ -72,6 +70,20 @@ var got_stuff = "official"
 func _process(delta):
 	if track_playing != -1:
 		best_time = pb_times[sec_playing][track_playing]
+	sec_has = 1
+	if got_stuff == "":
+		for i in num_tracks:
+			if pb_times["Beginner"][i]["time"] < official_times["Beginner"][i]["time"] and pb_times["Beginner"][i]["time"] != 0:
+				sec_has += 0.2
+			if pb_times["Intermediate"][i]["time"] < official_times["Intermediate"][i]["time"] and pb_times["Intermediate"][i]["time"] != 0:
+				sec_has += 0.2
+			if pb_times["Accomplished"][i]["time"] < official_times["Accomplished"][i]["time"] and pb_times["Accomplished"][i]["time"] != 0:
+				sec_has += 0.2
+			if pb_times["Advanced"][i]["time"] < official_times["Advanced"][i]["time"] and pb_times["Advanced"][i]["time"] != 0:
+				sec_has += 0.2
+			if pb_times["Professional"][i]["time"] < official_times["Professional"][i]["time"] and pb_times["Professional"][i]["time"] != 0:
+				sec_has += 0.2
+#	print(sec_has)
 #	if pb_times["Advanced"][1]["time"] != 0:
 #		print(pb_times["Advanced"][1]["time"])
 #		print("posting")

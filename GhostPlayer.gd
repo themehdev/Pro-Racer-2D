@@ -173,6 +173,7 @@ func _physics_process(delta):
 #				vel = Vector2.ZERO
 				dir = start_dir
 				rotation = dir.angle()
+				print(type)
 #				rotation_vel = 0
 #				timer = 0
 #				physics = false

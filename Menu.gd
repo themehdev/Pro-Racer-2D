@@ -16,8 +16,8 @@ func _ready():
 		var button = $GridContainer/Back.duplicate()
 		button.visible = true
 		button.text = Global.sec_playing + " " + (i + 1) as String + " - " + Global.num_to_name(i + 1)
-		if Global.pb_times[Global.sec_playing][i]["time"] != 0:
-			button.text += "\n  PB time: " + Global.gen_time(Global.pb_times[Global.sec_playing][i]["time"]) as String
+#		if Global.pb_times[Global.sec_playing][i]["time"] != 0:
+#			button.text += "\n  PB time: " + Global.gen_time(Global.pb_times[Global.sec_playing][i]["time"]) as String
 		button.connect("button_up", self, "_button_pressed", [i])
 		$GridContainer.add_child(button)
 
