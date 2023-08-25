@@ -17,9 +17,6 @@ func _process(delta):
 	$VBoxContainer/Accomplished.disabled = Global.sec_has < 3
 	$VBoxContainer/Advanced.disabled = Global.sec_has < 4
 	$VBoxContainer/Professional.disabled = Global.sec_has < 5
-	print(Global.sec_has)
-	print(Global.sec_has < 1.9)
-	print(2 < 1.8)
 
 
 

@@ -13,7 +13,7 @@ func _ready():
 #	print(Global.track_playing)
 #	print(Global.tracks[Global.track_playing]["track"])
 	add_child(Global.tracks[Global.sec_playing][Global.track_playing].instance())
-	$OppGhost.type = Global.opp_type
+	$OpponentGhost.type = Global.opp_type
 	$PBGhost.type = "pb"
 
 func _process(delta):
