@@ -8,11 +8,11 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$VBoxContainer/World.disabled = Global.can_play_world
+	$VBoxContainer/World.disabled = Global.sec_has < 6
 	if Global.pb_times[Global.sec_playing][Global.track_playing]["time"] != 0:
-		$VBoxContainer/PB.text += "\n   Time: " + Global.gen_time(Global.pb_times[Global.sec_playing][Global.track_playing]["time"]) as String
-	$VBoxContainer/Official.text += "\n   Time: " + Global.gen_time(Global.official_times[Global.sec_playing][Global.track_playing]["time"]) as String
-	$VBoxContainer/World.text += "\n   Time: " + Global.gen_time(Global.world_times[Global.sec_playing][Global.track_playing]["time"]) as String
+		$VBoxContainer/PB.text += "\n | Time: " + Global.gen_time(Global.pb_times[Global.sec_playing][Global.track_playing]["time"]) as String
+	$VBoxContainer/Official.text += "\n | Time: " + Global.gen_time(Global.official_times[Global.sec_playing][Global.track_playing]["time"]) as String
+	$VBoxContainer/World.text += "\n | Time: " + Global.gen_time(Global.world_times[Global.sec_playing][Global.track_playing]["time"]) as String
 	
 
 
@@ -41,3 +41,8 @@ func _on_World_pressed():
 
 func _on_Live_pressed():
 	pass # Replace with function body.
+
+
+func _on_Back_pressed():
+	get_tree().change_scene("res://Menu.tscn")
+	queue_free()

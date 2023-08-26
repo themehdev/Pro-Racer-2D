@@ -97,10 +97,6 @@ func _physics_process(delta):
 		data = Global.official_times
 	elif type == "world":
 		data = Global.world_times
-	if type == "" or (type == "pb" and Global.pb_times[Global.sec_playing][Global.track_playing]["time"] == 0):
-		visible = false
-	else:
-		visible = true
 	if run["time"] != 0:
 		input_len = len(run["inputs"])
 	if (data[Global.sec_playing][Global.track_playing]["time"] != 0 and run["time"] == 0) or input_on >= input_len - 1:
@@ -113,8 +109,12 @@ func _physics_process(delta):
 	
 	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[1])
 	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[0])
+	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[2])
 	if run["time"] != 0:
-		visible = true
+		if type == "" or (type == "pb" and Global.pb_times[Global.sec_playing][Global.track_playing]["time"] == 0):
+			visible = false
+		else:
+			visible = true
 		if not Global.player.finishing:
 			physics = Global.player.physics
 			
@@ -173,7 +173,7 @@ func _physics_process(delta):
 #				vel = Vector2.ZERO
 				dir = start_dir
 				rotation = dir.angle()
-				print(type)
+				#print(type)
 #				rotation_vel = 0
 #				timer = 0
 #				physics = false

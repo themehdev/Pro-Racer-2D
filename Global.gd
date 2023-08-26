@@ -6,20 +6,21 @@ extends Node
 # var b = "text"
 var checkpoints_left = 0
 var total_checkpoints = 0
-var player = {"finishing": false, "physics": false}
+var player = {"finishing": false, "physics": false, "timer": 0}
 var num_tracks = 5
 var track_has_finish = true
-var sec_playing = 0
+var sec_playing = "Beginner"
 var track_playing = -1
 var tracks = {"Beginner": [], "Intermediate": [], "Accomplished": [], "Advanced": [], "Professional": []}
 var official_times =  {"Beginner": [], "Intermediate": [], "Accomplished": [], "Advanced": [], "Professional": []}
 var world_times =  {"Beginner": [], "Intermediate": [], "Accomplished": [], "Advanced": [], "Professional": []}
 var pb_times =  {"Beginner": [], "Intermediate": [], "Accomplished": [], "Advanced": [], "Professional": []}
-var best_time = {"time": 0}
-var opp_type = ""
+var best_run = {"time": 0}
+var opp_type = "-"
+var opp_run
 var URL_OFFICIAL = "https://pro-racer-2d-default-rtdb.firebaseio.com/Official.json"
 var URL_WORLD = "https://pro-racer-2d-default-rtdb.firebaseio.com/World.json"
-var sec_has = 1
+var sec_has = 0
 var can_play_world = false
 
 func gen_time(time):
@@ -68,13 +69,21 @@ func _make_post_request(url, data_to_send, use_ssl = false):
 var got_stuff = "official"
 
 func _process(delta):
-	if track_playing != -1:
-		best_time = pb_times[sec_playing][track_playing]
+	if opp_type == "official":
+		opp_run = official_times[sec_playing][track_playing]
+	elif opp_type == "world":
+		opp_run = world_times[sec_playing][track_playing]
+	if opp_type != "-" and opp_type != "":
+		#print(pb_times[sec_playing][track_playing]["time"])
+		best_run = pb_times[sec_playing][track_playing] if (pb_times[sec_playing][track_playing]["time"] != 0 and pb_times[sec_playing][track_playing]["time"] <= opp_run["time"]) else opp_run
+	else:
+		best_run = pb_times[sec_playing][track_playing]
 	sec_has = 1
 	if got_stuff == "":
 		for i in num_tracks:
 			if pb_times["Beginner"][i]["time"] < official_times["Beginner"][i]["time"] and pb_times["Beginner"][i]["time"] != 0:
 				sec_has += 0.2
+				#print(sec_has)
 			if pb_times["Intermediate"][i]["time"] < official_times["Intermediate"][i]["time"] and pb_times["Intermediate"][i]["time"] != 0:
 				sec_has += 0.2
 			if pb_times["Accomplished"][i]["time"] < official_times["Accomplished"][i]["time"] and pb_times["Accomplished"][i]["time"] != 0:
@@ -85,9 +94,9 @@ func _process(delta):
 				sec_has += 0.2
 #	print(sec_has)
 #	if pb_times["Advanced"][1]["time"] != 0:
-#		print(pb_times["Advanced"][1]["time"])
+#		#print(pb_times["Advanced"][1]["time"])
 #		print("posting")
-#		_make_post_request(URL_WORLD, pb_times)
+#		_make_post_request("https://pro-racer-2d-default-rtdb.firebaseio.com/Official/Advanced.json", pb_times["Advanced"])
 #		pb_times["Advanced"][1] = {"time":0}
 	
 	

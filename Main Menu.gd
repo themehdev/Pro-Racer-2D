@@ -8,7 +8,10 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	$VBoxContainer/Intermediate.disabled = Global.sec_has < 1.9
+	$VBoxContainer/Accomplished.disabled = Global.sec_has < 3
+	$VBoxContainer/Advanced.disabled = Global.sec_has < 4
+	$VBoxContainer/Professional.disabled = Global.sec_has < 5
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
