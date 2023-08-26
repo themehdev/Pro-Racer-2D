@@ -93,11 +93,11 @@ func _process(delta):
 			if pb_times["Professional"][i]["time"] < official_times["Professional"][i]["time"] and pb_times["Professional"][i]["time"] != 0:
 				sec_has += 0.2
 #	print(sec_has)
-#	if pb_times["Advanced"][1]["time"] != 0:
+#	if sec_has >= 2:
 #		#print(pb_times["Advanced"][1]["time"])
 #		print("posting")
-#		_make_post_request("https://pro-racer-2d-default-rtdb.firebaseio.com/Official/Advanced.json", pb_times["Advanced"])
-#		pb_times["Advanced"][1] = {"time":0}
+#		_make_post_request("https://pro-racer-2d-default-rtdb.firebaseio.com/Official/Accomplished.json", pb_times["Accomplished"])
+#		pb_times["Accomplished"][1] = {"time":0}
 	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
