@@ -8,7 +8,8 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	$VBoxContainer/World.disabled = Global.sec_has < 6
+	$VBoxContainer/World.disabled = Global.sec_has < 5.9
+	$VBoxContainer/Title.text = Global.sec_playing + " " + (Global.track_playing + 1) as String + " - " + Global.num_to_name(Global.track_playing + 1)
 	if Global.pb_times[Global.sec_playing][Global.track_playing]["time"] != 0:
 		$VBoxContainer/PB.text += "\n | Time: " + Global.gen_time(Global.pb_times[Global.sec_playing][Global.track_playing]["time"]) as String
 	$VBoxContainer/Official.text += "\n | Time: " + Global.gen_time(Global.official_times[Global.sec_playing][Global.track_playing]["time"]) as String

@@ -23,6 +23,19 @@ var URL_WORLD = "https://pro-racer-2d-default-rtdb.firebaseio.com/World"
 var sec_has = 0
 var can_play_world = false
 
+func save_to_file(content, filename):
+	var file = File.new()
+	file.open("user://" + filename +".dat", File.WRITE)
+	file.store_var(content)
+	file.close()
+
+func load_from_file(filename):
+	var file = File.new()
+	file.open("user://" + filename + ".dat", File.READ)
+	var content = file.get_var()
+	file.close()
+	return content
+
 func gen_time(time):
 	return  (floor(time/60) if time >= 0 else ceil(time/60)) as String + ":" + (abs(fmod(time, 60.0)) as String if fmod(time, 60.0) > 10 else ("0" + abs(fmod(time, 60.0)) as String))
 # Called when the node enters the scene tree for the first time.
@@ -44,6 +57,34 @@ func num_to_name(num):
 		return "Lap"
 	else: 
 		return "Houston, we have a problem"
+		
+func num_to_name_2(num):
+	if(num == 1):
+		return "Beginner"
+	elif(num == 2):
+		return "Intermediate"
+	elif(num == 3):
+		return "Accomplished"
+	elif(num == 4):
+		return "Advanced"
+	elif(num == 5):
+		return "Professional"
+	else: 
+		return "Houston, we have a problem"
+		
+func name_to_num(name):
+	if name == "Race" or name == "Beginner":
+		return 1
+	elif name == "Road" or name == "Intermediate":
+		return 2
+	elif name == "Dirt" or name == "Accomplished":
+		return 3
+	elif name == "Precision" or name == "Advanced":
+		return 4
+	elif name == "Lap" or name == "Professional":
+		return 5
+	else:
+		return NAN
 
 func _ready():
 	for i in num_tracks:
@@ -57,7 +98,9 @@ func _ready():
 		pb_times["Advanced"].append({"time":0})
 		tracks["Professional"].append(load("res://Tracks/Professional/Track " + (i + 1) as String + ".tscn"))
 		pb_times["Professional"].append({"time":0})
-	$HTTPRequest.request(URL_OFFICIAL)
+	$HTTPRequest.request(URL_WORLD + ".json")
+	pb_times = load_from_file("pb_times")
+	official_times = load_from_file("official_times")
 	
 func _make_post_request(url, data_to_send, use_ssl = false):
 	# Convert data to json string:
@@ -66,7 +109,7 @@ func _make_post_request(url, data_to_send, use_ssl = false):
 	var headers = ["Content-Type: application/json"]
 	$HTTPRequest.request(url, headers, use_ssl, HTTPClient.METHOD_PUT, query)
 
-var got_stuff = "official"
+var got_stuff = "world"
 
 func _process(delta):
 	if opp_type == "official":
@@ -78,30 +121,7 @@ func _process(delta):
 		best_run = pb_times[sec_playing][track_playing] if (pb_times[sec_playing][track_playing]["time"] != 0 and pb_times[sec_playing][track_playing]["time"] <= opp_run["time"]) else opp_run
 	else:
 		best_run = pb_times[sec_playing][track_playing]
-	sec_has = 1
-	if got_stuff == "":
-		for i in num_tracks:
-			if pb_times["Beginner"][i]["time"] < official_times["Beginner"][i]["time"] and pb_times["Beginner"][i]["time"] != 0:
-				sec_has += 0.2
-#				if pb_times["Beginner"][i]["time"] < world_times["Beginner"][i]["time"]:
-#					_make_post_request(URL_WORLD + "/Beginner/" + i as String + ".json", pb_times["Beginner"][i])
-				#print(sec_has)
-			if pb_times["Intermediate"][i]["time"] < official_times["Intermediate"][i]["time"] and pb_times["Intermediate"][i]["time"] != 0:
-				sec_has += 0.2
-#				if pb_times["Intermediate"][i]["time"] < world_times["Intermediate"][i]["time"]:
-#					_make_post_request(URL_WORLD + "/Intermediate/" + i as String + ".json", pb_times["Intermediate"][i])
-			if pb_times["Accomplished"][i]["time"] < official_times["Accomplished"][i]["time"] and pb_times["Accomplished"][i]["time"] != 0:
-				sec_has += 0.2
-#				if pb_times["Accomplished"][i]["time"] < world_times["Accomplished"][i]["time"]:
-#					_make_post_request(URL_WORLD + "/Accomplished/" + i as String + ".json", pb_times["Accomplished"][i])
-			if pb_times["Advanced"][i]["time"] < official_times["Advanced"][i]["time"] and pb_times["Advanced"][i]["time"] != 0:
-				sec_has += 0.2
-#				if pb_times["Advanced"][i]["time"] < world_times["Advanced"][i]["time"]:
-#					_make_post_request(URL_WORLD + "/Advanced/" + i as String + ".json", pb_times["Advanced"][i])
-			if pb_times["Professional"][i]["time"] < official_times["Professional"][i]["time"] and pb_times["Professional"][i]["time"] != 0:
-				sec_has += 0.2
-#				if pb_times["Professional"][i]["time"] < world_times["Professional"][i]["time"]:
-#					_make_post_request(URL_WORLD + "/Professional/" + i as String + ".json", pb_times["Professional"][i])
+
 #	print(sec_has)
 #	if sec_has >= 2:
 #		#print(pb_times["Advanced"][1]["time"])
@@ -115,11 +135,7 @@ func _process(delta):
 #	pass
 
 func _on_HTTPRequest_request_completed(result, response_code, headers, body):
-	if got_stuff == "official":
-		official_times = JSON.parse(body.get_string_from_utf8()).result
-		got_stuff = "world"
-		_make_post_request(URL_WORLD + ".json", official_times)
-	elif got_stuff == "world":
+	if got_stuff == "world":
 		world_times = JSON.parse(body.get_string_from_utf8()).result
 		got_stuff = ""
 		print("done with getting data")

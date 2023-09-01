@@ -9,43 +9,54 @@ script = ExtResource( 1 )
 margin_right = 1024.0
 margin_bottom = 600.0
 
-[node name="Back" type="Button" parent="VBoxContainer"]
+[node name="Title" type="Label" parent="VBoxContainer"]
 margin_right = 1024.0
-margin_bottom = 116.0
+margin_bottom = 96.0
+size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Back"
+text = "Track"
+align = 1
+valign = 1
 
 [node name="PB" type="Button" parent="VBoxContainer"]
-margin_top = 120.0
+margin_top = 100.0
 margin_right = 1024.0
-margin_bottom = 237.0
+margin_bottom = 197.0
 size_flags_vertical = 3
 text = "Play Personal Best"
 
 [node name="Official" type="Button" parent="VBoxContainer"]
-margin_top = 241.0
+margin_top = 201.0
 margin_right = 1024.0
-margin_bottom = 358.0
+margin_bottom = 297.0
 size_flags_vertical = 3
 text = "Play Official Run"
 
 [node name="World" type="Button" parent="VBoxContainer"]
-margin_top = 362.0
+margin_top = 301.0
 margin_right = 1024.0
-margin_bottom = 479.0
+margin_bottom = 398.0
 size_flags_vertical = 3
 text = "Play World Record"
 
 [node name="Live" type="Button" parent="VBoxContainer"]
-margin_top = 483.0
+margin_top = 402.0
 margin_right = 1024.0
-margin_bottom = 600.0
+margin_bottom = 499.0
 size_flags_vertical = 3
 disabled = true
 text = "Play Someone Live"
 
-[connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_Back_pressed"]
+[node name="Back" type="Button" parent="VBoxContainer"]
+margin_top = 503.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Back"
+
 [connection signal="pressed" from="VBoxContainer/PB" to="." method="_on_PB_pressed"]
 [connection signal="pressed" from="VBoxContainer/Official" to="." method="_on_Official_pressed"]
 [connection signal="pressed" from="VBoxContainer/World" to="." method="_on_World_pressed"]
 [connection signal="pressed" from="VBoxContainer/Live" to="." method="_on_Live_pressed"]
+[connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_Back_pressed"]

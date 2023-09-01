@@ -13,8 +13,8 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	$VBoxContainer/Next.disabled = Global.sec_has < Global.name_to_num(Global.sec_playing) + 0.9 and Global.track_playing == 4
 
 
 
@@ -29,3 +29,15 @@ func _on_Play_pressed():
 	print("working")
 	emit_signal("restart")
 	hide()
+
+
+func _on_Next_pressed():
+	if Global.track_playing != 4:
+		Global.track_playing += 1
+		get_tree().change_scene("res://Track Menu.tscn")
+		queue_free()
+	else:
+		Global.sec_playing = Global.num_to_name_2(Global.name_to_num(Global.sec_playing) + 1)
+		Global.track_playing = 0
+		get_tree().change_scene("res://Track Menu.tscn")
+		queue_free()

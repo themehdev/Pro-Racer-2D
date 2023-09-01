@@ -307,6 +307,30 @@ func _on_Area2D_area_entered(area):
 			#print(Global.track_playing)
 		physics = false
 		finishing = true
+		Global.save_to_file(Global.pb_times, "pb_times")
+		Global.sec_has = 1
+		for i in Global.num_tracks:
+			if Global.pb_times["Beginner"][i]["time"] < Global.official_times["Beginner"][i]["time"] and Global.pb_times["Beginner"][i]["time"] != 0:
+				Global.sec_has += 0.2
+#				if Global.pb_times["Beginner"][i]["time"] < world_times["Beginner"][i]["time"]:
+#					_make_post_request(URL_WORLD + "/Beginner/" + i as String + ".json", Global.pb_times["Beginner"][i])
+				#print(Global.sec_has)
+			if Global.pb_times["Intermediate"][i]["time"] < Global.official_times["Intermediate"][i]["time"] and Global.pb_times["Intermediate"][i]["time"] != 0:
+				Global.sec_has += 0.2
+#				if Global.pb_times["Intermediate"][i]["time"] < world_times["Intermediate"][i]["time"]:
+#					_make_post_request(URL_WORLD + "/Intermediate/" + i as String + ".json", Global.pb_times["Intermediate"][i])
+			if Global.pb_times["Accomplished"][i]["time"] < Global.official_times["Accomplished"][i]["time"] and Global.pb_times["Accomplished"][i]["time"] != 0:
+				Global.sec_has += 0.2
+#				if Global.pb_times["Accomplished"][i]["time"] < world_times["Accomplished"][i]["time"]:
+#					_make_post_request(URL_WORLD + "/Accomplished/" + i as String + ".json", Global.pb_times["Accomplished"][i])
+			if Global.pb_times["Advanced"][i]["time"] < Global.official_times["Advanced"][i]["time"] and Global.pb_times["Advanced"][i]["time"] != 0:
+				Global.sec_has += 0.2
+#				if Global.pb_times["Advanced"][i]["time"] < world_times["Advanced"][i]["time"]:
+#					_make_post_request(URL_WORLD + "/Advanced/" + i as String + ".json", Global.pb_times["Advanced"][i])
+			if Global.pb_times["Professional"][i]["time"] < Global.official_times["Professional"][i]["time"] and Global.pb_times["Professional"][i]["time"] != 0:
+				Global.sec_has += 0.2
+#				if Global.pb_times["Professional"][i]["time"] < world_times["Professional"][i]["time"]:
+#					_make_post_request(URL_WORLD + "/Professional/" + i as String + ".json", Global.pb_times["Professional"][i])
 		$"%Finish Menu".popup()
 		
 		#print(run)
