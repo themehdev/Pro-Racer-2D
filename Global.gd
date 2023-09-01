@@ -19,7 +19,7 @@ var best_run = {"time": 0}
 var opp_type = "-"
 var opp_run
 var URL_OFFICIAL = "https://pro-racer-2d-default-rtdb.firebaseio.com/Official.json"
-var URL_WORLD = "https://pro-racer-2d-default-rtdb.firebaseio.com/World.json"
+var URL_WORLD = "https://pro-racer-2d-default-rtdb.firebaseio.com/World"
 var sec_has = 0
 var can_play_world = false
 
@@ -83,15 +83,25 @@ func _process(delta):
 		for i in num_tracks:
 			if pb_times["Beginner"][i]["time"] < official_times["Beginner"][i]["time"] and pb_times["Beginner"][i]["time"] != 0:
 				sec_has += 0.2
+#				if pb_times["Beginner"][i]["time"] < world_times["Beginner"][i]["time"]:
+#					_make_post_request(URL_WORLD + "/Beginner/" + i as String + ".json", pb_times["Beginner"][i])
 				#print(sec_has)
 			if pb_times["Intermediate"][i]["time"] < official_times["Intermediate"][i]["time"] and pb_times["Intermediate"][i]["time"] != 0:
 				sec_has += 0.2
+#				if pb_times["Intermediate"][i]["time"] < world_times["Intermediate"][i]["time"]:
+#					_make_post_request(URL_WORLD + "/Intermediate/" + i as String + ".json", pb_times["Intermediate"][i])
 			if pb_times["Accomplished"][i]["time"] < official_times["Accomplished"][i]["time"] and pb_times["Accomplished"][i]["time"] != 0:
 				sec_has += 0.2
+#				if pb_times["Accomplished"][i]["time"] < world_times["Accomplished"][i]["time"]:
+#					_make_post_request(URL_WORLD + "/Accomplished/" + i as String + ".json", pb_times["Accomplished"][i])
 			if pb_times["Advanced"][i]["time"] < official_times["Advanced"][i]["time"] and pb_times["Advanced"][i]["time"] != 0:
 				sec_has += 0.2
+#				if pb_times["Advanced"][i]["time"] < world_times["Advanced"][i]["time"]:
+#					_make_post_request(URL_WORLD + "/Advanced/" + i as String + ".json", pb_times["Advanced"][i])
 			if pb_times["Professional"][i]["time"] < official_times["Professional"][i]["time"] and pb_times["Professional"][i]["time"] != 0:
 				sec_has += 0.2
+#				if pb_times["Professional"][i]["time"] < world_times["Professional"][i]["time"]:
+#					_make_post_request(URL_WORLD + "/Professional/" + i as String + ".json", pb_times["Professional"][i])
 #	print(sec_has)
 #	if sec_has >= 2:
 #		#print(pb_times["Advanced"][1]["time"])
@@ -108,7 +118,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	if got_stuff == "official":
 		official_times = JSON.parse(body.get_string_from_utf8()).result
 		got_stuff = "world"
-		$HTTPRequest.request(URL_WORLD)
+		_make_post_request(URL_WORLD + ".json", official_times)
 	elif got_stuff == "world":
 		world_times = JSON.parse(body.get_string_from_utf8()).result
 		got_stuff = ""

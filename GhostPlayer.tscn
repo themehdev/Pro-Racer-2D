@@ -71,7 +71,7 @@ color = Color( 0, 0, 1, 0.392157 )
 
 [node name="Polygon2D" type="Polygon2D" parent="Graphics"]
 color = Color( 0, 0, 1, 0.392157 )
-polygon = PoolVector2Array( 0, -64, 0, -64, 8, -56, 16, -32, 24, 16, 8, 64, -8, 64, -16, 40, -24, 16, -16, -32, -8, -56 )
+polygon = PoolVector2Array( 0, -64, 0, -64, 8, -56, 16, -24, 28, 8, 8, 64, -8, 64, -28, 8, -16, -24, -8, -56 )
 
 [node name="HitWall" type="Timer" parent="."]
 wait_time = 0.1

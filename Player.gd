@@ -65,6 +65,29 @@ var traction_types = {
 	"off_road": 0.25
 }
 
+func restart():
+	$"%Start Text".visible = true
+	run = {"time": 0, "inputs": [{"pos": start_pos, "dir": start_dir.angle()}], "splits": []}
+	get_tree().call_group("Checkpoint", "reset")
+	position = start_pos
+	#print("restart")
+	vel = Vector2.ZERO
+	dir = start_dir
+	split_on = 0
+	rotation = dir.angle()
+	rotation_vel = 0
+	$"%Label".text = ""
+	$"%Label2".text = ""
+	timer = 0
+	physics = false
+	last_cp_pos = start_pos
+	last_cp_dir = start_dir
+	lap = 1
+	finishing = false
+	$Start.start()
+	print("restarting")
+	$"%Finish Menu".hide()
+
 func set_start(args):
 	start_pos = args[0]
 	last_cp_pos = args[0]
@@ -139,26 +162,8 @@ func _physics_process(delta):
 			$Start.stop()
 			start_stopped = true
 	#print(Input.is_action_pressed("restart"))
-	if Input.is_action_just_pressed("restart") or (Input.is_action_pressed("respawn") and last_cp_pos == start_pos and lap == 1):
-		$"%Start Text".visible = true
-		run = {"time": 0, "inputs": [{"pos": start_pos, "dir": start_dir.angle()}], "splits": []}
-		get_tree().call_group("Checkpoint", "reset")
-		position = start_pos
-		#print("restart")
-		vel = Vector2.ZERO
-		dir = start_dir
-		split_on = 0
-		rotation = dir.angle()
-		rotation_vel = 0
-		$"%Label".text = ""
-		$"%Label2".text = ""
-		timer = 0
-		physics = false
-		last_cp_pos = start_pos
-		last_cp_dir = start_dir
-		lap = 1
-		finishing = false
-		$Start.start()
+	if( Input.is_action_just_pressed("restart") or (Input.is_action_pressed("respawn") and last_cp_pos == start_pos and lap == 1)) and not $"%Popup".visible:
+		restart()
 	if(boost_counter > 0):
 		vel += Vector2.UP.rotated(PI * boost_dir/180) * boost_vel
 	
@@ -302,6 +307,8 @@ func _on_Area2D_area_entered(area):
 			#print(Global.track_playing)
 		physics = false
 		finishing = true
+		$"%Finish Menu".popup()
+		
 		#print(run)
 		
 	elif parent.is_in_group("Start") and Global.checkpoints_left == 0 and Global.track_has_finish == false:
@@ -355,8 +362,19 @@ func _on_Resume_pressed():
 	if start_stopped:
 		$Start.start()
 		start_stopped = false
+	if finishing == true:
+		restart()
 	pop_needs_hiding = true
 
 
 func _on_Player_tree_exited():
 	Global.player = {"physics" : false, "finishing": false, "timer": 0}
+
+
+func _on_Finish_Menu_restart():
+	print("Happening")
+	restart()
+
+
+func _on_Finish_Menu_exiting():
+	get_parent().queue_free()
