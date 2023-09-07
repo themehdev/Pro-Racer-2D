@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://Track Menu.gd" type="Script" id=1]
+[ext_resource path="res://Menus/Track Menu.gd" type="Script" id=1]
 
 [node name="Track Menu" type="Node2D"]
 script = ExtResource( 1 )
@@ -18,45 +18,44 @@ text = "Track"
 align = 1
 valign = 1
 
-[node name="PB" type="Button" parent="VBoxContainer"]
+[node name="Back" type="Button" parent="VBoxContainer"]
 margin_top = 100.0
 margin_right = 1024.0
 margin_bottom = 197.0
-size_flags_vertical = 3
-text = "Play Personal Best"
-
-[node name="Official" type="Button" parent="VBoxContainer"]
-margin_top = 201.0
-margin_right = 1024.0
-margin_bottom = 297.0
-size_flags_vertical = 3
-text = "Play Official Run"
-
-[node name="World" type="Button" parent="VBoxContainer"]
-margin_top = 301.0
-margin_right = 1024.0
-margin_bottom = 398.0
-size_flags_vertical = 3
-text = "Play World Record"
-
-[node name="Live" type="Button" parent="VBoxContainer"]
-margin_top = 402.0
-margin_right = 1024.0
-margin_bottom = 499.0
-size_flags_vertical = 3
-disabled = true
-text = "Play Someone Live"
-
-[node name="Back" type="Button" parent="VBoxContainer"]
-margin_top = 503.0
-margin_right = 1024.0
-margin_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Back"
 
+[node name="PB" type="Button" parent="VBoxContainer"]
+margin_top = 201.0
+margin_right = 1024.0
+margin_bottom = 297.0
+size_flags_vertical = 3
+text = "Play Personal Best"
+
+[node name="Official" type="Button" parent="VBoxContainer"]
+margin_top = 301.0
+margin_right = 1024.0
+margin_bottom = 398.0
+size_flags_vertical = 3
+text = "Play Official Run"
+
+[node name="World" type="Button" parent="VBoxContainer"]
+margin_top = 402.0
+margin_right = 1024.0
+margin_bottom = 499.0
+size_flags_vertical = 3
+text = "Play World Record"
+
+[node name="Live" type="Button" parent="VBoxContainer"]
+margin_top = 503.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_vertical = 3
+text = "Play Someone Live"
+
+[connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_Back_pressed"]
 [connection signal="pressed" from="VBoxContainer/PB" to="." method="_on_PB_pressed"]
 [connection signal="pressed" from="VBoxContainer/Official" to="." method="_on_Official_pressed"]
 [connection signal="pressed" from="VBoxContainer/World" to="." method="_on_World_pressed"]
 [connection signal="pressed" from="VBoxContainer/Live" to="." method="_on_Live_pressed"]
-[connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_Back_pressed"]

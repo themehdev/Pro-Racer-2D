@@ -22,6 +22,7 @@ var URL_OFFICIAL = "https://pro-racer-2d-default-rtdb.firebaseio.com/Official.js
 var URL_WORLD = "https://pro-racer-2d-default-rtdb.firebaseio.com/World"
 var sec_has = 0
 var can_play_world = false
+var live_splits = {"split_on": 0, "splits": [], "time" : 0}
 
 func save_to_file(content, filename):
 	var file = File.new()
@@ -87,6 +88,7 @@ func name_to_num(name):
 		return NAN
 
 func _ready():
+	#NetworkManager.connect("split", self, "_on_split")
 	for i in num_tracks:
 		tracks["Beginner"].append(load("res://Tracks/Beginner/Track " + (i + 1) as String + ".tscn"))
 		pb_times["Beginner"].append({"time":0})
@@ -110,16 +112,24 @@ func _make_post_request(url, data_to_send, use_ssl = false):
 	$HTTPRequest.request(url, headers, use_ssl, HTTPClient.METHOD_PUT, query)
 
 var got_stuff = "world"
+var data
 
 func _process(delta):
 	if opp_type == "official":
 		opp_run = official_times[sec_playing][track_playing]
 	elif opp_type == "world":
 		opp_run = world_times[sec_playing][track_playing]
-	if opp_type != "-" and opp_type != "":
+	if opp_type == "official" or opp_type == "world":
 		#print(pb_times[sec_playing][track_playing]["time"])
+		live_splits = {"split_on": 0, "splits": [], "time" : 0}
 		best_run = pb_times[sec_playing][track_playing] if (pb_times[sec_playing][track_playing]["time"] != 0 and pb_times[sec_playing][track_playing]["time"] <= opp_run["time"]) else opp_run
+	elif opp_type == "live":
+		#print(opp_type)
+		best_run = {"time":0}
+		
+		#best_run["time"] = live_splits["time"]
 	else:
+		live_splits = {"split_on": 0, "splits": [], "time" : 0}
 		best_run = pb_times[sec_playing][track_playing]
 
 #	print(sec_has)
@@ -127,9 +137,8 @@ func _process(delta):
 #		#print(pb_times["Advanced"][1]["time"])
 #		print("posting")
 #		_make_post_request("https://pro-racer-2d-default-rtdb.firebaseio.com/Official/Accomplished.json", pb_times["Accomplished"])
-#		pb_times["Accomplished"][1] = {"time":0}
-	
-	
+#		pb_times["Accomplished"][1] = {"time"
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass

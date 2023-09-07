@@ -24,7 +24,7 @@ func _ready():
 
 func _button_pressed(id):
 	Global.track_playing = id
-	get_tree().change_scene("res://Track Menu.tscn")
+	get_tree().change_scene("res://Menus/Track Menu.tscn")
 	queue_free()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
@@ -34,5 +34,5 @@ func _button_pressed(id):
 
 func _on_Back_pressed():
 	Global.track_playing = -1
-	get_tree().change_scene("res://Main Menu.tscn")
+	get_tree().change_scene("res://Menus/Main Menu.tscn")
 	queue_free()

@@ -11,12 +11,13 @@ config_version=4
 [application]
 
 config/name="Pro Racer 2D"
-run/main_scene="res://Main Menu.tscn"
+run/main_scene="res://Menus/Start Menu.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 Global="*res://Global.tscn"
+NetworkManager="*res://NetworkManager.tscn"
 
 [gui]
 

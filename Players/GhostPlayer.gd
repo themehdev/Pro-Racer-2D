@@ -91,7 +91,20 @@ func set_col(is_pb):
 func _physics_process(delta):
 	#old_run = run
 	set_col(type == "pb" or type == "")
-	if type == "pb" or type == "":
+	type = Global.opp_type if type != "pb" else "pb"
+	#print(type)
+	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[1])
+	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[0])
+	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[2])
+	if type == "live":
+		visible = true
+		data = NetworkManager.data
+		if "input" in data:
+			position = Global.xy_to_vec2(data["input"]["pos"])
+			rotation = data["input"]["dir"]
+			#print(position)
+		return
+	elif type == "pb" or type == "":
 		data = Global.pb_times
 	elif type == "official":
 		data = Global.official_times
@@ -107,9 +120,6 @@ func _physics_process(delta):
 		just_changed = true
 		run = data[Global.sec_playing][Global.track_playing]
 	
-	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[1])
-	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[0])
-	add_collision_exception_with(get_tree().get_nodes_in_group("Player")[2])
 	if run["time"] != 0:
 		if type == "" or (type == "pb" and Global.pb_times[Global.sec_playing][Global.track_playing]["time"] == 0):
 			visible = false

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Main Menu.gd" type="Script" id=1]
+[ext_resource path="res://Menus/Main Menu.gd" type="Script" id=1]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 1, 0, 0, 1 )
@@ -14,42 +14,50 @@ margin_bottom = 600.0
 
 [node name="Beginner" type="Button" parent="VBoxContainer"]
 margin_right = 1024.0
-margin_bottom = 112.0
+margin_bottom = 92.0
 size_flags_vertical = 3
 text = "Beginner"
 
 [node name="Intermediate" type="Button" parent="VBoxContainer"]
-margin_top = 116.0
+margin_top = 96.0
 margin_right = 1024.0
-margin_bottom = 228.0
+margin_bottom = 189.0
 size_flags_vertical = 3
 text = "Intermediate"
 
 [node name="Accomplished" type="Button" parent="VBoxContainer"]
-margin_top = 232.0
+margin_top = 193.0
 margin_right = 1024.0
-margin_bottom = 344.0
+margin_bottom = 285.0
 size_flags_vertical = 3
 text = "Accomplished"
 
 [node name="Advanced" type="Button" parent="VBoxContainer"]
-margin_top = 348.0
+margin_top = 289.0
 margin_right = 1024.0
-margin_bottom = 460.0
+margin_bottom = 382.0
 size_flags_vertical = 3
 text = "Advanced"
 
 [node name="Professional" type="Button" parent="VBoxContainer"]
-margin_top = 464.0
+margin_top = 386.0
 margin_right = 1024.0
-margin_bottom = 576.0
+margin_bottom = 479.0
 size_flags_vertical = 3
 text = "Professional"
 
-[node name="Clear" type="Button" parent="VBoxContainer"]
-margin_top = 580.0
+[node name="Back" type="Button" parent="VBoxContainer"]
+margin_top = 483.0
 margin_right = 1024.0
-margin_bottom = 600.0
+margin_bottom = 575.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Back"
+
+[node name="Clear" type="Button" parent="VBoxContainer"]
+margin_top = 579.0
+margin_right = 1024.0
+margin_bottom = 599.0
 custom_styles/hover = SubResource( 1 )
 text = "Clear"
 
@@ -58,4 +66,5 @@ text = "Clear"
 [connection signal="pressed" from="VBoxContainer/Accomplished" to="." method="_on_Accomplished_pressed"]
 [connection signal="pressed" from="VBoxContainer/Advanced" to="." method="_on_Advanced_pressed"]
 [connection signal="pressed" from="VBoxContainer/Professional" to="." method="_on_Professional_pressed"]
+[connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_Back_pressed"]
 [connection signal="pressed" from="VBoxContainer/Clear" to="." method="_on_Clear_pressed"]

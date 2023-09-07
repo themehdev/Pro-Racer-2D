@@ -20,7 +20,7 @@ func _process(delta):
 
 func _on_Menu_pressed():
 	print("exit")
-	get_tree().change_scene("res://Menu.tscn")
+	get_tree().change_scene("res://Menus/Menu.tscn")
 	hide()
 	emit_signal("exiting")
 
@@ -34,10 +34,10 @@ func _on_Play_pressed():
 func _on_Next_pressed():
 	if Global.track_playing != 4:
 		Global.track_playing += 1
-		get_tree().change_scene("res://Track Menu.tscn")
+		get_tree().change_scene("res://Menus/Track Menu.tscn")
 		queue_free()
 	else:
 		Global.sec_playing = Global.num_to_name_2(Global.name_to_num(Global.sec_playing) + 1)
 		Global.track_playing = 0
-		get_tree().change_scene("res://Track Menu.tscn")
+		get_tree().change_scene("res://Menus/Track Menu.tscn")
 		queue_free()

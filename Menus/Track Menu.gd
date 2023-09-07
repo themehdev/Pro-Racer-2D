@@ -41,9 +41,11 @@ func _on_World_pressed():
 
 
 func _on_Live_pressed():
-	pass # Replace with function body.
+	#Global.opp_type = "live"
+	get_tree().change_scene("res://Connection.tscn")
+	queue_free()
 
 
 func _on_Back_pressed():
-	get_tree().change_scene("res://Menu.tscn")
+	get_tree().change_scene("res://Menus/Menu.tscn")
 	queue_free()

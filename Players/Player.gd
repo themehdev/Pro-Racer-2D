@@ -220,6 +220,8 @@ func _physics_process(delta):
 		$"%Label2".text = "Time: " + gen_time(timer)
 		rotation = dir.angle()
 		run["inputs"].append({"pos": Global.vec2_to_xy(position), "dir" : rotation})
+		if Global.opp_type == "live":
+			NetworkManager.send_direct_msg({"input": {"pos": Global.vec2_to_xy(position), "dir" : rotation}})
 		#run["input_splits"].append(timer)
 	if pop_needs_hiding:
 		$"%Popup".hide()
@@ -241,7 +243,7 @@ func _physics_process(delta):
 		var boing_angle = collision.get_angle(vel.normalized()) if collision.get_angle(vel.normalized()) <= PI/2 else collision.get_angle(vel.normalized()) - PI
 		#print(-abs(boing_angle/(PI/2)) + 1)
 		if(abs(coll_angle) <= PI/4.75):
-			print((collision.get_position() - position).rotated(dir.angle()).y)
+			#print((collision.get_position() - position).rotated(dir.angle()).y)
 			rotation_vel += coll_angle/2 * -sign((collision.get_position() - position).rotated(-dir.angle()).y)
 			vel = vel.bounce(collision.normal)
 #		elif(collision.get_angle(vel) > PI/6 and collision.get_angle(vel.normalized()) <= PI/4):
@@ -291,46 +293,61 @@ func _on_Area2D_area_entered(area):
 		last_cp_dir = Vector2.RIGHT.rotated(block.rotation_degrees * PI/180)
 		$"%Label".text = gen_time(timer)
 		if Global.best_run["time"] != 0:
-			print(timer - Global.best_run["splits"][split_on])
+			#print(timer - Global.best_run["splits"][split_on])
 			$"%Label".text += "\n" + (gen_time(timer - Global.best_run["splits"][split_on]) if (timer - Global.best_run["splits"][split_on]) <= 0 else "+" + gen_time(timer - Global.best_run["splits"][split_on]))
 		Global.checkpoints_left -= 1
 		split_on += 1
+		if Global.opp_type == "live":
+			NetworkManager.send_direct_msg({"split": timer})
+			#print(timer)
+		print(Global.live_splits["split_on"])
+		print(split_on)
+		if split_on <= Global.live_splits["split_on"] and Global.opp_type == "live":
+			$"%Label".text += "\n2nd: " + (gen_time(timer - Global.live_splits["splits"][split_on - 1]) if (timer - Global.live_splits["splits"][split_on - 1]) <= 0 else "+" + gen_time(timer - Global.live_splits["splits"][split_on - 1]))
+		elif Global.opp_type == "live":
+			$"%Label".text += "\n1st!"
 	if ((parent.is_in_group("Finish") or (parent.is_in_group("Start") and lap == 3)) and Global.checkpoints_left == 0):
-		run["inputs"].append({"pos": position, "dir" : rotation})
+		run["inputs"].append({"pos": Global.vec2_to_xy(position), "dir" : rotation})
 		#run["input_splits"].append(timer)
 		$"%No Zoom/Label".text = "Finish!: " + gen_time(timer)
 		if Global.best_run["time"] != 0:
 			$"%No Zoom/Label".text += "\n" + (gen_time(timer - Global.best_run["time"]) if (timer - Global.best_run["time"]) <= 0 else "+" + gen_time(timer - Global.best_run["time"]))
+		if Global.opp_type == "live" and Global.live_splits["time"] != 0:
+			$"%No Zoom/Label".text += "\n2nd: " + (gen_time(timer - Global.live_splits["time"]) if (timer - Global.live_splits["time"]) <= 0 else "+" + gen_time(timer - Global.live_splits["time"]))
+		elif Global.opp_type == "live":
+			$"%Label".text += "\n1st!"
 		run["time"] = timer
 		if timer < Global.pb_times[Global.sec_playing][Global.track_playing]["time"] or Global.pb_times[Global.sec_playing][Global.track_playing]["time"] == 0:
 			Global.pb_times[Global.sec_playing][Global.track_playing] = run
 			#print(Global.track_playing)
 		physics = false
 		finishing = true
+		if Global.opp_type == "live":
+			NetworkManager.send_direct_msg({"time": timer})
 		Global.save_to_file(Global.pb_times, "pb_times")
 		Global.sec_has = 1
 		for i in Global.num_tracks:
 			if Global.pb_times["Beginner"][i]["time"] < Global.official_times["Beginner"][i]["time"] and Global.pb_times["Beginner"][i]["time"] != 0:
 				Global.sec_has += 0.2
-#				if Global.pb_times["Beginner"][i]["time"] < world_times["Beginner"][i]["time"]:
-#					_make_post_request(URL_WORLD + "/Beginner/" + i as String + ".json", Global.pb_times["Beginner"][i])
+#				if Global.pb_times["Beginner"][i]["time"] < Global.world_times["Beginner"][i]["time"]:
+#					_make_post_request(Global.URL_WORLD + "/Beginner/" + i as String + ".json", Global.pb_times["Beginner"][i])
 				#print(Global.sec_has)
 			if Global.pb_times["Intermediate"][i]["time"] < Global.official_times["Intermediate"][i]["time"] and Global.pb_times["Intermediate"][i]["time"] != 0:
 				Global.sec_has += 0.2
-#				if Global.pb_times["Intermediate"][i]["time"] < world_times["Intermediate"][i]["time"]:
-#					_make_post_request(URL_WORLD + "/Intermediate/" + i as String + ".json", Global.pb_times["Intermediate"][i])
+#				if Global.pb_times["Intermediate"][i]["time"] < Global.world_times["Intermediate"][i]["time"]:
+#					_make_post_request(Global.URL_WORLD + "/Intermediate/" + i as String + ".json", Global.pb_times["Intermediate"][i])
 			if Global.pb_times["Accomplished"][i]["time"] < Global.official_times["Accomplished"][i]["time"] and Global.pb_times["Accomplished"][i]["time"] != 0:
 				Global.sec_has += 0.2
-#				if Global.pb_times["Accomplished"][i]["time"] < world_times["Accomplished"][i]["time"]:
-#					_make_post_request(URL_WORLD + "/Accomplished/" + i as String + ".json", Global.pb_times["Accomplished"][i])
+#				if Global.pb_times["Accomplished"][i]["time"] < Global.world_times["Accomplished"][i]["time"]:
+#					_make_post_request(Global.URL_WORLD + "/Accomplished/" + i as String + ".json", Global.pb_times["Accomplished"][i])
 			if Global.pb_times["Advanced"][i]["time"] < Global.official_times["Advanced"][i]["time"] and Global.pb_times["Advanced"][i]["time"] != 0:
 				Global.sec_has += 0.2
-#				if Global.pb_times["Advanced"][i]["time"] < world_times["Advanced"][i]["time"]:
-#					_make_post_request(URL_WORLD + "/Advanced/" + i as String + ".json", Global.pb_times["Advanced"][i])
+#				if Global.pb_times["Advanced"][i]["time"] < Global.world_times["Advanced"][i]["time"]:
+#					_make_post_request(Global.URL_WORLD + "/Advanced/" + i as String + ".json", Global.pb_times["Advanced"][i])
 			if Global.pb_times["Professional"][i]["time"] < Global.official_times["Professional"][i]["time"] and Global.pb_times["Professional"][i]["time"] != 0:
 				Global.sec_has += 0.2
-#				if Global.pb_times["Professional"][i]["time"] < world_times["Professional"][i]["time"]:
-#					_make_post_request(URL_WORLD + "/Professional/" + i as String + ".json", Global.pb_times["Professional"][i])
+#				if Global.pb_times["Professional"][i]["time"] < Global.world_times["Professional"][i]["time"]:
+#					_make_post_request(Global.URL_WORLD + "/Professional/" + i as String + ".json", Global.pb_times["Professional"][i])
 		$"%Finish Menu".popup()
 		
 		#print(run)
@@ -346,6 +363,12 @@ func _on_Area2D_area_entered(area):
 		$"%Label".text += "\n" + ("Last lap!" if 3 - lap == 1 else (3 - lap) as String + " laps to go!")
 		lap += 1
 		split_on += 1
+		if Global.opp_type == "live":
+			NetworkManager.send_direct_msg({"split": timer})
+		if split_on <= Global.live_splits["split_on"] and Global.opp_type == "live":
+			$"%Label".text += "\n2nd: " + (gen_time(timer - Global.live_splits["splits"][split_on - 1]) if (timer - Global.live_splits["splits"][split_on - 1]) <= 0 else "+" + gen_time(timer - Global.live_splits["splits"][split_on - 1]))
+		elif Global.opp_type == "live":
+			$"%Label".text += "\n1st!"
 	
 	if area.is_in_group("Boost Panels"):
 		boost_counter += 1
@@ -375,7 +398,7 @@ func _on_Start_timeout():
 	get_tree().call_group("Checkpoint", "reset")
 
 func _on_Menu_pressed():
-	get_tree().change_scene("res://Menu.tscn")
+	get_tree().change_scene("res://Menus/Menu.tscn")
 	$"%Popup".hide()
 	get_parent().queue_free()
 

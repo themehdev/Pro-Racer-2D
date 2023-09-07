@@ -48,32 +48,32 @@ func _process(delta):
 
 func _on_Beginner_pressed():
 	Global.sec_playing = "Beginner"
-	get_tree().change_scene("res://Menu.tscn")
+	get_tree().change_scene("res://Menus/Menu.tscn")
 	queue_free()
 
 
 
 func _on_Intermediate_pressed():
 	Global.sec_playing = "Intermediate"
-	get_tree().change_scene("res://Menu.tscn")
+	get_tree().change_scene("res://Menus/Menu.tscn")
 	queue_free()
 
 
 func _on_Accomplished_pressed():
 	Global.sec_playing = "Accomplished"
-	get_tree().change_scene("res://Menu.tscn")
+	get_tree().change_scene("res://Menus/Menu.tscn")
 	queue_free()
 
 
 func _on_Advanced_pressed():
 	Global.sec_playing = "Advanced"
-	get_tree().change_scene("res://Menu.tscn")
+	get_tree().change_scene("res://Menus/Menu.tscn")
 	queue_free()
 
 
 func _on_Professional_pressed():
 	Global.sec_playing = "Professional"
-	get_tree().change_scene("res://Menu.tscn")
+	get_tree().change_scene("res://Menus/Menu.tscn")
 	queue_free()
 
 
@@ -109,3 +109,8 @@ func _on_Clear_pressed():
 			Global.sec_has += 0.2
 #				if Global.pb_times["Professional"][i]["time"] < world_times["Professional"][i]["time"]:
 #					_make_post_request(URL_WORLD + "/Professional/" + i as String + ".json", Global.pb_times["Professional"][i])
+
+
+func _on_Back_pressed():
+	get_tree().change_scene("res://Menus/Start Menu.tscn")
+	queue_free()
