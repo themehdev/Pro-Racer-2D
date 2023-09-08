@@ -1,6 +1,21 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Menus/Main Menu.gd" type="Script" id=1]
+[ext_resource path="res://Fonts/FasterOne-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Fonts/DotGothic16-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Fonts/Quicksand-VariableFont_wght.ttf" type="DynamicFontData" id=4]
+
+[sub_resource type="DynamicFont" id=2]
+size = 64
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 50
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 18
+font_data = ExtResource( 4 )
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 1, 0, 0, 1 )
@@ -12,54 +27,114 @@ script = ExtResource( 1 )
 margin_right = 1024.0
 margin_bottom = 600.0
 
-[node name="Beginner" type="Button" parent="VBoxContainer"]
+[node name="Label" type="Label" parent="VBoxContainer"]
 margin_right = 1024.0
-margin_bottom = 92.0
+margin_bottom = 69.0
+size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 2 )
+text = "Choose a track set:"
+align = 1
+valign = 1
+
+[node name="Beginner" type="Button" parent="VBoxContainer"]
+margin_top = 73.0
+margin_right = 1024.0
+margin_bottom = 152.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 3 )
 text = "Beginner"
 
 [node name="Intermediate" type="Button" parent="VBoxContainer"]
-margin_top = 96.0
+margin_top = 156.0
 margin_right = 1024.0
-margin_bottom = 189.0
+margin_bottom = 235.0
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 3 )
 text = "Intermediate"
 
 [node name="Accomplished" type="Button" parent="VBoxContainer"]
-margin_top = 193.0
+margin_top = 239.0
 margin_right = 1024.0
-margin_bottom = 285.0
+margin_bottom = 318.0
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 3 )
 text = "Accomplished"
 
 [node name="Advanced" type="Button" parent="VBoxContainer"]
-margin_top = 289.0
+margin_top = 322.0
 margin_right = 1024.0
-margin_bottom = 382.0
+margin_bottom = 401.0
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 3 )
 text = "Advanced"
 
 [node name="Professional" type="Button" parent="VBoxContainer"]
-margin_top = 386.0
+margin_top = 405.0
 margin_right = 1024.0
-margin_bottom = 479.0
+margin_bottom = 484.0
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 3 )
 text = "Professional"
 
 [node name="Back" type="Button" parent="VBoxContainer"]
-margin_top = 483.0
+margin_top = 488.0
 margin_right = 1024.0
-margin_bottom = 575.0
+margin_bottom = 567.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 3 )
 text = "Back"
 
 [node name="Clear" type="Button" parent="VBoxContainer"]
-margin_top = 579.0
+margin_top = 571.0
+margin_right = 1024.0
+margin_bottom = 600.0
+custom_fonts/font = SubResource( 4 )
+custom_styles/hover = SubResource( 1 )
+custom_styles/pressed = SubResource( 1 )
+custom_styles/focus = SubResource( 1 )
+text = "Clear all progress"
+
+[node name="Popup" type="Popup" parent="."]
 margin_right = 1024.0
 margin_bottom = 599.0
-custom_styles/hover = SubResource( 1 )
-text = "Clear"
+
+[node name="ColorRect" type="ColorRect" parent="Popup"]
+margin_right = 1024.0
+margin_bottom = 599.0
+color = Color( 0.223529, 0.223529, 0.223529, 0.643137 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Popup"]
+margin_left = 128.0
+margin_top = 128.0
+margin_right = 896.0
+margin_bottom = 472.0
+
+[node name="PopupTitle" type="Label" parent="Popup/VBoxContainer"]
+margin_right = 768.0
+margin_bottom = 112.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Do you really want to clear your progress?"
+align = 1
+valign = 1
+
+[node name="Yes" type="Button" parent="Popup/VBoxContainer"]
+margin_top = 116.0
+margin_right = 768.0
+margin_bottom = 228.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Yes"
+
+[node name="No" type="Button" parent="Popup/VBoxContainer"]
+margin_top = 232.0
+margin_right = 768.0
+margin_bottom = 344.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "No"
 
 [connection signal="pressed" from="VBoxContainer/Beginner" to="." method="_on_Beginner_pressed"]
 [connection signal="pressed" from="VBoxContainer/Intermediate" to="." method="_on_Intermediate_pressed"]
@@ -68,3 +143,5 @@ text = "Clear"
 [connection signal="pressed" from="VBoxContainer/Professional" to="." method="_on_Professional_pressed"]
 [connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_Back_pressed"]
 [connection signal="pressed" from="VBoxContainer/Clear" to="." method="_on_Clear_pressed"]
+[connection signal="pressed" from="Popup/VBoxContainer/Yes" to="." method="_on_Yes_pressed"]
+[connection signal="pressed" from="Popup/VBoxContainer/No" to="." method="_on_No_pressed"]

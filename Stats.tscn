@@ -1,6 +1,20 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Stats.gd" type="Script" id=1]
+[ext_resource path="res://Fonts/FasterOne-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Fonts/DotGothic16-Regular.ttf" type="DynamicFontData" id=3]
+
+[sub_resource type="DynamicFont" id=5]
+size = 80
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 50
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 50
+font_data = ExtResource( 3 )
 
 [node name="Stats" type="Node2D"]
 script = ExtResource( 1 )
@@ -10,23 +24,65 @@ margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+alignment = 1
 
 [node name="Title" type="Label" parent="VBoxContainer"]
 margin_right = 1024.0
-margin_bottom = 298.0
+margin_bottom = 96.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Stats
-"
+custom_fonts/font = SubResource( 5 )
+text = "Stats"
+align = 1
+valign = 1
+
+[node name="TracksGotten" type="Label" parent="VBoxContainer"]
+margin_top = 100.0
+margin_right = 1024.0
+margin_bottom = 197.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 3 )
+align = 1
+valign = 1
+
+[node name="LiveWins" type="Label" parent="VBoxContainer"]
+margin_top = 201.0
+margin_right = 1024.0
+margin_bottom = 297.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 4 )
+align = 1
+valign = 1
+
+[node name="LiveLosses" type="Label" parent="VBoxContainer"]
+margin_top = 301.0
+margin_right = 1024.0
+margin_bottom = 398.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 4 )
+align = 1
+valign = 1
+
+[node name="LiveWinPercentage" type="Label" parent="VBoxContainer"]
+margin_top = 402.0
+margin_right = 1024.0
+margin_bottom = 499.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 4 )
 align = 1
 valign = 1
 
 [node name="Back" type="Button" parent="VBoxContainer"]
-margin_top = 302.0
+margin_top = 503.0
 margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 3 )
 text = "Back"
 
 [connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_Back_pressed"]

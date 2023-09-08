@@ -1,6 +1,19 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Menus/Start Menu.gd" type="Script" id=1]
+[ext_resource path="res://Fonts/FasterOne-Regular.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 100
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 64
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 64
+font_data = ExtResource( 2 )
 
 [node name="Start Menu" type="Node2D"]
 script = ExtResource( 1 )
@@ -14,6 +27,7 @@ margin_right = 1024.0
 margin_bottom = 147.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 1 )
 text = "Pro Racer 2D"
 align = 1
 valign = 1
@@ -31,7 +45,8 @@ margin_right = 1024.0
 margin_bottom = 449.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Play!"
+custom_fonts/font = SubResource( 2 )
+text = "Play"
 
 [node name="Stats" type="Button" parent="VBoxContainer"]
 margin_top = 453.0
@@ -39,6 +54,7 @@ margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 3 )
 text = "Stats"
 
 [connection signal="pressed" from="VBoxContainer/Play" to="." method="_on_Play_pressed"]

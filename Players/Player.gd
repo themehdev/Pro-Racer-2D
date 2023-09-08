@@ -76,8 +76,8 @@ func restart():
 	split_on = 0
 	rotation = dir.angle()
 	rotation_vel = 0
-	$"%Label".text = ""
-	$"%Label2".text = ""
+	$"%Time".text = ""
+	$"%Splits".text = ""
 	timer = 0
 	physics = false
 	last_cp_pos = start_pos
@@ -217,7 +217,7 @@ func _physics_process(delta):
 		vel = vel.rotated(rotation_vel * traction) #* 1.0 - drift
 		collision = move_and_collide(vel * delta)
 		timer += round(delta * 1000)/1000
-		$"%Label2".text = "Time: " + gen_time(timer)
+		$"%Time".text = "Time: " + gen_time(timer)
 		rotation = dir.angle()
 		run["inputs"].append({"pos": Global.vec2_to_xy(position), "dir" : rotation})
 		if Global.opp_type == "live":
@@ -291,31 +291,35 @@ func _on_Area2D_area_entered(area):
 		#last_cp_pos.y += 512
 #		last_cp_pos.y -= 206
 		last_cp_dir = Vector2.RIGHT.rotated(block.rotation_degrees * PI/180)
-		$"%Label".text = gen_time(timer)
+		$"%Splits".text = gen_time(timer)
 		if Global.best_run["time"] != 0:
 			#print(timer - Global.best_run["splits"][split_on])
-			$"%Label".text += "\n" + (gen_time(timer - Global.best_run["splits"][split_on]) if (timer - Global.best_run["splits"][split_on]) <= 0 else "+" + gen_time(timer - Global.best_run["splits"][split_on]))
+			$"%Splits".text += "\n\n" + (gen_time(timer - Global.best_run["splits"][split_on]) if (timer - Global.best_run["splits"][split_on]) <= 0 else "+" + gen_time(timer - Global.best_run["splits"][split_on]))
 		Global.checkpoints_left -= 1
 		split_on += 1
 		if Global.opp_type == "live":
 			NetworkManager.send_direct_msg({"split": timer})
-			#print(timer)
-		print(Global.live_splits["split_on"])
-		print(split_on)
+#			#print(timer)
+#		print(Global.live_splits["split_on"])
+#		print(split_on)
 		if split_on <= Global.live_splits["split_on"] and Global.opp_type == "live":
-			$"%Label".text += "\n2nd: " + (gen_time(timer - Global.live_splits["splits"][split_on - 1]) if (timer - Global.live_splits["splits"][split_on - 1]) <= 0 else "+" + gen_time(timer - Global.live_splits["splits"][split_on - 1]))
+			$"%Splits".text += "\n\n2nd: " + (gen_time(timer - Global.live_splits["splits"][split_on - 1]) if (timer - Global.live_splits["splits"][split_on - 1]) <= 0 else "+" + gen_time(timer - Global.live_splits["splits"][split_on - 1]))
 		elif Global.opp_type == "live":
-			$"%Label".text += "\n1st!"
+			$"%Splits".text += "\n\n1st!"
 	if ((parent.is_in_group("Finish") or (parent.is_in_group("Start") and lap == 3)) and Global.checkpoints_left == 0):
 		run["inputs"].append({"pos": Global.vec2_to_xy(position), "dir" : rotation})
 		#run["input_splits"].append(timer)
-		$"%No Zoom/Label".text = "Finish!: " + gen_time(timer)
+		$"%Splits".text = "Finish!: " + gen_time(timer)
 		if Global.best_run["time"] != 0:
-			$"%No Zoom/Label".text += "\n" + (gen_time(timer - Global.best_run["time"]) if (timer - Global.best_run["time"]) <= 0 else "+" + gen_time(timer - Global.best_run["time"]))
+			$"%Splits".text += "\n\n" + (gen_time(timer - Global.best_run["time"]) if (timer - Global.best_run["time"]) <= 0 else "+" + gen_time(timer - Global.best_run["time"]))
 		if Global.opp_type == "live" and Global.live_splits["time"] != 0:
-			$"%No Zoom/Label".text += "\n2nd: " + (gen_time(timer - Global.live_splits["time"]) if (timer - Global.live_splits["time"]) <= 0 else "+" + gen_time(timer - Global.live_splits["time"]))
+			$"%Splits".text += "\n\n2nd: " + (gen_time(timer - Global.live_splits["time"]) if (timer - Global.live_splits["time"]) <= 0 else "+" + gen_time(timer - Global.live_splits["time"]))
+			Global.live_races += 1
 		elif Global.opp_type == "live":
-			$"%Label".text += "\n1st!"
+			$"%Splits".text += "\n\n1st!"
+			Global.live_races += 1
+			Global.live_wins += 1
+			Global.save_to_file({"live_races": Global.live_races, "live_wins": Global.live_wins}, "live_stats")
 		run["time"] = timer
 		if timer < Global.pb_times[Global.sec_playing][Global.track_playing]["time"] or Global.pb_times[Global.sec_playing][Global.track_playing]["time"] == 0:
 			Global.pb_times[Global.sec_playing][Global.track_playing] = run
@@ -357,18 +361,18 @@ func _on_Area2D_area_entered(area):
 		get_tree().call_group("Checkpoint", "reset")
 		last_cp_pos = start_pos
 		last_cp_dir = start_dir
-		$"%Label".text = gen_time(timer)
+		$"%Splits".text = gen_time(timer)
 		if Global.best_run["time"] != 0:
-			$"%Label".text += "\n" + (gen_time(timer - Global.best_run["splits"][split_on]) if (timer - Global.best_run["splits"][split_on]) <= 0 else "+" + gen_time(timer - Global.best_run["splits"][split_on]))
-		$"%Label".text += "\n" + ("Last lap!" if 3 - lap == 1 else (3 - lap) as String + " laps to go!")
+			$"%Splits".text += "\n\n" + (gen_time(timer - Global.best_run["splits"][split_on]) if (timer - Global.best_run["splits"][split_on]) <= 0 else "+" + gen_time(timer - Global.best_run["splits"][split_on]))
+		$"%Splits".text += "\n\n" + ("Last lap!" if 3 - lap == 1 else (3 - lap) as String + " laps to go!")
 		lap += 1
 		split_on += 1
 		if Global.opp_type == "live":
 			NetworkManager.send_direct_msg({"split": timer})
 		if split_on <= Global.live_splits["split_on"] and Global.opp_type == "live":
-			$"%Label".text += "\n2nd: " + (gen_time(timer - Global.live_splits["splits"][split_on - 1]) if (timer - Global.live_splits["splits"][split_on - 1]) <= 0 else "+" + gen_time(timer - Global.live_splits["splits"][split_on - 1]))
+			$"%Splits".text += "\n\n2nd: " + (gen_time(timer - Global.live_splits["splits"][split_on - 1]) if (timer - Global.live_splits["splits"][split_on - 1]) <= 0 else "+" + gen_time(timer - Global.live_splits["splits"][split_on - 1]))
 		elif Global.opp_type == "live":
-			$"%Label".text += "\n1st!"
+			$"%Splits".text += "\n\n1st!"
 	
 	if area.is_in_group("Boost Panels"):
 		boost_counter += 1

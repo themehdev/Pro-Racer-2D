@@ -11,6 +11,7 @@ var tracks = []
 func _ready():
 #	for i in Global.num_tracks:
 #		Global.tracks[i]["track"] = load("res://Tracks/Track " + (i + 1) as String + ".tscn").instance()
+	$GridContainer/Title.text = Global.sec_playing + " track set:"
 	Global.track_playing = -1
 	Global.opp_type = "-"
 	for i in Global.num_tracks:

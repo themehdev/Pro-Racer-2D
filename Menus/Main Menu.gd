@@ -78,6 +78,16 @@ func _on_Professional_pressed():
 
 
 func _on_Clear_pressed():
+	$Popup.popup()
+
+
+
+func _on_Back_pressed():
+	get_tree().change_scene("res://Menus/Start Menu.tscn")
+	queue_free()
+
+
+func _on_Yes_pressed():
 	Global.pb_times =  {"Beginner": [], "Intermediate": [], "Accomplished": [], "Advanced": [], "Professional": []}
 	for i in Global.num_tracks:
 		Global.pb_times["Beginner"].append({"time":0})
@@ -86,6 +96,9 @@ func _on_Clear_pressed():
 		Global.pb_times["Advanced"].append({"time":0})
 		Global.pb_times["Professional"].append({"time":0})
 	Global.save_to_file(Global.pb_times, "pb_times")
+	Global.live_races = 0
+	Global.live_wins = 0
+	Global.save_to_file({"live_races": Global.live_races, "live_wins": Global.live_wins}, "live_stats")
 	Global.sec_has = 1
 	for i in Global.num_tracks:
 		if Global.pb_times["Beginner"][i]["time"] < Global.official_times["Beginner"][i]["time"] and Global.pb_times["Beginner"][i]["time"] != 0:
@@ -109,8 +122,8 @@ func _on_Clear_pressed():
 			Global.sec_has += 0.2
 #				if Global.pb_times["Professional"][i]["time"] < world_times["Professional"][i]["time"]:
 #					_make_post_request(URL_WORLD + "/Professional/" + i as String + ".json", Global.pb_times["Professional"][i])
+	$Popup.hide()
 
 
-func _on_Back_pressed():
-	get_tree().change_scene("res://Menus/Start Menu.tscn")
-	queue_free()
+func _on_No_pressed():
+	$Popup.hide()
