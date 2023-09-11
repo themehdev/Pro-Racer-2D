@@ -1,8 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Menus/Track Menu.gd" type="Script" id=1]
 [ext_resource path="res://Fonts/FasterOne-Regular.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://Fonts/DotGothic16-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Fonts/Quicksand-VariableFont_wght.ttf" type="DynamicFontData" id=3]
 
 [sub_resource type="DynamicFont" id=1]
 size = 64
@@ -11,6 +11,15 @@ font_data = ExtResource( 2 )
 [sub_resource type="DynamicFont" id=3]
 size = 50
 font_data = ExtResource( 3 )
+
+[sub_resource type="StyleBoxFlat" id=11]
+bg_color = Color( 0.2, 0.2, 0.2, 1 )
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.172549, 0.172549, 0.172549, 1 )
+
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.243137, 0.145098, 0.145098, 1 )
 
 [node name="Track Menu" type="Node2D"]
 script = ExtResource( 1 )
@@ -36,42 +45,59 @@ margin_bottom = 197.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 3 )
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/normal = SubResource( 9 )
 text = "Back"
 
-[node name="PB" type="Button" parent="VBoxContainer"]
+[node name="Live" type="Button" parent="VBoxContainer"]
 margin_top = 201.0
 margin_right = 1024.0
 margin_bottom = 297.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 3 )
-text = "Race Personal Best"
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/normal = SubResource( 9 )
+text = "Race Someone Live"
 
-[node name="Official" type="Button" parent="VBoxContainer"]
+[node name="PB" type="Button" parent="VBoxContainer"]
 margin_top = 301.0
 margin_right = 1024.0
 margin_bottom = 398.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 3 )
-text = "Race Official Run"
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/normal = SubResource( 9 )
+text = "Race Personal Best"
 
-[node name="World" type="Button" parent="VBoxContainer"]
+[node name="Official" type="Button" parent="VBoxContainer"]
 margin_top = 402.0
 margin_right = 1024.0
 margin_bottom = 499.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 3 )
-text = "Race World Record"
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/disabled = SubResource( 5 )
+custom_styles/normal = SubResource( 9 )
+text = "Race Official Run"
 
-[node name="Live" type="Button" parent="VBoxContainer"]
+[node name="World" type="Button" parent="VBoxContainer"]
 margin_top = 503.0
 margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 3 )
-text = "Race Someone Live"
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/disabled = SubResource( 5 )
+custom_styles/normal = SubResource( 9 )
+text = "Race World Record"
 
 [connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_Back_pressed"]
+[connection signal="pressed" from="VBoxContainer/Live" to="." method="_on_Live_pressed"]
 [connection signal="pressed" from="VBoxContainer/PB" to="." method="_on_PB_pressed"]
 [connection signal="pressed" from="VBoxContainer/Official" to="." method="_on_Official_pressed"]
 [connection signal="pressed" from="VBoxContainer/World" to="." method="_on_World_pressed"]
-[connection signal="pressed" from="VBoxContainer/Live" to="." method="_on_Live_pressed"]

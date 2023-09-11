@@ -18,6 +18,13 @@ func _ready():
 		var button = $GridContainer/Back.duplicate()
 		button.visible = true
 		button.text = Global.sec_playing + " " + (i + 1) as String + " - " + Global.num_to_name(i + 1)
+		if Global.pb_times[Global.sec_playing][i]["time"] < Global.official_times[Global.sec_playing][i]["time"] and Global.pb_times[Global.sec_playing][i]["time"] != 0:
+			var nbox = StyleBoxFlat.new()
+			nbox.bg_color = Color("1f3222")
+			var hbox = StyleBoxFlat.new()
+			hbox.bg_color = Color("163d11")
+			button["custom_styles/normal"] = nbox
+			button["custom_styles/hover"] = hbox 
 #		if Global.pb_times[Global.sec_playing][i]["time"] != 0:
 #			button.text += "\n  PB time: " + Global.gen_time(Global.pb_times[Global.sec_playing][i]["time"]) as String
 		button.connect("button_up", self, "_button_pressed", [i])

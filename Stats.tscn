@@ -1,20 +1,31 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Stats.gd" type="Script" id=1]
 [ext_resource path="res://Fonts/FasterOne-Regular.ttf" type="DynamicFontData" id=2]
 [ext_resource path="res://Fonts/DotGothic16-Regular.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Fonts/Quicksand-VariableFont_wght.ttf" type="DynamicFontData" id=4]
 
 [sub_resource type="DynamicFont" id=5]
 size = 80
 font_data = ExtResource( 2 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=6]
 size = 50
 font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 50
 font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 50
+font_data = ExtResource( 4 )
+
+[sub_resource type="StyleBoxFlat" id=11]
+bg_color = Color( 0.2, 0.2, 0.2, 1 )
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.172549, 0.172549, 0.172549, 1 )
 
 [node name="Stats" type="Node2D"]
 script = ExtResource( 1 )
@@ -42,7 +53,7 @@ margin_right = 1024.0
 margin_bottom = 197.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 6 )
 align = 1
 valign = 1
 
@@ -83,6 +94,9 @@ margin_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 3 )
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/normal = SubResource( 9 )
 text = "Back"
 
 [connection signal="pressed" from="VBoxContainer/Back" to="." method="_on_Back_pressed"]

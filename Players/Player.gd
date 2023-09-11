@@ -45,11 +45,13 @@ var run = {"time": 0, "inputs": [], "splits": []}
 var has_popup = false
 var moving_forward = true
 var start_stopped = false
+
 onready var start_pos = Vector2.ZERO
 onready var start_dir = Vector2.RIGHT
 onready var last_cp_pos = start_pos
 onready var last_cp_dir = Vector2.RIGHT
 
+var cp_pos_last
 
 
 # Called when the node enters the scene tree for the first time.
@@ -97,6 +99,10 @@ func set_start(args):
 	#print(args[1])
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
+	if last_cp_pos != cp_pos_last:
+		print(last_cp_pos)
+	cp_pos_last = last_cp_pos
+	$"No Zoom/CanvasLayer/Popup/HBoxContainer/Menu".disabled = Global.track_playing == -1
 	has_popup = $"%Popup".visible
 	Global.player = self
 	#var actions_changed = Input.is_action_just_pressed("ui_down") or Input.is_action_just_released("ui_down") or Input.is_action_just_pressed("ui_left") or Input.is_action_just_released("ui_left") or Input.is_action_just_pressed("ui_right") or Input.is_action_just_released("ui_right") or Input.is_action_just_pressed("ui_up") or Input.is_action_just_released("ui_up") or Input.is_action_just_pressed("respawn")
@@ -128,6 +134,15 @@ func _physics_process(delta):
 #		pass
 	
 	#print(vel.rotated(dir.angle()))
+	if(Input.is_action_just_pressed("ui_right")):
+		$AnimationPlayer.play("Turn_right")
+	if(Input.is_action_just_pressed("ui_left")):
+		$AnimationPlayer.play("Turn_left")
+	if Input.is_action_just_released("ui_left"):
+		$AnimationPlayer.play_backwards("Turn_left")
+	if Input.is_action_just_released("ui_right"):
+		$AnimationPlayer.play_backwards("Turn_right")
+		
 	if vel.normalized() == Vector2.DOWN.rotated(dir.angle()):
 		moving_forward = false
 	if not Input.is_action_pressed("ui_down") and not Input.is_action_pressed("ui_up"):
@@ -162,7 +177,9 @@ func _physics_process(delta):
 			$Start.stop()
 			start_stopped = true
 	#print(Input.is_action_pressed("restart"))
-	if( Input.is_action_just_pressed("restart") or (Input.is_action_pressed("respawn") and last_cp_pos == start_pos and lap == 1)) and not $"%Popup".visible:
+	if (Input.is_action_just_pressed("restart") or (Input.is_action_pressed("respawn") and last_cp_pos == start_pos and lap == 1)) and not $"%Popup".visible:
+		print(last_cp_pos)
+		print(start_pos)
 		restart()
 	if(boost_counter > 0):
 		vel += Vector2.UP.rotated(PI * boost_dir/180) * boost_vel
@@ -227,8 +244,6 @@ func _physics_process(delta):
 		$"%Popup".hide()
 		pop_needs_hiding = false
 	
-	
-	
 	if(collision and just_had_collision):
 		can_hit_wall = false
 		vel = Vector2.ZERO
@@ -265,7 +280,7 @@ func _physics_process(delta):
 	if smooth_zoom >= 1:
 		$Camera2D.zoom = Vector2(3.25, 3.25)
 	$"%No Zoom".scale = $Camera2D.zoom
-	Input.action_release("restart")
+	#Input.action_release("restart")
 	moving_forward = true
 
 func gen_time(time):
@@ -417,15 +432,21 @@ func _on_Resume_pressed():
 		restart()
 	pop_needs_hiding = true
 
-
 func _on_Player_tree_exited():
 	Global.player = {"physics" : false, "finishing": false, "timer": 0}
-
 
 func _on_Finish_Menu_restart():
 	print("Happening")
 	restart()
 
-
 func _on_Finish_Menu_exiting():
 	get_parent().queue_free()
+
+func _on_Crash_finished():
+	$SFX/Crash.stop()
+
+func _on_Checkpoint_finished():
+	$SFX/Checkpoint.stop()
+
+func _on_Drift_finished():
+	$SFX/Drift.stop()

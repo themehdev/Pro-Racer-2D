@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/ui-click-43196.mp3-dc4b3f6f53469e149fe6f0b2b7382446.mp3str"
+
+[deps]
+
+source_file="res://Sound Effects/ui-click-43196.mp3"
+dest_files=[ "res://.import/ui-click-43196.mp3-dc4b3f6f53469e149fe6f0b2b7382446.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

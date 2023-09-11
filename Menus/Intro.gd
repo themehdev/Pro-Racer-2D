@@ -12,9 +12,9 @@ var tracks = []
 func _ready():
 #	print(Global.track_playing)
 #	print(Global.tracks[Global.track_playing]["track"])
-	add_child(Global.tracks[Global.sec_playing][Global.track_playing].instance() if Global.track_playing != -1 else Global.intro_track.instance())
-	$OpponentGhost.type = Global.opp_type
-	$PBGhost.type = "pb"
+	add_child(Global.tracks[Global.sec_playing][Global.track_playing].instance())
+	$GhostPlayer.type = "offiial"
+	$GhostPlayer2.type = "intro"
 
 func _process(delta):
 	if yay:

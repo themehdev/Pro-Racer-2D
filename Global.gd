@@ -25,6 +25,7 @@ var can_play_world = false
 var live_splits = {"split_on": 0, "splits": [], "time" : 0}
 var live_wins = 0
 var live_races = 0
+var intro_track = preload("res://Tracks/Intro Track.tscn")
 
 func save_to_file(content, filename):
 	var file = File.new()
@@ -108,29 +109,30 @@ func _ready():
 	if load_from_file("live_stats"):
 		live_wins = load_from_file("live_stats")["live_wins"]
 		live_races = load_from_file("live_stats")["live_races"]
-	Global.sec_has = 1
-	for i in Global.num_tracks:
-		if Global.pb_times["Beginner"][i]["time"] < Global.official_times["Beginner"][i]["time"] and Global.pb_times["Beginner"][i]["time"] != 0:
-			Global.sec_has += 0.2
-#				if Global.pb_times["Beginner"][i]["time"] < world_times["Beginner"][i]["time"]:
-#					_make_post_request(URL_WORLD + "/Beginner/" + i as String + ".json", Global.pb_times["Beginner"][i])
-			#print(Global.sec_has)
-		if Global.pb_times["Intermediate"][i]["time"] < Global.official_times["Intermediate"][i]["time"] and Global.pb_times["Intermediate"][i]["time"] != 0:
-			Global.sec_has += 0.2
-#				if Global.pb_times["Intermediate"][i]["time"] < world_times["Intermediate"][i]["time"]:
-#					_make_post_request(URL_WORLD + "/Intermediate/" + i as String + ".json", Global.pb_times["Intermediate"][i])
-		if Global.pb_times["Accomplished"][i]["time"] < Global.official_times["Accomplished"][i]["time"] and Global.pb_times["Accomplished"][i]["time"] != 0:
-			Global.sec_has += 0.2
-#				if Global.pb_times["Accomplished"][i]["time"] < world_times["Accomplished"][i]["time"]:
-#					_make_post_request(URL_WORLD + "/Accomplished/" + i as String + ".json", Global.pb_times["Accomplished"][i])
-		if Global.pb_times["Advanced"][i]["time"] < Global.official_times["Advanced"][i]["time"] and Global.pb_times["Advanced"][i]["time"] != 0:
-			Global.sec_has += 0.2
-#				if Global.pb_times["Advanced"][i]["time"] < world_times["Advanced"][i]["time"]:
-#					_make_post_request(URL_WORLD + "/Advanced/" + i as String + ".json", Global.pb_times["Advanced"][i])
-		if Global.pb_times["Professional"][i]["time"] < Global.official_times["Professional"][i]["time"] and Global.pb_times["Professional"][i]["time"] != 0:
-			Global.sec_has += 0.2
-#				if Global.pb_times["Professional"][i]["time"] < world_times["Professional"][i]["time"]:
-#					_make_post_request(URL_WORLD + "/Professional/" + i as String + ".json", Global.pb_times["Professional"][i])
+	sec_has = 1
+	for i in num_tracks:
+		if pb_times["Beginner"][i]["time"] < official_times["Beginner"][i]["time"] and pb_times["Beginner"][i]["time"] != 0:
+			sec_has += 0.2
+#				if pb_times["Beginner"][i]["time"] < world_times["Beginner"][i]["time"]:
+#					_make_post_request(URL_WORLD + "/Beginner/" + i as String + ".json", pb_times["Beginner"][i])
+			#print(sec_has)
+		if pb_times["Intermediate"][i]["time"] < official_times["Intermediate"][i]["time"] and pb_times["Intermediate"][i]["time"] != 0:
+			sec_has += 0.2
+#				if pb_times["Intermediate"][i]["time"] < world_times["Intermediate"][i]["time"]:
+#					_make_post_request(URL_WORLD + "/Intermediate/" + i as String + ".json", pb_times["Intermediate"][i])
+		if pb_times["Accomplished"][i]["time"] < official_times["Accomplished"][i]["time"] and pb_times["Accomplished"][i]["time"] != 0:
+			sec_has += 0.2
+#				if pb_times["Accomplished"][i]["time"] < world_times["Accomplished"][i]["time"]:
+#					_make_post_request(URL_WORLD + "/Accomplished/" + i as String + ".json", pb_times["Accomplished"][i])
+		if pb_times["Advanced"][i]["time"] < official_times["Advanced"][i]["time"] and pb_times["Advanced"][i]["time"] != 0:
+			sec_has += 0.2
+#				if pb_times["Advanced"][i]["time"] < world_times["Advanced"][i]["time"]:
+#					_make_post_request(URL_WORLD + "/Advanced/" + i as String + ".json", pb_times["Advanced"][i])
+		if pb_times["Professional"][i]["time"] < official_times["Professional"][i]["time"] and pb_times["Professional"][i]["time"] != 0:
+			sec_has += 0.2
+#				if pb_times["Professional"][i]["time"] < world_times["Professional"][i]["time"]:
+#					_make_post_request(URL_WORLD + "/Professional/" + i as String + ".json", pb_times["Professional"][i])
+		pb_times["Beginner"][-1] = {"time":0}
 
 func _make_post_request(url, data_to_send, use_ssl = false):
 	# Convert data to json string:
@@ -158,7 +160,7 @@ func _process(delta):
 		#best_run["time"] = live_splits["time"]
 	else:
 		live_splits = {"split_on": 0, "splits": [], "time" : 0}
-		best_run = pb_times[sec_playing][track_playing]
+		best_run = pb_times[sec_playing][track_playing] if track_playing != -1 else {"time":0}
 
 #	print(sec_has)
 #	if sec_has >= 2:
