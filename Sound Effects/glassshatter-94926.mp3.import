@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/glassshatter-94926.mp3-93edfdda30a4a477152e20fb864e8817.mp3str"
+
+[deps]
+
+source_file="res://Sound Effects/glassshatter-94926.mp3"
+dest_files=[ "res://.import/glassshatter-94926.mp3-93edfdda30a4a477152e20fb864e8817.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

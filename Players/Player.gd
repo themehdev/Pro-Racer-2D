@@ -45,6 +45,8 @@ var run = {"time": 0, "inputs": [], "splits": []}
 var has_popup = false
 var moving_forward = true
 var start_stopped = false
+var check_last_time = 0
+var drift_last_time = 0
 
 onready var start_pos = Vector2.ZERO
 onready var start_dir = Vector2.RIGHT
@@ -142,7 +144,17 @@ func _physics_process(delta):
 		$AnimationPlayer.play_backwards("Turn_left")
 	if Input.is_action_just_released("ui_right"):
 		$AnimationPlayer.play_backwards("Turn_right")
-		
+	
+	if drift_last_time > $Drift.get_playback_position():
+		$Drift.stop()
+	if check_last_time > $Checkpoint.get_playback_position():
+		$Checkpoint.stop()
+	if $Crash.get_playback_position() > 0.4:
+		$Crash.stop()
+	drift_last_time = $Drift.get_playback_position()
+	check_last_time = $Checkpoint.get_playback_position()
+	
+	
 	if vel.normalized() == Vector2.DOWN.rotated(dir.angle()):
 		moving_forward = false
 	if not Input.is_action_pressed("ui_down") and not Input.is_action_pressed("ui_up"):
@@ -163,6 +175,7 @@ func _physics_process(delta):
 		vel += Vector2.DOWN.rotated(dir.angle()) * b_accel
 		if vel.length_squared() > min_drift_speed * min_drift_speed and turning:
 			drifting = true
+			$Drift.play()
 		is_trying_to_move = true
 	if Input.is_action_pressed("respawn") and (last_cp_pos != start_pos or lap != 1) and physics:
 		position = last_cp_pos
@@ -203,6 +216,7 @@ func _physics_process(delta):
 	
 	if not turning or -acc_vel.y + abs(acc_vel.x) < 100 or collision or traction_type == "off_road" or abs(rotation_vel) < 0.005:
 		drifting = false
+		$Drift.stop()
 	
 	if drifting:
 		drift = 0.5
@@ -254,6 +268,7 @@ func _physics_process(delta):
 	#print($HitWall.time_left)
 	if collision and can_hit_wall:
 #		rotation_vel += 0.1 * vel.length() * 0.002 * collision.normal.dot(vel.normalized())
+		$Crash.play()
 		var coll_angle = collision.get_angle(dir.normalized()) if collision.get_angle(dir.normalized()) <= PI/2 else collision.get_angle(dir.normalized()) - PI
 		var boing_angle = collision.get_angle(vel.normalized()) if collision.get_angle(vel.normalized()) <= PI/2 else collision.get_angle(vel.normalized()) - PI
 		#print(-abs(boing_angle/(PI/2)) + 1)
@@ -299,6 +314,7 @@ func _on_Area2D_area_entered(area):
 	if (parent.is_in_group("Dirt")):
 		dirt_counter += 1
 	if (parent.is_in_group("Checkpoint") and not parent.gotten):
+		$Checkpoint.play()
 		run["splits"].append(timer)
 		var block = parent.get_parent()
 		parent.gotten = true
@@ -322,6 +338,7 @@ func _on_Area2D_area_entered(area):
 		elif Global.opp_type == "live":
 			$"%Splits".text += "\n\n1st!"
 	if ((parent.is_in_group("Finish") or (parent.is_in_group("Start") and lap == 3)) and Global.checkpoints_left == 0):
+		$Checkpoint.play()
 		run["inputs"].append({"pos": Global.vec2_to_xy(position), "dir" : rotation})
 		#run["input_splits"].append(timer)
 		$"%Splits".text = "Finish!: " + gen_time(timer)
@@ -372,6 +389,7 @@ func _on_Area2D_area_entered(area):
 		#print(run)
 		
 	elif parent.is_in_group("Start") and Global.checkpoints_left == 0 and Global.track_has_finish == false:
+		$Checkpoint.play()
 		run["splits"].append(timer)
 		get_tree().call_group("Checkpoint", "reset")
 		last_cp_pos = start_pos

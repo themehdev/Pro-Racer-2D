@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Menus/Main Menu.gd" type="Script" id=1]
 [ext_resource path="res://Fonts/FasterOne-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Fonts/DotGothic16-Regular.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://Fonts/Quicksand-VariableFont_wght.ttf" type="DynamicFontData" id=4]
 
 [sub_resource type="DynamicFont" id=2]
@@ -34,8 +35,17 @@ font_data = ExtResource( 4 )
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.435294, 0, 0, 1 )
 
-[sub_resource type="StyleBoxFlat" id=6]
-bg_color = Color( 1, 0, 0, 1 )
+[sub_resource type="DynamicFont" id=23]
+size = 35
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=24]
+size = 50
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=25]
+size = 50
+font_data = ExtResource( 4 )
 
 [node name="Main Menu" type="Node2D"]
 script = ExtResource( 1 )
@@ -156,6 +166,7 @@ margin_right = 768.0
 margin_bottom = 112.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 23 )
 text = "Do you really want to clear your progress?"
 align = 1
 valign = 1
@@ -166,7 +177,10 @@ margin_right = 768.0
 margin_bottom = 228.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-custom_styles/hover = SubResource( 6 )
+custom_fonts/font = SubResource( 24 )
+custom_styles/hover = SubResource( 1 )
+custom_styles/pressed = SubResource( 1 )
+custom_styles/normal = SubResource( 9 )
 text = "Yes"
 
 [node name="No" type="Button" parent="Popup/VBoxContainer"]
@@ -175,6 +189,10 @@ margin_right = 768.0
 margin_bottom = 344.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_fonts/font = SubResource( 25 )
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/normal = SubResource( 9 )
 text = "No"
 
 [connection signal="pressed" from="VBoxContainer/Beginner" to="." method="_on_Beginner_pressed"]
