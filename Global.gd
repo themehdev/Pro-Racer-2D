@@ -97,7 +97,7 @@ func name_to_num(name):
 
 func _ready():
 	#NetworkManager.connect("split", self, "_on_split")
-	if load_from_file("pb_times"):
+	if load_from_file("pb_times") and load_from_file("official_times") and load_from_file("sound") and load_from_file("color"):
 		had_reset = false
 		pb_times = load_from_file("pb_times")
 		official_times = load_from_file("official_times")

@@ -60,6 +60,7 @@ var cp_pos_last
 func _ready():
 	position = start_pos
 	set_col()
+	set_volume()
 
 var can_hit_wall = true
 
