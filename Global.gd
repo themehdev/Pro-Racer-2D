@@ -28,7 +28,7 @@ var live_races = 0
 var intro_track = preload("res://Tracks/Intro Track.tscn")
 var sound = 0
 var colR = 0
-var colG = 0
+var colG = 130
 var colB = 255
 
 func save_to_file(content, filename): 

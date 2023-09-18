@@ -19,6 +19,10 @@ config/icon="res://icon.png"
 Global="*res://Global.tscn"
 NetworkManager="*res://NetworkManager.tscn"
 
+[display]
+
+window/size/resizable=false
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
