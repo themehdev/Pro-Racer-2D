@@ -31,7 +31,7 @@ func _on_close_pressed():
 
 func _on_HSlider_drag_ended(value_changed):
 	Global.sound = $VBoxContainer/HBoxContainer/VBoxContainer2/HSlider.value - 75
-	Global.save_to_file({"sound" : $VBoxContainer/HBoxContainer/VBoxContainer2/HSlider.value - 75}, "sound")
+	Global.save_to_file($VBoxContainer/HBoxContainer/VBoxContainer2/HSlider.value - 75, "sound")
 
 func _on_ColorPicker_color_changed(color):
 	Global.colR = color.r8

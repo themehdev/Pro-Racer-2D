@@ -384,25 +384,30 @@ func _on_Area2D_area_entered(area):
 		for i in Global.num_tracks:
 			if Global.pb_times["Beginner"][i]["time"] < Global.official_times["Beginner"][i]["time"] and Global.pb_times["Beginner"][i]["time"] != 0:
 				Global.sec_has += 0.2
-#				if Global.pb_times["Beginner"][i]["time"] < Global.world_times["Beginner"][i]["time"]:
-#					_make_post_request(Global.URL_WORLD + "/Beginner/" + i as String + ".json", Global.pb_times["Beginner"][i])
+				if Global.pb_times["Beginner"][i]["time"] < Global.world_times["Beginner"][i]["time"]:
+					Global._make_post_request(Global.URL_WORLD + "/Beginner/" + i as String + ".json", Global.pb_times["Beginner"][i])
+					Global.world_times["Beginner"][i] = Global.pb_times["Beginner"][i]
 				#print(Global.sec_has)
 			if Global.pb_times["Intermediate"][i]["time"] < Global.official_times["Intermediate"][i]["time"] and Global.pb_times["Intermediate"][i]["time"] != 0:
 				Global.sec_has += 0.2
-#				if Global.pb_times["Intermediate"][i]["time"] < Global.world_times["Intermediate"][i]["time"]:
-#					_make_post_request(Global.URL_WORLD + "/Intermediate/" + i as String + ".json", Global.pb_times["Intermediate"][i])
+				if Global.pb_times["Intermediate"][i]["time"] < Global.world_times["Intermediate"][i]["time"]:
+					Global._make_post_request(Global.URL_WORLD + "/Intermediate/" + i as String + ".json", Global.pb_times["Intermediate"][i])
+					Global.world_times["Intermadiate"][i] = Global.pb_times["Intermediate"][i]
 			if Global.pb_times["Accomplished"][i]["time"] < Global.official_times["Accomplished"][i]["time"] and Global.pb_times["Accomplished"][i]["time"] != 0:
 				Global.sec_has += 0.2
-#				if Global.pb_times["Accomplished"][i]["time"] < Global.world_times["Accomplished"][i]["time"]:
-#					_make_post_request(Global.URL_WORLD + "/Accomplished/" + i as String + ".json", Global.pb_times["Accomplished"][i])
+				if Global.pb_times["Accomplished"][i]["time"] < Global.world_times["Accomplished"][i]["time"]:
+					Global._make_post_request(Global.URL_WORLD + "/Accomplished/" + i as String + ".json", Global.pb_times["Accomplished"][i])
+					Global.world_times["Accomplished"][i] = Global.pb_times["Accomplished"][i]
 			if Global.pb_times["Advanced"][i]["time"] < Global.official_times["Advanced"][i]["time"] and Global.pb_times["Advanced"][i]["time"] != 0:
 				Global.sec_has += 0.2
-#				if Global.pb_times["Advanced"][i]["time"] < Global.world_times["Advanced"][i]["time"]:
-#					_make_post_request(Global.URL_WORLD + "/Advanced/" + i as String + ".json", Global.pb_times["Advanced"][i])
+				if Global.pb_times["Advanced"][i]["time"] < Global.world_times["Advanced"][i]["time"]:
+					Global._make_post_request(Global.URL_WORLD + "/Advanced/" + i as String + ".json", Global.pb_times["Advanced"][i])
+					Global.world_times["Advanced"][i] = Global.pb_times["Advanced"][i]
 			if Global.pb_times["Professional"][i]["time"] < Global.official_times["Professional"][i]["time"] and Global.pb_times["Professional"][i]["time"] != 0:
 				Global.sec_has += 0.2
-#				if Global.pb_times["Professional"][i]["time"] < Global.world_times["Professional"][i]["time"]:
-#					_make_post_request(Global.URL_WORLD + "/Professional/" + i as String + ".json", Global.pb_times["Professional"][i])
+				if Global.pb_times["Professional"][i]["time"] < Global.world_times["Professional"][i]["time"]:
+					Global._make_post_request(Global.URL_WORLD + "/Professional/" + i as String + ".json", Global.pb_times["Professional"][i])
+					Global.world_times["Professional"][i] = Global.pb_times["Professional"][i]
 		$"%Finish Menu".popup()
 		
 		#print(run)
