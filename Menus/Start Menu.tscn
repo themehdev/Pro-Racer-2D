@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Menus/Start Menu.gd" type="Script" id=1]
 [ext_resource path="res://Fonts/FasterOne-Regular.ttf" type="DynamicFontData" id=2]
@@ -28,6 +28,10 @@ bg_color = Color( 0.172549, 0.172549, 0.172549, 1 )
 size = 64
 font_data = ExtResource( 2 )
 
+[sub_resource type="DynamicFont" id=13]
+size = 64
+font_data = ExtResource( 2 )
+
 [node name="Start Menu" type="Node2D"]
 script = ExtResource( 1 )
 
@@ -37,37 +41,37 @@ margin_bottom = 600.0
 color = Color( 0.180392, 0.509804, 0.0431373, 1 )
 
 [node name="Large Curve" parent="." instance=ExtResource( 4 )]
-position = Vector2( 960, 104 )
+position = Vector2( 1008, 40 )
 rotation = 1.5708
 scale = Vector2( 0.25, 0.25 )
 
 [node name="Finish" parent="." instance=ExtResource( 3 )]
-position = Vector2( 448, 232 )
+position = Vector2( 496, 168 )
 rotation = 1.5708
 scale = Vector2( 0.25, 0.25 )
 
 [node name="Straight" parent="." instance=ExtResource( 5 )]
-position = Vector2( 576, 232 )
+position = Vector2( 624, 168 )
 rotation = 1.5708
 scale = Vector2( 0.25, 0.25 )
 
 [node name="Straight2" parent="." instance=ExtResource( 5 )]
-position = Vector2( 704, 232 )
+position = Vector2( 752, 168 )
 rotation = 1.5708
 scale = Vector2( 0.25, 0.25 )
 
 [node name="DisplayPlayer3" parent="." instance=ExtResource( 6 )]
-position = Vector2( 552, 208 )
+position = Vector2( 600, 144 )
 rotation = -1.5708
 scale = Vector2( 0.25, 0.25 )
 
 [node name="DisplayPlayer2" parent="." instance=ExtResource( 6 )]
-position = Vector2( 636, 220 )
+position = Vector2( 684, 156 )
 rotation = -1.39626
 scale = Vector2( 0.25, 0.25 )
 
 [node name="DisplayPlayer" parent="." instance=ExtResource( 6 )]
-position = Vector2( 600, 248 )
+position = Vector2( 648, 184 )
 rotation = -1.8326
 scale = Vector2( 0.25, 0.25 )
 
@@ -77,7 +81,7 @@ margin_bottom = 600.0
 
 [node name="Title" type="Label" parent="VBoxContainer"]
 margin_right = 1024.0
-margin_bottom = 147.0
+margin_bottom = 116.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 1 )
@@ -86,16 +90,16 @@ align = 1
 valign = 1
 
 [node name="Fill" type="Label" parent="VBoxContainer"]
-margin_top = 151.0
+margin_top = 120.0
 margin_right = 1024.0
-margin_bottom = 298.0
+margin_bottom = 237.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="Play" type="Button" parent="VBoxContainer"]
-margin_top = 302.0
+margin_top = 241.0
 margin_right = 1024.0
-margin_bottom = 449.0
+margin_bottom = 358.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 2 )
@@ -105,9 +109,9 @@ custom_styles/normal = SubResource( 9 )
 text = "Play"
 
 [node name="Stats" type="Button" parent="VBoxContainer"]
-margin_top = 453.0
+margin_top = 362.0
 margin_right = 1024.0
-margin_bottom = 600.0
+margin_bottom = 479.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/font = SubResource( 3 )
@@ -116,5 +120,17 @@ custom_styles/pressed = SubResource( 12 )
 custom_styles/normal = SubResource( 9 )
 text = "Stats"
 
+[node name="Button" type="Button" parent="VBoxContainer"]
+margin_top = 483.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_vertical = 3
+custom_fonts/font = SubResource( 13 )
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 11 )
+custom_styles/normal = SubResource( 9 )
+text = "Settings"
+
 [connection signal="pressed" from="VBoxContainer/Play" to="." method="_on_Play_pressed"]
 [connection signal="pressed" from="VBoxContainer/Stats" to="." method="_on_Stats_pressed"]
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_Button_pressed"]

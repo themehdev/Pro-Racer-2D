@@ -59,6 +59,7 @@ var cp_pos_last
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	position = start_pos
+	set_col()
 
 var can_hit_wall = true
 
@@ -69,7 +70,24 @@ var traction_types = {
 	"off_road": 0.25
 }
 
+func set_col():
+	var col = Color8(Global.colR, Global.colG, Global.colB)
+	$Graphics/ColorRect.color = col
+	$Graphics/ColorRect2.color = col
+	$Graphics/ColorRect3.color = col
+	$Graphics/ColorRect4.color = col
+	$Graphics/ColorRect5.color = col
+	$Graphics/ColorRect6.color = col
+	$Graphics/Polygon2D.color = col
+
+func set_volume():
+	$Checkpoint.volume_db = Global.sound
+	$Drift.volume_db = Global.sound
+	$Crash.volume_db = Global.sound
+	$Start2.volume_db = Global.sound
+
 func restart():
+	$Start2.play()
 	$"%Start Text".visible = true
 	run = {"time": 0, "inputs": [{"pos": start_pos, "dir": start_dir.angle()}], "splits": []}
 	get_tree().call_group("Checkpoint", "reset")
@@ -120,6 +138,7 @@ func _physics_process(delta):
 	$"%Start Text".text = ceil($Start.time_left) as String if $Start.time_left != 0 else "Go!"
 	#print(vel_speed)
 	if timer > 1:
+		$Start2.stop()
 		$"%Start Text".visible = false
 #	speed /= vel_speed/accel_hamper + 1
 	

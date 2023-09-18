@@ -77,7 +77,7 @@ func set_start(args):
 	#Input.action_press("restart")
 	
 func set_col(is_pb):
-	var col = Color("64ff6400") if not is_pb else Color("640000ff")
+	var col = Color8(255 - Global.colR, 255 - Global.colG, 255 - Global.colB, 100) if not is_pb else Color8(Global.colR, Global.colG, Global.colB, 100)
 	$Graphics/ColorRect.color = col
 	$Graphics/ColorRect2.color = col
 	$Graphics/ColorRect3.color = col

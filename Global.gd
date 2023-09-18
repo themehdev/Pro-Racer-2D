@@ -26,8 +26,12 @@ var live_splits = {"split_on": 0, "splits": [], "time" : 0}
 var live_wins = 0
 var live_races = 0
 var intro_track = preload("res://Tracks/Intro Track.tscn")
+var sound = 0
+var colR = 0
+var colG = 0
+var colB = 255
 
-func save_to_file(content, filename):
+func save_to_file(content, filename): 
 	var file = File.new()
 	file.open("user://" + filename +".dat", File.WRITE)
 	file.store_var(content)
@@ -92,6 +96,10 @@ func name_to_num(name):
 
 func _ready():
 	#NetworkManager.connect("split", self, "_on_split")
+	sound = load_from_file("sound")["sound"]
+	colR = load_from_file("color")["r"]
+	colG = load_from_file("color")["g"]
+	colB = load_from_file("color")["b"]
 	for i in num_tracks:
 		tracks["Beginner"].append(load("res://Tracks/Beginner/Track " + (i + 1) as String + ".tscn"))
 		pb_times["Beginner"].append({"time":0})
@@ -145,6 +153,7 @@ var got_stuff = "world"
 var data
 
 func _process(delta):
+	$AudioStreamPlayer.volume_db = sound
 	if opp_type == "official":
 		opp_run = official_times[sec_playing][track_playing]
 	elif opp_type == "world":

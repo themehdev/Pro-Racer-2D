@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://Players/Player.gd" type="Script" id=1]
 [ext_resource path="res://Menus/Finish Menu.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Sound Effects/glassshatter-94926.mp3" type="AudioStream" id=5]
 [ext_resource path="res://Sound Effects/-110063.mp3" type="AudioStream" id=6]
 [ext_resource path="res://Sound Effects/chime-sound-7143.mp3" type="AudioStream" id=7]
+[ext_resource path="res://Sound Effects/start.mp3" type="AudioStream" id=8]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 32, 64 )
@@ -329,6 +330,10 @@ stream = ExtResource( 7 )
 
 [node name="Crash" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
+
+[node name="Start2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+autoplay = true
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="area_exited" from="Area2D" to="." method="_on_Area2D_area_exited"]
