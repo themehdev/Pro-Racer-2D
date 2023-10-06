@@ -9,7 +9,7 @@ func _ready():
 
 func connected(_proto):
 	status = "waiting"
-	$Label.text = "Waiting for players..."
+	$Label.text = "Waiting for\nplayers..."
 	NetworkManager.send_msg({"ready": true})
 
 func start_game():

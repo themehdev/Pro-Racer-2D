@@ -20,7 +20,7 @@ var opp_type = "-"
 var opp_run
 var URL_OFFICIAL = "https://pro-racer-2d-default-rtdb.firebaseio.com/Official.json"
 var URL_WORLD = "https://pro-racer-2d-default-rtdb.firebaseio.com/World"
-var sec_has = 0
+var sec_has = 1
 var can_play_world = false
 var live_splits = {"split_on": 0, "splits": [], "time" : 0}
 var live_wins = 0
@@ -33,16 +33,26 @@ var colB = 255
 var had_reset = false
 
 func save_to_file(content, filename): 
-	var file = File.new()
-	file.open("user://" + filename +".dat", File.WRITE)
-	file.store_var(content)
-	file.close()
+#	var file = File.new()
+#	file.open("user://" + filename +".dat", File.WRITE)
+#	file.store_var(content)
+#	file.close()
+	JavaScript.eval("localStorage.setItem(\"" + filename + "\", JSON.stringify(" + content as String + "));")
+	#JavaScript.eval("console.log(localStorage.setItem)")
+	print("saving to " + filename)
+	print(content if not "_times" in filename else "")
+	#load_from_file(filename)
 
 func load_from_file(filename):
-	var file = File.new()
-	file.open("user://" + filename + ".dat", File.READ)
-	var content = file.get_var()
-	file.close()
+#	var file = File.new()
+#	file.open("user://" + filename + ".dat", File.READ)
+#	var content = file.get_var()
+#	file.close()
+	var content = JavaScript.eval("localStorage.getItem(\"" + filename + "\")")#.eval("Window.localStorage.getItem(" + filename + ");"
+	content = JSON.parse(content).result
+	print(filename + " loading")
+	print(content if not "_times" in filename else "")
+	#JavaScript.eval("console.log(localStorage.getItem)")
 	return content
 
 func gen_time(time):
@@ -97,18 +107,39 @@ func name_to_num(name):
 
 func _ready():
 	#NetworkManager.connect("split", self, "_on_split")
-	if load_from_file("pb_times") and load_from_file("official_times") and load_from_file("sound") and load_from_file("color"):
-		had_reset = false
+	if load_from_file("pb_times"):
 		pb_times = load_from_file("pb_times")
+	else:
+		for i in num_tracks:
+			pb_times["Beginner"].append({"time":0})
+			pb_times["Intermediate"].append({"time":0})
+			pb_times["Accomplished"].append({"time":0})
+			pb_times["Advanced"].append({"time":0})
+			pb_times["Professional"].append({"time":0})
+		save_to_file(pb_times, "pb_times")
+	if load_from_file("official_times"):
+		had_reset = false
 		official_times = load_from_file("official_times")
-		if load_from_file("live_stats"):
-			live_wins = load_from_file("live_stats")["live_wins"]
-			live_races = load_from_file("live_stats")["live_races"]
+	else: 
+		had_reset = true
+	if load_from_file("sound") != null:
 		sound = load_from_file("sound")
+	else:
+		save_to_file(sound, "sound")
+	if load_from_file("color"):
 		var cols = load_from_file("color")
 		colR = cols["r"]
 		colG = cols["g"]
 		colB = cols["b"]
+	else:
+		save_to_file({"r": colR, "g": colG, "b": colB}, "color")
+	if load_from_file("live_stats"):
+		live_wins = load_from_file("live_stats")["live_wins"]
+		live_races = load_from_file("live_stats")["live_races"]
+	else:
+		save_to_file({"live_races": Global.live_races, "live_wins": Global.live_wins}, "live_stats")
+	if load_from_file("pb_times") and load_from_file("official_times"):
+		sec_has = 1
 		for i in range(0, num_tracks):
 			if pb_times["Beginner"][i]["time"] < official_times["Beginner"][i]["time"] and pb_times["Beginner"][i]["time"] != 0:
 				sec_has += 0.2
@@ -132,17 +163,6 @@ func _ready():
 	#				if pb_times["Professional"][i]["time"] < world_times["Professional"][i]["time"]:
 	#					_make_post_request(URL_WORLD + "/Professional/" + i as String + ".json", pb_times["Professional"][i])
 			pb_times["Beginner"][-1] = {"time":0}
-	else:
-		had_reset = true
-		for i in num_tracks:
-			pb_times["Beginner"].append({"time":0})
-			pb_times["Intermediate"].append({"time":0})
-			pb_times["Accomplished"].append({"time":0})
-			pb_times["Advanced"].append({"time":0})
-			pb_times["Professional"].append({"time":0})
-		save_to_file(pb_times, "pb_times")
-		save_to_file(sound, "sound")
-		save_to_file({"r": colR, "g": colG, "b": colB}, "color")
 	for i in num_tracks:
 			tracks["Beginner"].append(load("res://Tracks/Beginner/Track " + (i + 1) as String + ".tscn"))
 			tracks["Intermediate"].append(load("res://Tracks/Intermediate/Track " + (i + 1) as String + ".tscn"))
@@ -150,7 +170,6 @@ func _ready():
 			tracks["Advanced"].append(load("res://Tracks/Advanced/Track " + (i + 1) as String + ".tscn"))
 			tracks["Professional"].append(load("res://Tracks/Professional/Track " + (i + 1) as String + ".tscn"))
 	$HTTPRequest.request(URL_WORLD + ".json")
-	sec_has = 1
 	#print(pb_times)
 
 func _make_post_request(url, data_to_send, use_ssl = false):
@@ -205,9 +224,8 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			print("done with getting data")
 	elif got_stuff == "official":
 		official_times = JSON.parse(body.get_string_from_utf8()).result
+		save_to_file(official_times, "official_times")
 		for i in range(0, num_tracks):
-			print(pb_times["Beginner"][i])
-			print(i)
 			if pb_times["Beginner"][i]["time"] < official_times["Beginner"][i]["time"] and pb_times["Beginner"][i]["time"] != 0:
 				sec_has += 0.2
 	#				if pb_times["Beginner"][i]["time"] < world_times["Beginner"][i]["time"]:

@@ -393,7 +393,7 @@ func _on_Area2D_area_entered(area):
 				Global.sec_has += 0.2
 				if Global.pb_times["Intermediate"][i]["time"] < Global.world_times["Intermediate"][i]["time"]:
 					Global._make_post_request(Global.URL_WORLD + "/Intermediate/" + i as String + ".json", Global.pb_times["Intermediate"][i])
-					Global.world_times["Intermadiate"][i] = Global.pb_times["Intermediate"][i]
+					Global.world_times["Intermediate"][i] = Global.pb_times["Intermediate"][i]
 			if Global.pb_times["Accomplished"][i]["time"] < Global.official_times["Accomplished"][i]["time"] and Global.pb_times["Accomplished"][i]["time"] != 0:
 				Global.sec_has += 0.2
 				if Global.pb_times["Accomplished"][i]["time"] < Global.world_times["Accomplished"][i]["time"]:
