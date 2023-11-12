@@ -8,29 +8,6 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	Global.sec_has = 1
-	for i in Global.num_tracks:
-		if Global.pb_times["Beginner"][i]["time"] < Global.official_times["Beginner"][i]["time"] and Global.pb_times["Beginner"][i]["time"] != 0:
-			Global.sec_has += 0.2
-			if Global.pb_times["Beginner"][i]["time"] < Global.world_times["Beginner"][i]["time"]:
-				Global._make_post_request(Global.URL_WORLD + "/Beginner/" + i as String + ".json", Global.pb_times["Beginner"][i])
-			#print(Global.sec_has)
-		if Global.pb_times["Intermediate"][i]["time"] < Global.official_times["Intermediate"][i]["time"] and Global.pb_times["Intermediate"][i]["time"] != 0:
-			Global.sec_has += 0.2
-			if Global.pb_times["Intermediate"][i]["time"] < Global.world_times["Intermediate"][i]["time"]:
-				Global._make_post_request(Global.URL_WORLD + "/Intermediate/" + i as String + ".json", Global.pb_times["Intermediate"][i])
-		if Global.pb_times["Accomplished"][i]["time"] < Global.official_times["Accomplished"][i]["time"] and Global.pb_times["Accomplished"][i]["time"] != 0:
-			Global.sec_has += 0.2
-			if Global.pb_times["Accomplished"][i]["time"] < Global.world_times["Accomplished"][i]["time"]:
-				Global._make_post_request(Global.URL_WORLD + "/Accomplished/" + i as String + ".json", Global.pb_times["Accomplished"][i])
-		if Global.pb_times["Advanced"][i]["time"] < Global.official_times["Advanced"][i]["time"] and Global.pb_times["Advanced"][i]["time"] != 0:
-			Global.sec_has += 0.2
-			if Global.pb_times["Advanced"][i]["time"] < Global.world_times["Advanced"][i]["time"]:
-				Global._make_post_request(Global.URL_WORLD + "/Advanced/" + i as String + ".json", Global.pb_times["Advanced"][i])
-		if Global.pb_times["Professional"][i]["time"] < Global.official_times["Professional"][i]["time"] and Global.pb_times["Professional"][i]["time"] != 0:
-			Global.sec_has += 0.2
-			if Global.pb_times["Professional"][i]["time"] < Global.world_times["Professional"][i]["time"]:
-				Global._make_post_request(Global.URL_WORLD + "/Professional/" + i as String + ".json", Global.pb_times["Professional"][i])
 	$VBoxContainer/Beginner.disabled = Global.got_stuff != ""
 	$VBoxContainer/Intermediate.disabled = Global.sec_has < 1.9
 	$VBoxContainer/Accomplished.disabled = Global.sec_has < 2.9
@@ -40,6 +17,29 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	Global.sec_has = 1
+	for i in Global.num_tracks:
+		if Global.pb_times["Beginner"][i]["time"] < Global.official_times["Beginner"][i]["time"] and Global.pb_times["Beginner"][i]["time"] != 0:
+			Global.sec_has += 0.2
+#			if Global.pb_times["Beginner"][i]["time"] < Global.world_times["Beginner"][i]["time"]:
+#				Global._make_post_request(Global.URL_WORLD + "/Beginner/" + i as String + ".json", Global.pb_times["Beginner"][i])
+			#print(Global.sec_has)
+		if Global.pb_times["Intermediate"][i]["time"] < Global.official_times["Intermediate"][i]["time"] and Global.pb_times["Intermediate"][i]["time"] != 0:
+			Global.sec_has += 0.2
+#			if Global.pb_times["Intermediate"][i]["time"] < Global.world_times["Intermediate"][i]["time"]:
+#				Global._make_post_request(Global.URL_WORLD + "/Intermediate/" + i as String + ".json", Global.pb_times["Intermediate"][i])
+		if Global.pb_times["Accomplished"][i]["time"] < Global.official_times["Accomplished"][i]["time"] and Global.pb_times["Accomplished"][i]["time"] != 0:
+			Global.sec_has += 0.2
+#			if Global.pb_times["Accomplished"][i]["time"] < Global.world_times["Accomplished"][i]["time"]:
+#				Global._make_post_request(Global.URL_WORLD + "/Accomplished/" + i as String + ".json", Global.pb_times["Accomplished"][i])
+		if Global.pb_times["Advanced"][i]["time"] < Global.official_times["Advanced"][i]["time"] and Global.pb_times["Advanced"][i]["time"] != 0:
+			Global.sec_has += 0.2
+#			if Global.pb_times["Advanced"][i]["time"] < Global.world_times["Advanced"][i]["time"]:
+#				Global._make_post_request(Global.URL_WORLD + "/Advanced/" + i as String + ".json", Global.pb_times["Advanced"][i])
+		if Global.pb_times["Professional"][i]["time"] < Global.official_times["Professional"][i]["time"] and Global.pb_times["Professional"][i]["time"] != 0:
+			Global.sec_has += 0.2
+#			if Global.pb_times["Professional"][i]["time"] < Global.world_times["Professional"][i]["time"]:
+#				Global._make_post_request(Global.URL_WORLD + "/Professional/" + i as String + ".json", Global.pb_times["Professional"][i])
 	$VBoxContainer/Beginner.disabled = Global.got_stuff != ""
 	$VBoxContainer/Intermediate.disabled = Global.sec_has < 1.9
 	$VBoxContainer/Accomplished.disabled = Global.sec_has < 3

@@ -61,6 +61,13 @@ func _ready():
 	position = start_pos
 	set_col()
 	set_volume()
+	if Global.opp_type == "live":
+		NetworkManager.connect("closed", self, "closed_connection")
+		#NetworkManager.connect("synced", self, "synced")
+		#NetworkManager.send_direct_msg({"start": "u can start already"})
+		Global.live_races += 1
+	#else: 
+	$Start.start()
 
 var can_hit_wall = true
 
@@ -82,10 +89,10 @@ func set_col():
 	$Graphics/Polygon2D.color = col
 
 func set_volume():
-	$Checkpoint.volume_db = Global.sound
-	$Drift.volume_db = Global.sound
-	$Crash.volume_db = Global.sound
-	$Start2.volume_db = Global.sound
+	$Checkpoint.volume_db = Global.FXsound
+	$Drift.volume_db = Global.FXsound
+	$Crash.volume_db = Global.FXsound
+	$Start2.volume_db = Global.FXsound
 
 func restart():
 	$Start2.play()
@@ -123,6 +130,9 @@ func _physics_process(delta):
 	if last_cp_pos != cp_pos_last:
 		print(last_cp_pos)
 	cp_pos_last = last_cp_pos
+	if(Global.opp_type == "live" and Global.can_start and $Start.time_left == 0):
+		physics = true
+		Global.can_start = false
 	$"No Zoom/CanvasLayer/Popup/HBoxContainer/Menu".disabled = Global.track_playing == -1
 	has_popup = $"%Popup".visible
 	Global.player = self
@@ -204,15 +214,16 @@ func _physics_process(delta):
 		dir = last_cp_dir
 	if Input.is_action_just_pressed("pause"):
 		$"%Popup".popup_centered()
-		physics = false
-		if $Start.time_left != 0:
+		if Global.opp_type != "live":
+			physics = false
+		if $Start.time_left != 0 and Global.opp_type != "live":
 			$Start.wait_time = $Start.time_left
 			$Start.stop()
 			start_stopped = true
 	#print(Input.is_action_pressed("restart"))
-	if (Input.is_action_just_pressed("restart") or (Input.is_action_pressed("respawn") and last_cp_pos == start_pos and lap == 1)) and not $"%Popup".visible:
-		print(last_cp_pos)
-		print(start_pos)
+	if ((Input.is_action_just_pressed("restart") or (Input.is_action_pressed("respawn") and last_cp_pos == start_pos and lap == 1)) and not $"%Popup".visible) and Global.opp_type != "live":
+#		print(last_cp_pos)
+#		print(start_pos)
 		restart()
 	if(boost_counter > 0):
 		vel += Vector2.UP.rotated(PI * boost_dir/180) * boost_vel
@@ -366,10 +377,10 @@ func _on_Area2D_area_entered(area):
 			$"%Splits".text += "\n\n" + (gen_time(timer - Global.best_run["time"]) if (timer - Global.best_run["time"]) <= 0 else "+" + gen_time(timer - Global.best_run["time"]))
 		if Global.opp_type == "live" and Global.live_splits["time"] != 0:
 			$"%Splits".text += "\n\n2nd: " + (gen_time(timer - Global.live_splits["time"]) if (timer - Global.live_splits["time"]) <= 0 else "+" + gen_time(timer - Global.live_splits["time"]))
-			Global.live_races += 1
+			#Global.live_races += 1
 		elif Global.opp_type == "live":
 			$"%Splits".text += "\n\n1st!"
-			Global.live_races += 1
+			#Global.live_races += 1
 			Global.live_wins += 1
 			Global.save_to_file({"live_races": Global.live_races, "live_wins": Global.live_wins}, "live_stats")
 		run["time"] = timer
@@ -447,7 +458,12 @@ func _on_Area2D_area_exited(area):
 		boost_counter -= 1
 
 func _on_Start_timeout():
-	physics = true
+	if Global.opp_type == "live":
+		print("sent")
+		NetworkManager.send_direct_msg({"start": "u can start already"})
+	physics = Global.can_start or Global.opp_type != "live"
+	print(Global.can_start as String)
+	print(Global.opp_type != "live" as String)
 	finishing = false
 	just_physics = true
 	vel = Vector2.ZERO
@@ -458,11 +474,25 @@ func _on_Start_timeout():
 	timer = 0
 	rotation_vel = 0
 	get_tree().call_group("Checkpoint", "reset")
+	
+func synced():
+	Global.can_start = true
+	
 
 func _on_Menu_pressed():
+	if Global.opp_type == "live":
+		NetworkManager._client.disconnect_from_host()
 	get_tree().change_scene("res://Menus/Menu.tscn")
 	$"%Popup".hide()
 	get_parent().queue_free()
+
+func closed_connection():
+	if(Global.live_splits["time"] == 0 and not finishing):
+		#Global.live_races += 1
+		Global.live_wins += 1
+		Global.save_to_file({"live_races": Global.live_races, "live_wins": Global.live_wins}, "live_stats")
+		get_tree().change_scene("res://Menus/Track Menu.tscn")
+		get_parent().queue_free()
 
 func _on_Resume_pressed():
 	if not finishing and not start_stopped:
@@ -486,10 +516,13 @@ func _on_Finish_Menu_exiting():
 	get_parent().queue_free()
 
 func _on_Crash_finished():
-	$SFX/Crash.stop()
+	$Crash.stop()
 
 func _on_Checkpoint_finished():
-	$SFX/Checkpoint.stop()
+	$Checkpoint.stop()
 
 func _on_Drift_finished():
-	$SFX/Drift.stop()
+	$Drift.stop()
+
+func _on_Start2_finished():
+	$Start2.stop()

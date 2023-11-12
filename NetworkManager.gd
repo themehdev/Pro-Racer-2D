@@ -11,6 +11,8 @@ var last_data = {}
 
 signal split(split)
 signal start
+#signal synced
+signal closed
 
 func _init():
 	_client.connect("connection_closed", self, "_closed")
@@ -37,6 +39,7 @@ func start_connecting():
 func _closed(was_clean = false):
 	print("Disconnected!")
 	connected = false
+	emit_signal("closed")
 
 func _connected(_proto):
 	print("Connected!")
@@ -55,7 +58,11 @@ func _on_data():
 	if "ids" in data:
 		opponent_id = data["ids"][0]
 		emit_signal("start")
+		Global.can_start = false
 		return
+	if "start" in data:
+		Global.can_start = true
+		print("starting")
 	if data.hash() == last_data.hash():
 		return
 	last_data = data

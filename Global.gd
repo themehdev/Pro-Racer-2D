@@ -26,11 +26,13 @@ var live_splits = {"split_on": 0, "splits": [], "time" : 0}
 var live_wins = 0
 var live_races = 0
 var intro_track = preload("res://Tracks/Intro Track.tscn")
-var sound = 0
+var Msound = 0
+var FXsound = 0
 var colR = 0
 var colG = 130
 var colB = 255
-var had_reset = false
+var had_reset = true
+var can_start = false
 
 func save_to_file(content, filename): 
 #	var file = File.new()
@@ -51,8 +53,8 @@ func load_from_file(filename):
 	var content = JavaScript.eval("localStorage.getItem(\"" + filename + "\")")#.eval("Window.localStorage.getItem(" + filename + ");"
 	content = JSON.parse(content).result
 	print(filename + " loading")
-	print(content if not "_times" in filename else "")
-	#JavaScript.eval("console.log(localStorage.getItem)")
+	#print(content if not "_times" in filename else "")
+	JavaScript.eval("console.log(" + (content as String if not "_times" in filename else "") + ")")
 	return content
 
 func gen_time(time):
@@ -107,6 +109,12 @@ func name_to_num(name):
 
 func _ready():
 	#NetworkManager.connect("split", self, "_on_split")
+	for i in num_tracks:
+			official_times["Beginner"].append({"time":0})
+			official_times["Intermediate"].append({"time":0})
+			official_times["Accomplished"].append({"time":0})
+			official_times["Advanced"].append({"time":0})
+			official_times["Professional"].append({"time":0})
 	if load_from_file("pb_times"):
 		pb_times = load_from_file("pb_times")
 	else:
@@ -117,15 +125,12 @@ func _ready():
 			pb_times["Advanced"].append({"time":0})
 			pb_times["Professional"].append({"time":0})
 		save_to_file(pb_times, "pb_times")
-	if load_from_file("official_times"):
-		had_reset = false
-		official_times = load_from_file("official_times")
-	else: 
-		had_reset = true
-	if load_from_file("sound") != null:
-		sound = load_from_file("sound")
+	if load_from_file("Msound") != null and load_from_file("FXsound") != null:
+		Msound = load_from_file("Msound")
+		FXsound = load_from_file("FXsound")
 	else:
-		save_to_file(sound, "sound")
+		save_to_file(Msound, "Msound")
+		save_to_file(FXsound, "FXsound")
 	if load_from_file("color"):
 		var cols = load_from_file("color")
 		colR = cols["r"]
@@ -138,31 +143,6 @@ func _ready():
 		live_races = load_from_file("live_stats")["live_races"]
 	else:
 		save_to_file({"live_races": Global.live_races, "live_wins": Global.live_wins}, "live_stats")
-	if load_from_file("pb_times") and load_from_file("official_times"):
-		sec_has = 1
-		for i in range(0, num_tracks):
-			if pb_times["Beginner"][i]["time"] < official_times["Beginner"][i]["time"] and pb_times["Beginner"][i]["time"] != 0:
-				sec_has += 0.2
-	#				if pb_times["Beginner"][i]["time"] < world_times["Beginner"][i]["time"]:
-	#					_make_post_request(URL_WORLD + "/Beginner/" + i as String + ".json", pb_times["Beginner"][i])
-				#print(sec_has)
-			if pb_times["Intermediate"][i]["time"] < official_times["Intermediate"][i]["time"] and pb_times["Intermediate"][i]["time"] != 0:
-				sec_has += 0.2
-	#				if pb_times["Intermediate"][i]["time"] < world_times["Intermediate"][i]["time"]:
-	#					_make_post_request(URL_WORLD + "/Intermediate/" + i as String + ".json", pb_times["Intermediate"][i])
-			if pb_times["Accomplished"][i]["time"] < official_times["Accomplished"][i]["time"] and pb_times["Accomplished"][i]["time"] != 0:
-				sec_has += 0.2
-	#				if pb_times["Accomplished"][i]["time"] < world_times["Accomplished"][i]["time"]:
-	#					_make_post_request(URL_WORLD + "/Accomplished/" + i as String + ".json", pb_times["Accomplished"][i])
-			if pb_times["Advanced"][i]["time"] < official_times["Advanced"][i]["time"] and pb_times["Advanced"][i]["time"] != 0:
-				sec_has += 0.2
-	#				if pb_times["Advanced"][i]["time"] < world_times["Advanced"][i]["time"]:
-	#					_make_post_request(URL_WORLD + "/Advanced/" + i as String + ".json", pb_times["Advanced"][i])
-			if pb_times["Professional"][i]["time"] < official_times["Professional"][i]["time"] and pb_times["Professional"][i]["time"] != 0:
-				sec_has += 0.2
-	#				if pb_times["Professional"][i]["time"] < world_times["Professional"][i]["time"]:
-	#					_make_post_request(URL_WORLD + "/Professional/" + i as String + ".json", pb_times["Professional"][i])
-			pb_times["Beginner"][-1] = {"time":0}
 	for i in num_tracks:
 			tracks["Beginner"].append(load("res://Tracks/Beginner/Track " + (i + 1) as String + ".tscn"))
 			tracks["Intermediate"].append(load("res://Tracks/Intermediate/Track " + (i + 1) as String + ".tscn"))
@@ -171,6 +151,7 @@ func _ready():
 			tracks["Professional"].append(load("res://Tracks/Professional/Track " + (i + 1) as String + ".tscn"))
 	$HTTPRequest.request(URL_WORLD + ".json")
 	#print(pb_times)
+	
 
 func _make_post_request(url, data_to_send, use_ssl = false):
 	# Convert data to json string:
@@ -183,7 +164,7 @@ var got_stuff = "world"
 var data
 
 func _process(delta):
-	$AudioStreamPlayer.volume_db = sound
+	$AudioStreamPlayer.volume_db = Msound
 	if opp_type == "official":
 		opp_run = official_times[sec_playing][track_playing]
 	elif opp_type == "world":
@@ -199,7 +180,7 @@ func _process(delta):
 		#best_run["time"] = live_splits["time"]
 	else:
 		live_splits = {"split_on": 0, "splits": [], "time" : 0}
-		best_run = pb_times[sec_playing][track_playing] if track_playing != -1 else {"time":0}
+		best_run = pb_times[sec_playing][track_playing]
 
 #	print(sec_has)
 #	if sec_has >= 2:
@@ -224,7 +205,7 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 			print("done with getting data")
 	elif got_stuff == "official":
 		official_times = JSON.parse(body.get_string_from_utf8()).result
-		save_to_file(official_times, "official_times")
+		#save_to_file(official_times, "official_times")
 		for i in range(0, num_tracks):
 			if pb_times["Beginner"][i]["time"] < official_times["Beginner"][i]["time"] and pb_times["Beginner"][i]["time"] != 0:
 				sec_has += 0.2
@@ -247,7 +228,6 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 				sec_has += 0.2
 	#				if pb_times["Professional"][i]["time"] < world_times["Professional"][i]["time"]:
 	#					_make_post_request(URL_WORLD + "/Professional/" + i as String + ".json", pb_times["Professional"][i])
-			pb_times["Beginner"][-1] = {"time":0}
 		print("done with getting data")
 		got_stuff = ""
 	#print("why")

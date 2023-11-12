@@ -27,7 +27,10 @@ func _on_Menu_pressed():
 
 func _on_Play_pressed():
 	print("working")
-	emit_signal("restart")
+	if Global.opp_type != "live":
+		emit_signal("restart")
+	else:
+		get_tree().change_scene("res://Connection.tscn")
 	hide()
 
 

@@ -20,7 +20,7 @@ bg_color = Color( 0.2, 0.2, 0.2, 1 )
 bg_color = Color( 0.172549, 0.172549, 0.172549, 1 )
 
 [sub_resource type="DynamicFont" id=3]
-size = 64
+size = 40
 font_data = ExtResource( 3 )
 
 [sub_resource type="DynamicFont" id=4]
@@ -71,17 +71,36 @@ margin_right = 1024.0
 margin_bottom = 197.0
 size_flags_horizontal = 3
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
-margin_top = 8.0
+[node name="MLabel" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
 margin_right = 510.0
-margin_bottom = 88.0
+margin_bottom = 50.0
 size_flags_vertical = 6
 custom_fonts/font = SubResource( 3 )
-text = "Volume Level:"
+text = "Music Volume:"
 align = 1
 
-[node name="HSlider" type="HSlider" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
+[node name="Music" type="HSlider" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
+margin_top = 54.0
+margin_right = 510.0
+margin_bottom = 96.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+max_value = 75.0
+value = 75.0
+
+[node name="FXLabel" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
 margin_top = 100.0
+margin_right = 510.0
+margin_bottom = 150.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+custom_fonts/font = SubResource( 3 )
+text = "Sound Effects Volume:"
+align = 1
+valign = 1
+
+[node name="SFX" type="HSlider" parent="VBoxContainer/HBoxContainer/VBoxContainer2"]
+margin_top = 154.0
 margin_right = 510.0
 margin_bottom = 197.0
 size_flags_horizontal = 3
@@ -102,7 +121,6 @@ custom_styles/normal = SubResource( 9 )
 text = "Back"
 
 [node name="Popup" type="Popup" parent="."]
-visible = true
 margin_right = 1024.0
 margin_bottom = 600.0
 
@@ -157,7 +175,8 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [connection signal="pressed" from="VBoxContainer/HBoxContainer/Button2" to="." method="_on_Button2_pressed"]
-[connection signal="drag_ended" from="VBoxContainer/HBoxContainer/VBoxContainer2/HSlider" to="." method="_on_HSlider_drag_ended"]
+[connection signal="drag_ended" from="VBoxContainer/HBoxContainer/VBoxContainer2/Music" to="." method="_on_HSlider_drag_ended"]
+[connection signal="drag_ended" from="VBoxContainer/HBoxContainer/VBoxContainer2/SFX" to="." method="_on_SFX_drag_ended"]
 [connection signal="pressed" from="VBoxContainer/Button" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="Popup/VBoxContainer/VBoxContainer/close" to="." method="_on_close_pressed"]
 [connection signal="color_changed" from="Popup/VBoxContainer/ColorPicker" to="." method="_on_ColorPicker_color_changed"]

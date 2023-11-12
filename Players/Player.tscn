@@ -218,7 +218,6 @@ one_shot = true
 [node name="Start" type="Timer" parent="."]
 wait_time = 3.0
 one_shot = true
-autostart = true
 
 [node name="No Zoom" type="Node2D" parent="."]
 unique_name_in_owner = true
@@ -322,18 +321,18 @@ text = "Resume"
 anims/Turn_left = SubResource( 15 )
 anims/Turn_right = SubResource( 13 )
 
-[node name="Drift" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 6 )
-
-[node name="Checkpoint" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 7 )
+[node name="Start2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+autoplay = true
 
 [node name="Crash" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
 
-[node name="Start2" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 8 )
-autoplay = true
+[node name="Checkpoint" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+
+[node name="Drift" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="area_exited" from="Area2D" to="." method="_on_Area2D_area_exited"]
@@ -343,3 +342,7 @@ autoplay = true
 [connection signal="restart" from="No Zoom/CanvasLayer/Finish Menu" to="." method="_on_Finish_Menu_restart"]
 [connection signal="pressed" from="No Zoom/CanvasLayer/Popup/HBoxContainer/Menu" to="." method="_on_Menu_pressed"]
 [connection signal="pressed" from="No Zoom/CanvasLayer/Popup/HBoxContainer/Resume" to="." method="_on_Resume_pressed"]
+[connection signal="finished" from="Start2" to="." method="_on_Start2_finished"]
+[connection signal="finished" from="Crash" to="." method="_on_Crash_finished"]
+[connection signal="finished" from="Checkpoint" to="." method="_on_Checkpoint_finished"]
+[connection signal="finished" from="Drift" to="." method="_on_Drift_finished"]

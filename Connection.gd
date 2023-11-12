@@ -6,6 +6,7 @@ func _ready():
 	NetworkManager.start_connecting()
 	NetworkManager._client.connect("connection_established", self, "connected")
 	NetworkManager.connect("start", self, "start_game")
+	NetworkManager.connect("closed", self, "_on_Button_pressed")
 
 func connected(_proto):
 	status = "waiting"
@@ -20,3 +21,4 @@ func start_game():
 func _on_Button_pressed():
 	get_tree().change_scene("res://Menus/Track Menu.tscn")
 	queue_free()
+	
