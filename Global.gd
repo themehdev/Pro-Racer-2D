@@ -181,7 +181,6 @@ func _process(delta):
 	else:
 		live_splits = {"split_on": 0, "splits": [], "time" : 0}
 		best_run = pb_times[sec_playing][track_playing]
-
 #	print(sec_has)
 #	if sec_has >= 2:
 #		#print(pb_times["Advanced"][1]["time"])
@@ -230,4 +229,5 @@ func _on_HTTPRequest_request_completed(result, response_code, headers, body):
 	#					_make_post_request(URL_WORLD + "/Professional/" + i as String + ".json", pb_times["Professional"][i])
 		print("done with getting data")
 		got_stuff = ""
+		#_make_post_request("https://pro-racer-2d-default-rtdb.firebaseio.com/Official/Advanced/4.json", pb_times["Advanced"][4])
 	#print("why")
