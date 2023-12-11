@@ -272,10 +272,6 @@ rotation = 1.5708
 position = Vector2( -6528, -15744 )
 rotation = 1.5708
 
-[node name="Sign2" parent="." instance=ExtResource( 17 )]
-position = Vector2( -8920, -13720 )
-rotation = 0.785398
-
 [node name="Pillar7" parent="." instance=ExtResource( 7 )]
 position = Vector2( -2144, -5552 )
 
@@ -362,3 +358,13 @@ position = Vector2( -3952, -8064 )
 
 [node name="Pillar29" parent="." instance=ExtResource( 7 )]
 position = Vector2( -4536, -7496 )
+
+[node name="BoostPanel27" parent="." instance=ExtResource( 2 )]
+position = Vector2( -9152, -13456 )
+rotation = 0.261799
+scale = Vector2( 10, 16 )
+
+[node name="BoostPanel30" parent="." instance=ExtResource( 2 )]
+position = Vector2( -8944, -13464 )
+rotation = 0.261799
+scale = Vector2( 10, 16 )

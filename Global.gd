@@ -25,7 +25,7 @@ var can_play_world = false
 var live_splits = {"split_on": 0, "splits": [], "time" : 0}
 var live_wins = 0
 var live_races = 0
-var intro_track = preload("res://Tracks/Intro Track.tscn")
+#var intro_track = preload("res://Tracks/Intro Track.tscn")
 var Msound = 0
 var FXsound = 0
 var colR = 0
@@ -162,9 +162,11 @@ func _make_post_request(url, data_to_send, use_ssl = false):
 
 var got_stuff = "world"
 var data
+var last_opp_type = "-"
 
 func _process(delta):
-	$AudioStreamPlayer.volume_db = Msound
+	$Menuing.volume_db = Msound
+	$Racing.volume_db = Msound + 5
 	if opp_type == "official":
 		opp_run = official_times[sec_playing][track_playing]
 	elif opp_type == "world":
@@ -181,11 +183,23 @@ func _process(delta):
 	else:
 		live_splits = {"split_on": 0, "splits": [], "time" : 0}
 		best_run = pb_times[sec_playing][track_playing]
+	if opp_type == "-" and last_opp_type != opp_type:
+		$Menuing.play()
+		$Racing.stop()
+	elif opp_type != "-" and last_opp_type != opp_type:
+		$Racing.play()
+		$Menuing.stop()
+	if $Racing.get_playback_position() >= 51.19:
+		$Racing.stop()
+		$Racing.play()
+		print($Racing.get_playback_position())
+	last_opp_type = opp_type
 #	print(sec_has)
-#	if sec_has >= 2:
+#	if pb_times["Advanced"][4]["time"] != 0:
+		
 #		#print(pb_times["Advanced"][1]["time"])
 #		print("posting")
-#		_make_post_request("https://pro-racer-2d-default-rtdb.firebaseio.com/Official/Accomplished.json", pb_times["Accomplished"])
+#		_make_post_request("https://pro-racer-2d-default-rtdb.firebaseio.com/Official/Advanced/4.json", pb_times["Advanced"][4])
 #		pb_times["Accomplished"][1] = {"time"
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

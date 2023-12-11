@@ -219,6 +219,7 @@ func _physics_process(delta):
 		if $Start.time_left != 0 and Global.opp_type != "live":
 			$Start.wait_time = $Start.time_left
 			$Start.stop()
+			$Start2.stop()
 			start_stopped = true
 	#print(Input.is_action_pressed("restart"))
 	if ((Input.is_action_just_pressed("restart") or (Input.is_action_pressed("respawn") and last_cp_pos == start_pos and lap == 1)) and not $"%Popup".visible) and Global.opp_type != "live":
@@ -500,6 +501,7 @@ func _on_Resume_pressed():
 		#print("yay")
 	if start_stopped:
 		$Start.start()
+		$Start2.play(3 - $Start.time_left)
 		start_stopped = false
 	if finishing == true:
 		restart()

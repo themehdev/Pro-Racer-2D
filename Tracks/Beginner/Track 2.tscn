@@ -126,3 +126,11 @@ rotation = -0.698132
 [node name="Side Wide 4" parent="." instance=ExtResource( 4 )]
 position = Vector2( -2560, 256 )
 rotation = 3.14159
+
+[node name="Sign3" parent="." instance=ExtResource( 12 )]
+position = Vector2( -4352, -256 )
+rotation = 3.14159
+
+[node name="Sign4" parent="." instance=ExtResource( 12 )]
+position = Vector2( -3840, 256 )
+rotation = -1.5708

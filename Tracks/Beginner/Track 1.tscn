@@ -101,3 +101,10 @@ position = Vector2( -7936, -256 )
 [node name="Mid Curve" parent="." instance=ExtResource( 15 )]
 position = Vector2( -7424, 256 )
 rotation = 3.14159
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = -6648.0
+margin_top = -1088.0
+margin_right = -5120.0
+margin_bottom = 504.0
+color = Color( 0.180392, 0.509804, 0.0431373, 1 )
